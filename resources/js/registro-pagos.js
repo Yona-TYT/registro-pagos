@@ -267,10 +267,12 @@ function mostrar_detalles_cl(){
 	var nr = gl_venta_rv.count;
 
 //var monto_dol = gl_cliente.monto_dol[1][0];
-	console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
-	for (var j = 0; j < gl_cliente.indx_a; j++) {
+	//console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
+	var gen_bs = gl_general.gen_bs;
+	for (var j = 0; gl_curr_cuenta && j < gl_cliente.indx_a; j++) {
 		var cliente = gl_cliente.cliente[j];
 		var monto_total = gl_cliente.monto_totl[j];
+		var monto_tot_bs = calc_dolar_a_bs(monto_total, gen_bs);
 		var detalles = "";
 		for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 
@@ -283,7 +285,7 @@ function mostrar_detalles_cl(){
 
 			detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
 		}
-		secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+"</div> "+ detalles+"</div>";
+		secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"</div> "+ detalles+"</div>";
 	}
 }
 

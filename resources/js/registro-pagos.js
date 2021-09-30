@@ -79,7 +79,7 @@ function save_inputs_pagos(){
 	var mask_cc = document.getElementById("text_mask_gnbs_cc");
 
 	var vl_bs = gen_bs.value;
-	genbs_cc = vl_bs;
+	genbs_cc.value = vl_bs;
 
 	gl_general.gen_bs = parseFloat(vl_bs)? parseFloat(vl_bs).toFixed(2) : parseFloat(0).toFixed(2);
 	agregar_gene_datos(gl_general);								//Se guardan los datos Generales
@@ -160,13 +160,11 @@ function button_reg_pago(){
 			gl_general.fechalist[gl_general.index] = curr_fecha;
 		}
 
-		//var index_a = gl_cliente.indx_a;
 		var res = cliente_check(vl_nombre);			//Compara si el nombre del cliente existe
 		var index_a = res.a;
 		var index_b = res.b;
 
-		//var index_b = gl_cliente.indx_b[index_a];
-console.log("Save Ind a "+index_a+" Ind b "+index_b);
+
 
 		gl_actual_bs[index_b] = gen_bs;
 		gl_monto_dol[index_b] = monto_a;
@@ -183,6 +181,11 @@ console.log("Save Ind a "+index_a+" Ind b "+index_b);
 		gl_cliente.hora[index_a] = gl_hora;
 
 		gl_cliente.cliente[index_a] = vl_nombre.toLowerCase();
+		if (gl_cliente.monto_totl[index_a]) gl_cliente.monto_totl[index_a] += monto_a
+		else gl_cliente.monto_totl[index_a] = monto_a;
+
+
+		console.log("Save Ind a "+index_a+" Monto Dol: "+monto_a+" total: "+gl_cliente.monto_totl[index_a]);
 
 		agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
 		agregar_gene_datos(gl_general);
@@ -267,6 +270,7 @@ function mostrar_detalles_cl(){
 	console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
 	for (var j = 0; j < gl_cliente.indx_a; j++) {
 		var cliente = gl_cliente.cliente[j];
+		var monto_total = gl_cliente.monto_totl[j];
 		var detalles = "";
 		for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 
@@ -277,9 +281,9 @@ function mostrar_detalles_cl(){
 			var fecha = gl_cliente.fecha[j][i];
 			var hora = gl_cliente.hora[j][i];
 
-			detalles += "<div class='div_list_style'>["+j+"]["+i+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
+			detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
 		}
-		secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + detalles+"</div>";
+		secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+"</div> "+ detalles+"</div>";
 	}
 }
 

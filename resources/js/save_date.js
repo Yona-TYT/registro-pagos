@@ -262,7 +262,9 @@ function reg_cliente() {
 	this.indx_a = 0;					//index maximo para los arrays
 	this.indx_b = new Array();					//index maximo para los arrays
 
-	this.cliente = new Array();			//Nombre del Cliente
+	this.cliente = new Array();			//Nombre de cada Cliente
+	this.monto_totl = new Array();		//Monoto total de cada cliente
+
 	this.actual_bs = new Array();		//Precio del dolara al momento de registrar
 	this.desc = new Array();			//Texto descritivo
 	this.monto_dol = new Array();		//Monto en dolares

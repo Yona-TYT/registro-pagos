@@ -15,7 +15,6 @@
 		<script src="resources/js/export-cvs.js"></script>
 		<script src="resources/js/menus.js"></script>
 
-
 		<script src="resources/js/registro-cuentas.js"></script>
 		<script src="resources/js/registro-pagos.js"></script>
 		<script src="resources/js/lista-productos.js"></script>
@@ -24,15 +23,12 @@
 		<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.1/dist/xlsx.full.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
 
-
-
 		<! Fin del js -->
 		<! Aquí definimos los estilo CSS para esta página -->
 		<link rel="stylesheet" href="resources/css/main.css"></link>
 		<link rel="stylesheet" href="resources/css/basic-class.css"></link>
 
 		<link rel="stylesheet" href="resources/css/auto-pantalla.css"></link>
-
 
 		<! Fin del CSS -->
 	</head>
@@ -51,7 +47,7 @@
 				<div class="input_style_hidden" id="menulist">
 					<button class='menu_list_style' type="button" id="menuopt1" onclick="visible_element(1);">Registro de Pagos</button>
 					<button class='menu_list_style' type="button" id="menuopt2" onclick="visible_element(2);">Registro de Cuentas</button>
-					<button class='input_style_hidden' type="button" id="menuopt3" onclick="visible_element(3);">Historial</button>
+					<button class='menu_list_style' type="button" id="menuopt3" onclick="visible_element(3);">Historial</button>
 					<button class='input_style_hidden' type="button" id="menuopt4" onclick="visible_element(4);">Lista de Productos</button>
 					<button class='input_style_hidden' type="button" id="menuopt5" onclick="visible_element(5);">Importar Lista</button>
 				</div>
@@ -66,7 +62,7 @@
 					<button class="mask_style" type="button" id="butopt2" onclick="visible_element(2);">
 					Registro de Cuentas
 				</div>
-				<div class="input_style_hidden">
+				<div class="cajas_style">
 					<button class="mask_style" type="button" id="butopt3" onclick="visible_element(3);">
 					Historial de Ventas
 				</div>
@@ -117,7 +113,7 @@
 			<div class="cajas_style">
 				Precio Dolar:
 				<input readonly="" class="input_style_td" id="text_mask_gnbs_cc" onclick="mostrar_input();" onselect="mostrar_input();">
-				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_cuentas();" onclick="save_inputs_cuentas();" onchange="save_inputs_cuentas();" step="10" min="1" id="input_gnbs_cc" onfocus="ocultar_input();" lang="en">
+				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_cuentas();" onclick="save_inputs_cuentas();" onchange="save_inputs_cuentas();" step="1" min="0.01" id="input_gnbs_cc" onfocus="ocultar_input();" lang="en">
 			</div>
 			<section class="label_style" id="sect_rp"></section>
 			<datalist id="list_datacc"></datalist>

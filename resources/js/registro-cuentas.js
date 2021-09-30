@@ -24,7 +24,7 @@ function save_inputs_cuentas(){
 	var mask_rp = document.getElementById("text_mask_gnbs");
 
 	var vl_bs = gen_bs.value;
-	genbs_rp = vl_bs;
+	genbs_rp.value = vl_bs;
 
 	gl_general.gen_bs = parseFloat(vl_bs)? parseFloat(vl_bs).toFixed(2) : parseFloat(0).toFixed(2);
 	agregar_gene_datos(gl_general);								//Se guardan los datos Generales
@@ -32,6 +32,8 @@ function save_inputs_cuentas(){
 	var vl_mask = get_mask(vl_bs,"Bs");
 	mask.value = vl_mask;
 	mask_rp.value = vl_mask;
+
+	get_input_value_rc()
 }
 
 function get_input_value_rc(){

@@ -416,9 +416,7 @@
 
 .total_style {
 
-	color: #f9f8d8;
-	text-shadow: 2px 2px 2px #000000;
-	text-align: right;
+	text-align: left;
 	font-weight: bold;
 	font-size:var(--siz-text);
 

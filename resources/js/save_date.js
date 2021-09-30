@@ -118,7 +118,6 @@ function obtener_cuentas(evento) {
 	var resultado = evento.target.result;
 	if(resultado){
 		gl_cuenta = resultado.rg_cuenta;
-		start_inputs_pagos();
 	}
 }
 //----------------------------------------------------------------------

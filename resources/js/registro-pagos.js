@@ -54,7 +54,10 @@ function reset_inputs_pagos() {
 function start_inputs_pagos() {
 	var nombre = gl_cuenta.nombre + " - " + gl_cuenta.desc;	//Titulo para la cuenta
 	var monto = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_dol,"$"):get_mask(gl_cuenta.monto_bs,"Bs");
-	var pagado = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_pagado,"$"):get_mask(gl_cuenta.monto_pagado,"Bs");
+
+	var gen_bs = gl_general.gen_bs;
+	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_pagado, gen_bs);
+	var pagado = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_pagado,"$"):get_mask(monto_tot_bs,"Bs");
 
 	var input_nomb = document.getElementById("pginput"+1+""+0);
 	var input_mont = document.getElementById("pginput"+1+""+1);
@@ -266,26 +269,29 @@ function mostrar_detalles_cl(){
 	secc_reg.innerHTML = "";
 	var nr = gl_venta_rv.count;
 
-//var monto_dol = gl_cliente.monto_dol[1][0];
 	//console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
+	gl_cuenta.monto_pagado = 0;
 	var gen_bs = gl_general.gen_bs;
-	for (var j = 0; gl_curr_cuenta && j < gl_cliente.indx_a; j++) {
-		var cliente = gl_cliente.cliente[j];
-		var monto_total = gl_cliente.monto_totl[j];
-		var monto_tot_bs = calc_dolar_a_bs(monto_total, gen_bs);
-		var detalles = "";
-		for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+	if(gl_curr_cuenta){
+		for (var j = 0;j < gl_cliente.indx_a; j++) {
+			var cliente = gl_cliente.cliente[j];
+			var monto_total = gl_cliente.monto_totl[j];
+			gl_cuenta.monto_pagado += monto_total;
+			var monto_tot_bs = calc_dolar_a_bs(monto_total, gen_bs);
+			var detalles = "";
+			for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+				var actual_bs = gl_cliente.actual_bs[j][i];
+				var monto_dol = gl_cliente.monto_dol[j][i];
+				var monto_bs = gl_cliente.monto_bs[j][i];
 
-			var actual_bs = gl_cliente.actual_bs[j][i];
-			var monto_dol = gl_cliente.monto_dol[j][i];
-			var monto_bs = gl_cliente.monto_bs[j][i];
+				var fecha = gl_cliente.fecha[j][i];
+				var hora = gl_cliente.hora[j][i];
 
-			var fecha = gl_cliente.fecha[j][i];
-			var hora = gl_cliente.hora[j][i];
-
-			detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
+				detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
+			}
+			secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"</div> "+ detalles+"</div>";
 		}
-		secc_reg.innerHTML += "<div class='div_list_style' id='divrv"+j+"'>Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"</div> "+ detalles+"</div>";
+		start_inputs_pagos();
 	}
 }
 

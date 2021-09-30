@@ -79,7 +79,20 @@ function guardar_cuenta(){
 
 	var gen_bs = gl_general.gen_bs;
 
-	if(gen_bs == 0) return alert("El valor de Precio Dolar no puede ser cero!.")
+	var titulo = nombre.value + " " + desc.value;	//Titulo para la cuenta
+	var result = false;
+	for (var j = 0; j<gl_general.cu_save_id; j++) {
+		var save_tx = gl_general.cuentlist[j];
+		if (save_tx!="") save_tx = save_tx.toLowerCase();
+		else continue;
+		result = save_tx.includes(titulo.toLowerCase());
+
+		if(result){
+			break;
+		}
+	}
+	if(result) return alert("El Nombre de la Cuenta ya Existe!.")
+	if(gen_bs == 0) return alert("El Valor de Precio Dolar no Puede ser Cero!.")
 
 	//console.log(""+monto_a+" "+monto_b+" "+nombre.value+" "+desc.value);
 	if(monto_a != "" && monto_b != "" && nombre.value != "" && desc.value != ""){
@@ -102,7 +115,7 @@ function guardar_cuenta(){
 		gl_cuenta.clave = gl_general.cu_save_id;
 		agregar_cuenta(gl_cuenta, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
 
-		gl_general.cuentlist[gl_general.cu_save_id] = gl_cuenta.nombre + " " + gl_cuenta.desc;	//Titulo para la cuenta
+		gl_general.cuentlist[gl_general.cu_save_id] = titulo;			//Titulo para la cuenta
 		gl_general.cu_save_id++;										//Se incrementa para la siguiente cuenta
 		agregar_gene_datos(gl_general);									//Se guardan los datos Generales
 

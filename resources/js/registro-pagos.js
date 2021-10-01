@@ -272,8 +272,11 @@ function crear_datalist_cl() {
 function mostrar_detalles_cc(){
 	var secc_det = document.getElementById("detalles_cc");
 
+	var gen_bs = gl_general.gen_bs;
+	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_dol, gen_bs);
+
 	var monto_d = "<div class='div_list_style'> Monto ($): "+ get_mask(gl_cuenta.monto_dol,"$") +"</div>";
-	var monto_b = "<div class='div_list_style'> Monto (Bs: "+ get_mask(gl_cuenta.monto_bs,"Bs") +"</div>";
+	var monto_b = "<div class='div_list_style'> Monto (Bs): "+ get_mask(monto_tot_bs,"Bs") +"</div>";
 	var monto_p = "<div class='div_list_style'> Pagado: "+ get_mask(gl_cuenta.monto_pagado,"$") +"</div>";
 	var estado = "<div class='div_list_style'> Estado: "+ gl_cuenta.estado +"</div>";
 	var fecha = "<div class='div_list_style'> Fecha: "+ gl_cuenta.fecha +"</div>";

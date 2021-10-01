@@ -6,7 +6,7 @@ function pagos_main(){
 	//Buscador para las cuentas
 	var input_cuenta = document.getElementById("buscar_cc");
 	input_cuenta.addEventListener("input", function(){buscar_lista_cuenta();});
-	input_cuenta.addEventListener("click", function(){el_selec("buscar_cc");});
+	input_cuenta.addEventListener("focus", function(){el_selec("buscar_cc");});
 }
 
 function selec_moneda_cl(){

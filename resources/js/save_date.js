@@ -72,6 +72,7 @@ function obtener_general(evento) {
 	if(resultado){
 		gl_general = resultado.datos_gene;
 
+		console.log("Claave gn "+gl_general.cu_save_id +" Nr: "+gl_cliente.indx_a)
 		//----------------------------------------------
 		var gen_bs = document.getElementById("input_gnbs");
 		var mask_bs = document.getElementById("text_mask_gnbs");
@@ -98,6 +99,7 @@ function obtener_general(evento) {
 		else if(curr_fecha != fecha){
 			gl_general.fecha = curr_fecha;
 		}
+		save_inputs_pagos();
 		mostrar_cuentas(gl_general.cu_save_id);
 		mostrar_clientes(gl_general.cl_save_id);
 		crear_datalist_cc();
@@ -119,6 +121,7 @@ function obtener_cuentas(evento) {
 	if(resultado){
 		gl_cuenta = resultado.rg_cuenta;
 	}
+	console.log("Claave cc "+gl_cuenta.clave +" Nr: "+gl_cliente.indx_a)
 }
 //----------------------------------------------------------------------
 
@@ -143,6 +146,7 @@ function obtener_clientes(evento) {
 
 // Elimina los datos de los almacenes ----------------------------------
 function remove_general(clave) {
+
 	var transaccion = bd.transaction(["general_datos"], "readwrite");
 	var almacen = transaccion.objectStore("general_datos");
 	var solicitud = almacen.delete(clave);
@@ -155,58 +159,14 @@ function remove_cuenta(clave) {
 }
 
 function remove_cliente(clave) {
+	gl_cliente = new reg_cliente();
+
 	var transaccion = bd.transaction(["cuenta_clientes"], "readwrite");
 	var almacen = transaccion.objectStore("cuenta_clientes");
 	var solicitud = almacen.delete(clave);
 }
 
 //--------------------------------------------------------------------------
-
-//Manejo de datos desde el selector de fechas -----------------------------------------
-function mostrar_selec(clave) {
-	var transaccion = bd.transaction(["ventas_saves"]);
-	var almacen = transaccion.objectStore("ventas_saves");
-	var solicitud = almacen.get(clave);
-	solicitud.addEventListener("success", obtener_selec);
-	
-}
-function obtener_selec(evento) {
-	var resultado = evento.target.result;
-	gl_hist_save = new all_ventas();
-
-	console.log(gl_hist_date.save_id);	
-	if(resultado){
-		//var id = resultado.id;
-		gl_hist_save = resultado.rventas;
-		var nr = gl_hist_save.index;
-		for (var j = nr-1;  j >= 0; j--) {
-			crear_historial(j);
-		}		
-	}
-		//console.log(""+resultado.id+" fech index");
-}
-//---------------------------------------------------------------------------------------
-
-
-//Manejo de datos para el control del historial ------------------------------
-function mostrar_hist_date(clave) {
-	var transaccion = bd.transaction(["history_data"]);
-	var almacen = transaccion.objectStore("history_data");
-	var solicitud = almacen.get(clave);
-	solicitud.addEventListener("success", obtener_hist_date);
-	
-}
-
-function obtener_hist_date(evento) {
-	var resultado = evento.target.result;
-
-	if(resultado){
-		gl_hist_date = resultado.data_his;
-		mostrar_ventas(gl_hist_date.save_id);
-	}
-	preloder_selec_list("selectlistaname");
-}
-//----------------------------------------------------------------------
 
 //Datos generales
 function general_datos() {
@@ -257,6 +217,7 @@ function reg_cuenta() {
 
 //Datos de cada cliente
 function reg_cliente() {
+	this.start = false;						//Para saber si ha sido guardada o no en el almacen
 	this.clave = 0;						//Clave para guardar/cargar el registro
 	this.indx_a = 0;					//index maximo para los arrays
 	this.indx_b = new Array();					//index maximo para los arrays

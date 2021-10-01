@@ -181,13 +181,13 @@ function eliminar_todo(opt){
 }
 function clear_history(){
 
-	//remove_general(0);
+	remove_general(0);
 
 	for (var j = 0; j <= gl_general.cu_save_id; j++) {
-		//remove_cuenta(j);
+		remove_cuenta(j);
 	}
 
-	for (var j = 0; j <= gl_general.cl_save_id; j++) {
+	for (var j = 0; j <= gl_general.cu_save_id; j++) {
 		remove_cliente(j);
 	}
 

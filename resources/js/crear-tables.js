@@ -415,7 +415,7 @@ function create_table_pagos(){
 					button.setAttribute("class", "mask_style");
 					button.setAttribute("type", "button");
 					button.innerHTML= "Detalles";
-					button.setAttribute("onclick","button_reg_pago("+siz_f+");");
+					button.setAttribute("onclick","button_detalles_cc();");
 					button.setAttribute("id", "buttpg"+siz_f+"5");
 					celda.appendChild(button);
 				}

@@ -4,6 +4,7 @@
 	--mask-height: 5%;
 	--caja-disp: inline-block;
 	--all-bord: 1px;
+	--butt-bord: 2px;
 	--alig-text: center;
 	--cel-siz: 100%;
 	--cel-siz-name: 100%;
@@ -506,6 +507,19 @@ tr, .fila_style:hover {
 	display: none;
 
 }
+
+
+
+
+.butt_style:active {
+	border-width: var(--butt-bord);
+	border-style: solid;
+	border-color: #fafafa;
+
+	background-color: rgba(206, 24, 30, 0.5);
+}
+
+
 .mask_style:hover {
 	background-color: rgba(206, 24, 30, 0.5);
 }
@@ -520,6 +534,26 @@ tr, .fila_style:hover {
 
 .logo_div_style {
 
+}
+
+.butt_style {
+	text-align: center;
+	font-weight: bold;
+	font-size:90%;
+
+	color: #ffffff;
+	width: 90px;
+	height: var(--all-height);
+
+	border-width: var(--butt-bord);
+	border-style: solid;
+	border-color: #959595
+	border-radius: 15px;
+
+	margin:2px;
+
+	background: #6e3068;
+	overflow: hidden;
 }
 
 input::placeholder{

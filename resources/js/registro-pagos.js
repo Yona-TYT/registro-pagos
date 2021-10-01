@@ -7,6 +7,12 @@ function pagos_main(){
 	var input_cuenta = document.getElementById("buscar_cc");
 	input_cuenta.addEventListener("input", function(){buscar_lista_cuenta();});
 	input_cuenta.addEventListener("focus", function(){el_selec("buscar_cc");});
+	input_cuenta.addEventListener("dblclick", function(){el_selec("buscar_cc");});
+
+	//Buscador para los clientes
+	var input_cliente = document.getElementById("input_nombre_pg");
+	input_cliente.addEventListener("focus", function(){el_selec("input_nombre_pg");});
+	input_cliente.addEventListener("dblclick", function(){el_selec("input_nombre_pg");});
 }
 
 function selec_moneda_cl(){

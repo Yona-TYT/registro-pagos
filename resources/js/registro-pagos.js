@@ -54,12 +54,14 @@ function reset_inputs_pagos() {
 }
 
 function start_inputs_pagos() {
-	var nombre = gl_cuenta.nombre + " - " + gl_cuenta.desc;	//Titulo para la cuenta
-	var monto = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_dol,"$"):get_mask(gl_cuenta.monto_bs,"Bs");
-
 	var gen_bs = gl_general.gen_bs;
-	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_pagado, gen_bs);
-	var pagado = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_pagado,"$"):get_mask(monto_tot_bs,"Bs");
+	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_dol, gen_bs);
+	var nombre = gl_cuenta.nombre + " - " + gl_cuenta.desc;	//Titulo para la cuenta
+	var monto = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_dol,"$"):get_mask(monto_tot_bs,"Bs");
+
+
+	var monto_pgdo_bs = calc_dolar_a_bs(gl_cuenta.monto_pagado, gen_bs);
+	var pagado = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_pagado,"$"):get_mask(monto_pgdo_bs,"Bs");
 
 	var input_nomb = document.getElementById("pginput"+1+""+0);
 	var input_mont = document.getElementById("pginput"+1+""+1);
@@ -190,7 +192,7 @@ function button_reg_pago(){
 		else gl_cliente.monto_totl[index_a] = monto_a;
 
 
-		console.log("Save Ind a "+index_a+" Monto Dol: "+monto_a+" total: "+gl_cliente.monto_totl[index_a]);
+		//console.log("Save Ind a "+index_a+" Monto Dol: "+monto_a+" total: "+gl_cliente.monto_totl[index_a]);
 
 		gl_cliente.start = true;									//Se marca como iniciado
 		gl_cliente.clave = gl_cuenta.clave;

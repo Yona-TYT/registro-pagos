@@ -1,6 +1,6 @@
 
-function arrayObjToCsv(ar) {
-
+function arrayObjToCsv() {
+alert("here");
 	var cuenta = crear_array_cc();
 	var cliente = crear_array_cl();
 	if(!gl_curr_cuenta) return alert("Debes Seleccionar una Cuenta!.");
@@ -46,7 +46,8 @@ function arrayObjToCsv(ar) {
 		}
 		//leemos como url
 		reader.readAsDataURL(blob);
-	}else {
+	}
+	else {
 		//el navegador no admite esta opción
 		alert("Su navegador no permite esta acción");
 	}

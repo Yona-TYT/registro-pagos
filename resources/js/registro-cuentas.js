@@ -3,19 +3,8 @@ var gl_opt_moneda = 0;
 
 
 function cuentas_main(){
-	selec_moneda_rc();
+
 }
-
-function selec_moneda_rc(){
-	var selec_moneda = document.getElementById("selc_moneda_cc");
-	var opt = selec_moneda.options[selec_moneda.selectedIndex];
-	var selec_mon_cl = document.getElementById("selc_moneda_cl");
-	selec_mon_cl.options[selec_moneda.selectedIndex].selected=true;
-	gl_opt_moneda = opt.value;
-
-	get_input_value_rc();
-}
-
 function save_inputs_cuentas(){
 	var gen_bs = document.getElementById("input_gnbs_cc");
 	var mask = document.getElementById("text_mask_gnbs_cc");

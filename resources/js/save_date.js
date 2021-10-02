@@ -76,14 +76,12 @@ function obtener_general(evento) {
 		//----------------------------------------------
 		var gen_bs = document.getElementById("input_gnbs");
 		var mask_bs = document.getElementById("text_mask_gnbs");
-		var genbs_cc = document.getElementById("input_gnbs_cc");
 
 		var vl_bs = gl_general.gen_bs;
 		gen_bs.value = vl_bs;
 
 		var vl_mask = get_mask(vl_bs,"Bs");
 		mask_bs.value = vl_mask;
-		genbs_cc.value = vl_mask;
 		//----------------------------------------------
 
 		var hoy = new Date();
@@ -99,7 +97,6 @@ function obtener_general(evento) {
 		else if(curr_fecha != fecha){
 			gl_general.fecha = curr_fecha;
 		}
-		save_inputs_pagos();
 		mostrar_cuentas(gl_general.cu_save_id);
 		mostrar_clientes(gl_general.cl_save_id);
 		crear_datalist_cc();

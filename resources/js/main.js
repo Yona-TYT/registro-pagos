@@ -165,37 +165,13 @@ function cursor_no_button(id)
 
 function init(){
 
-
-	//test arrays bidimencionales
-	/*	
-	var save = [12,112,588,5558,5998,565,65];
-	for(var j = 0; j<5;j++){
-		save_expdate[j] = new Array(10);
-		for(var i = 0; i<5;i++){
-
-				save_expdate[j][i] = save[i];
-			}
-	}
-	*/
-
-	//save_expdate[0] = Array();
-	//save_expdate[0][0] = "ssdd";
-	//save_expdate[1] = Array();
-	//save_expdate[1][0] = "yoma";
-	//save_id[0].push();
-	//save_id[0].unshift(100);
-	//save_celda[1][5]=12;
-	//save_celda[4][0] = 44;
-	//save_celda[0][1] = 44;
-	//save_celda[0][2] = 44;
-	//var tamaño = save_id[0].length;  //tamaño de un array
-	//add_message(tamaño);
-	//add_message(save_expdate[2][0]+"--"+save_expdate[2][1]);
-
-
 	check_windows_siz();
 
+	//Crea la tabla de Registro de pAGOS
 	create_table_pagos();
+
+	//Crea la tabla de Registro de Cuentas
+	create_table_cuentas();
 
 	//Para cambiar entre listas
 	select_list_x();
@@ -203,25 +179,12 @@ function init(){
 	//Leer documentos tipo hojas de datos
 	//importar_datos();
 
-	//Tabal vista previa de documentos
-	//table_preview_ex()
+	//Inicia las funciones de menu
+	menu_main();
+
 
 	//Solo visible la tabla de lista
  	visible_element(1);
-
-	//example_preview();
-
-
-
-
-	//Comprueba y activa/desactiva el modo editor
-	check_edit_mode();
-
-	//Crea la tabla de lista productos
-	//create_table();
-
-	//Crea la tabla de Registro de Cuentas
-	create_table_cuentas();
 
 
 	//--------------------------------------------
@@ -252,7 +215,8 @@ document.addEventListener('click', function() {
 	var input = document.activeElement;
 	var class_name = input.className;
 	if(class_name != "" && class_name != "input_style_visible"){
-		ocultar_input();
+		var otros = true;
+		ocultar_input(otros);
 	}
 
 }); 

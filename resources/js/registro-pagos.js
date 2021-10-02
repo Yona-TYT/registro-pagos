@@ -1,8 +1,6 @@
 var gl_cliente = new reg_cliente();
 var gl_curr_cuenta = false;
 function pagos_main(){
-	selec_moneda_cl();
-
 	//Buscador para las cuentas
 	var input_cuenta = document.getElementById("buscar_cc");
 	input_cuenta.addEventListener("input", function(){buscar_lista_cuenta();});
@@ -13,17 +11,6 @@ function pagos_main(){
 	var input_cliente = document.getElementById("input_nombre_pg");
 	input_cliente.addEventListener("focus", function(){el_selec("input_nombre_pg");});
 	input_cliente.addEventListener("dblclick", function(){el_selec("input_nombre_pg");});
-}
-
-function selec_moneda_cl(){
-	var selec_moneda = document.getElementById("selc_moneda_cl");
-	var opt = selec_moneda.options[selec_moneda.selectedIndex];
-	var selec_mon_cc = document.getElementById("selc_moneda_cc");
-	selec_mon_cc.options[selec_moneda.selectedIndex].selected=true;
-	gl_opt_moneda = opt.value;
-
-	save_inputs_cliente();
-
 }
 
 function buscar_lista_cuenta()
@@ -85,24 +72,6 @@ function start_inputs_pagos() {
 		input_nomb.style.fontSize = "80%";
 
 	//----------------------------------------------------------------
-}
-
-function save_inputs_pagos(){
-	var gen_bs = document.getElementById("input_gnbs");
-	var mask = document.getElementById("text_mask_gnbs");
-
-	var genbs_cc = document.getElementById("input_gnbs_cc");
-	var mask_cc = document.getElementById("text_mask_gnbs_cc");
-
-	var vl_bs = gen_bs.value;
-	genbs_cc.value = vl_bs;
-
-	gl_general.gen_bs = parseFloat(vl_bs)? parseFloat(vl_bs).toFixed(2) : parseFloat(0).toFixed(2);
-	agregar_gene_datos(gl_general);								//Se guardan los datos Generales
-
-	var vl_mask = get_mask(vl_bs,"Bs");
-	mask.value = vl_mask;
-	mask_cc.value = vl_mask;
 }
 
 function save_inputs_cliente(){

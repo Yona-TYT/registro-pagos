@@ -228,10 +228,12 @@
 
 	background: rgba(55, 64, 145, 0.4);
 
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-user-select: none;
 
 }
 
@@ -420,10 +422,12 @@
 	background-color: #6e3068;
 	overflow: hidden;
 
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-user-select: none;
 }
 
 .total_style {
@@ -554,6 +558,12 @@ button {
 	border-style: solid;
 	border-color: #b3b3b3;
 
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-user-select: none;
 }
 
 .butt_style {

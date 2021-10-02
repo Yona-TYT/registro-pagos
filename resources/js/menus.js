@@ -1,27 +1,7 @@
 
 function menu_main(){
 
-
-	var select = document.getElementById("selectlistaname");
-	var opt = select.options[select.selectedIndex];
-	var input2 = document.getElementById("inputlistaname");
-	//input2.value = opt.innerHTML;
-
-	//clonar_filtros("selectlistaname");
-
-	if(edit_mode){
-		input2.setAttribute("class","mask_style");
-		select.setAttribute("class","element_style_hidden");
-	}
-
-
-	reset_inputs_rv();
-
-	document.getElementById("rv_totaldol").value = 0.00+" $";
-	document.getElementById("rv_totalbsf").value = 0.00+" BsF";
-
-	var select1 = document.getElementById("selcregvent");
-	//select1.setAttribute("onchange","test_select_base('selcregvent');");
+	selec_moneda_chg();
 
 }
 
@@ -66,7 +46,6 @@ function visible_element(opt) {
 
 	//Registro de Pagos
 	if(opt==1) {
-		selec_moneda_cl();	
 		menu_gest.setAttribute("class","element_style_hidden");
 		menu_import.setAttribute("class","element_style_hidden");
 		menu_export.setAttribute("class","element_style_hidden");
@@ -77,7 +56,6 @@ function visible_element(opt) {
 	}
 	//Registro de Cuentas
 	if(opt==2) {
-		selec_moneda_rc();
 		menu_gest.setAttribute("class","element_style_hidden");
 		menu_import.setAttribute("class","element_style_hidden");
 		menu_export.setAttribute("class","element_style_hidden");
@@ -137,6 +115,31 @@ function select_list_x(){
 	
 }
 
+function selec_moneda_chg(){
+	var selec_moneda = document.getElementById("selc_moneda");
+	var opt = selec_moneda.options[selec_moneda.selectedIndex];
+
+	gl_opt_moneda = opt.value;
+
+	get_input_value_rc();
+	save_inputs_cliente();
+}
+
+function save_inputs_chg(){
+	var gen_bs = document.getElementById("input_gnbs");
+	var mask = document.getElementById("text_mask_gnbs");
+
+	var vl_bs = gen_bs.value;
+	gl_general.gen_bs = parseFloat(vl_bs)? parseFloat(vl_bs).toFixed(2) : parseFloat(0).toFixed(2);
+	agregar_gene_datos(gl_general);								//Se guardan los datos Generales
+
+	var vl_mask = get_mask(vl_bs,"Bs");
+	mask.value = vl_mask;
+
+	save_inputs_cliente();
+	start_inputs_pagos();
+	get_input_value_rc();
+}
 function mostrar_input() {
 	var mask = document.activeElement;
 	mask.setAttribute("placeholder", "");
@@ -162,21 +165,21 @@ function mostrar_input() {
 	return null
 }
 
-function ocultar_input()
+function ocultar_input(otros = false)
 {
 	var current_input = document.activeElement;
 	var current_id_name = current_input.id;
 	var input_old = current_element;
 
 	var result = true;
-	try {
-		el_selec(current_id_name);
+	if(!otros){				//Otros inputs distintos a los de ingresar valores numericos
+		try {
+			el_selec(current_id_name);
+		}
+		catch (err) {
+			result = false;
+		}
 	}
-	catch (err) {
-		result = false;
-	}
-	
-
 	
 	if(input_old && result){
 		var id_name_old = input_old.id;

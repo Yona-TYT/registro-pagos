@@ -51,7 +51,7 @@
 					<button class='menu_list_style' type="button" id="menuopt2" onclick="visible_element(2);">Registro de Cuentas</button>
 					<button class='menu_list_style' type="button" id="menuopt3" onclick="visible_element(3);">Gestion Clientes</button>
 					<button class='menu_list_style' type="button" id="menuopt4" onclick="visible_element(4);">Historial de Pagos</button>
-					<button class='menu_list_style' type="button" id="menuopt5" onclick="visible_element(5);">Importar Datos</button>
+					<button class='menu_list_style' type="button" id="menuopt5" onclick="visible_element(5);">Impor./Expor Datos</button>
 					<button class='menu_list_style' type="button" id="menuopt6" onclick="visible_element(6);">Exportar Datos</button>
 				</div>
 			</div>
@@ -75,18 +75,17 @@
 				</div>
 				<div class="cajas_style">
 					<button class="butt_menu_style" type="button" id="butopt5" onclick="visible_element(5);">
-					Importar Datos
+					Impor./Expor Datos
 				</div>
 				<div class="cajas_style">
 					<button class="butt_menu_style" type="button" id="butopt6" onclick="visible_element(6);">
 					Exportar Datos
 				</div>
 			</div>
-		<! ---------------- Seccion1 Registro de Pagos ------------------>
-
-		<section class="label_style" id="seccion1">
+		<! ---------------- Seccion Siempre Visible ------------------>
+		<section class="label_style" id="seccion_fija">
 			<div class="cajas_style">Tipo de Moneda: 
-				<select class="mask_style" id="selc_moneda_cl" onchange = "selec_moneda_cl();">
+				<select class="mask_style" id="selc_moneda" onchange = "selec_moneda_chg();">
 					<option  value="0">Dolares</option>
 					<option  value="1">Bolivares</option>
 				</select>
@@ -94,46 +93,41 @@
 			<div class="cajas_style">
 				Precio Dolar:
 				<input readonly="" class="input_style_td" id="text_mask_gnbs" onclick="mostrar_input();" onselect="mostrar_input();">
-				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_pagos();" onclick="save_inputs_pagos();" onchange="save_inputs_pagos();" step="10" min="1" id="input_gnbs" onfocus="ocultar_input();" lang="en">
+				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_chg();" onclick="save_inputs_chg();" onchange="save_inputs_chg();" step="0.01" min="0.01" id="input_gnbs" onfocus="ocultar_input();" placeholder="Ingrese Monto">
 			</div>
 			<div class="cajas_style">Buscara Cuentas: 
 				<input class="mask_style" type="search" id="buscar_cc" placeholder="Ingrese Nombre de Cuenta" list="list_datacc">
 			</div>
+		</section>
+		<! ---------------- Seccion1 Registro de Pagos ------------------>
+
+		<section class="label_style" id="seccion1">
 			<section class="label_style" id="sect_rv"></section>
 			<section class="element_style_hidden" id="detalles_cc"></section>
 			<div class="cajas_style">Ingrese Monto:
 				<input readonly="" class="input_style_td" type="text" id="text_mask_monto_pg" onclick="mostrar_input();" onselect="mostrar_input();">
-				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_cliente();" onclick="save_inputs_cliente();" onchange="save_inputs_cliente();" step="10" min="1" id="input_monto_pg" onfocus="ocultar_input();" lang="en">
+				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_cliente();" onclick="save_inputs_cliente();" onchange="save_inputs_cliente();" step="0.01" min="0.01" id="input_monto_pg" onfocus="ocultar_input();" placeholder="Ingrese Monto">
 			</div>
-			<div class="cajas_style">Ingrese Nombre: <input class="mask_style" type="text" id="input_nombre_pg" placeholder="Ingrese Nombre de Cliente" list="listcliente"></div>
+			<div class="cajas_style">Ingrese Nombre:
+				<input class="mask_style" type="text" id="input_nombre_pg" placeholder="Ingrese Nombre de Cliente" list="listcliente">
+			</div>
 			<div class="cajas_style"><button class="mask_style" type="button" id="butt_savepg" onclick="button_reg_pago();">Registrar</button></div>
 			<section class="label_style" id="registroactual"></section>
 			<datalist id="listcliente"></datalist>
 		</section>
 		<! ------- Seccion2 Registro de Cuentas ------------- >
 		<section class="label_style" id="seccion2">
-			<div class="cajas_style">Tipo de Moneda: 
-				<select class="mask_style" id="selc_moneda_cc" onchange = "selec_moneda_rc();">
-					<option  value="0">Dolares</option>
-					<option  value="1">Bolivares</option>
-				</select>
-			</div>
-			<div class="cajas_style">
-				Precio Dolar:
-				<input readonly="" class="input_style_td" id="text_mask_gnbs_cc" onclick="mostrar_input();" onselect="mostrar_input();">
-				<input type="number" readwrite="" class="input_style_hidden" onkeyup="save_inputs_cuentas();" onclick="save_inputs_cuentas();" onchange="save_inputs_cuentas();" step="1" min="0.01" id="input_gnbs_cc" onfocus="ocultar_input();" lang="en">
-			</div>
 			<section class="label_style" id="sect_rp"></section>
 			<datalist id="list_datacc"></datalist>
 		</section>
 
-		<! ------- Seccion3 Gestion de Datos ------------- >
+		<! ------- Seccion3 Gestion de Clientes ------------- >
 
 		<section class="label_style" id="seccion4">
 
 		</section>
 
-		<! ------- Seccion4 Historial de ventas ------------- >
+		<! ------- Seccion4 Historial de Pagos ------------- >
 		<section class="label_style" id="seccion3">
 			<div class="cajas_style">Seleccione Fecha: 
 				<select class="mask_style" id="selchisfec"></select>

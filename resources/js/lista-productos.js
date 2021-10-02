@@ -132,52 +132,7 @@ function buscar_lista(text) {
 	}
 }
 
-function mostrar_input() {
-	var mask = document.activeElement;
-	mask.setAttribute("placeholder", "");
-	var id_name = mask.id;
-	var id_input = id_name.replace("text_mask", "input"); //remplaza  palabaras en cadenas de texto
 
-	var input = document.getElementById(id_input);
-	//var fila = document.getElementById("fila"+id_a);
-	//var celda = document.getElementById("celd"+id_b);
-	//var input = document.getElementById("input"+id_c);
-	//var mask = document.getElementById("text_mask"+id_d);
-
-	if(input && id_name.includes("text_mask")){
-		input.setAttribute("class","input_style_visible");
-		mask.setAttribute("disabled", "");
-		input.focus();
-		if(current_element == input)
-			current_element = null;
-
-		else
-			current_element = input;
-	}
-	return null
-}
-
-function ocultar_input()
-{
-	var current_input = document.activeElement;
-	var current_id_name = current_input.id;
-	var input_old = current_element;
-
-	el_selec(current_id_name);
-	if(input_old){
-		var id_name_old = input_old.id;
-		var id_mask_old = id_name_old.replace("input", "text_mask"); //remplaza  palabaras en cadenas de texto
-		var mask_old = document.getElementById(id_mask_old);
-		if(mask_old && id_name_old.includes("input")){
-			input_old.setAttribute("class","input_style_hidden");
-			mask_old.setAttribute("placeholder", "Ingrese Valor");
-			mask_old.disabled=false;
-			//add_message(""+id_name_old+"  "+current_id_name+"")
-			if(id_name_old != current_id_name)
-				current_element = null;
-		}
-	}
-}
 function get_celda_value_test(){
 
 	if(gl_current_selec != null){

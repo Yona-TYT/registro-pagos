@@ -336,6 +336,7 @@ function mostrar_detalles_cl(){
 				gl_cuenta.monto_pagado += monto_total;
 				var monto_tot_bs = calc_dolar_a_bs(monto_total, gen_bs);
 				var buttm = "<button type='button' class='butt_style' onclick='button_detalles_pg("+j+");'>Detalles</button>";
+				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 					var actual_bs = gl_cliente.actual_bs[j][i];
@@ -344,11 +345,12 @@ function mostrar_detalles_cl(){
 
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
-					var buttq = "<button type='button' class='butt_style' onclick='button_quit_pg("+j+","+i+");'>Quitar</button>";
-					detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttq+"</div>";
+					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
+					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+""+i+");'>Capture</button>";
+					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>";
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
-				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"</div> "+ inside+"</div>";
+				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
 			}
 		}
 		start_inputs_pagos();
@@ -362,6 +364,15 @@ function button_detalles_pg(index) {
 		secc_det.setAttribute("class", "");
 	else
 		secc_det.setAttribute("class", "element_style_hidden");
+}
+
+function check_ocultar_x(a,siz) {
+	var check = document.getElementById("check_x"+a).checked;
+	var name = check?"butt_style_x":"element_style_hidden";
+	for (var i = 0; i < siz; i++) {
+		var buttq = document.getElementById("butt_x"+a+""+i);
+		buttq.setAttribute("class", name);
+	}
 }
 
 function button_quit_pg(a,b) {
@@ -379,5 +390,8 @@ function button_quit_pg(a,b) {
 
  	agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
 	mostrar_detalles_cl();
+}
+
+function button_cap_pg(a,b){
 }
 

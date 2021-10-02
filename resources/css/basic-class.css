@@ -571,6 +571,19 @@ button {
 	overflow: hidden;
 }
 
+.butt_style_x {
+	text-align: left;
+	font-weight: bold;
+	font-size:90%;
+
+	color: #ffffff;
+	width: 30px;
+	height: var(--all-height);
+
+	background: #6e3068;
+	overflow: hidden;
+}
+
 .butt_menu_style {
 
 

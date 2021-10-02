@@ -247,6 +247,16 @@ function init(){
 
 window.addEventListener("resize", check_windows_siz);
 
+document.addEventListener('click', function() {
+
+	var input = document.activeElement;
+	var class_name = input.className;
+	if(class_name != "" && class_name != "input_style_visible"){
+		ocultar_input();
+	}
+
+}); 
+
 window.addEventListener("keypress", function() {
 
 		var key = window.event.key;

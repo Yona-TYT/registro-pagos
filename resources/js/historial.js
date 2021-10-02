@@ -163,7 +163,7 @@ function eliminar_todo(opt){
 	var butt = document.getElementById("buthist");
 	var label = document.getElementById("histlabel");
 	var check = document.getElementById("histcheck");
-
+alert("here");
 	return arrayObjToCsv();
 	if(opt==0){
 		label.setAttribute("class", "cajas_style");

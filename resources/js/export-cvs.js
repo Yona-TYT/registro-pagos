@@ -1,6 +1,5 @@
 
 function arrayObjToCsv() {
-alert("here");
 	var cuenta = crear_array_cc();
 	var cliente = crear_array_cl();
 	if(!gl_curr_cuenta) return alert("Debes Seleccionar una Cuenta!.");

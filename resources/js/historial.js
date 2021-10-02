@@ -164,7 +164,7 @@ function eliminar_todo(opt){
 	var label = document.getElementById("histlabel");
 	var check = document.getElementById("histcheck");
 
-	return arrayObjToCsv(miArrayDeObjetos);
+	return arrayObjToCsv();
 	if(opt==0){
 		label.setAttribute("class", "cajas_style");
 		check.checked = false;

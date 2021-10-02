@@ -32,6 +32,9 @@ function buscar_lista_cuenta()
 	reset_inputs_pagos();
 	var result = false;
 
+	var secc_det = document.getElementById("detalles_cc");
+	secc_det.setAttribute("class", "element_style_hidden");
+
 	//console.log("Finished: "+gl_curr_cuenta);
 	for (var j = 0; j<gl_general.cu_save_id; j++) {
 		var nombre = gl_general.cuentlist[j];
@@ -291,10 +294,13 @@ function mostrar_detalles_cc(){
 	var fecha = "<div class='div_list_style'> Fecha: "+ gl_cuenta.fecha +"</div>";
 	var hora = "<div class='div_list_style'> Hora: "+ gl_cuenta.hora +"</div>";
 
-	secc_det.innerHTML = "<div class=''>"+ monto_d + monto_b + monto_p + estado + fecha + hora +"</div>";	
+	var butt_name = "Quitar"
+	var butt = "<div class='div_list_style'>Quitar esta Cuenta: <button type='button' class='butt_style' id='butt_qcc' onclick='button_marcar_cuenta();'>"+butt_name+"</button> </div>";
+
+	secc_det.innerHTML = "<div class=''>"+ monto_d + monto_b + monto_p + estado + fecha + hora + butt +"</div>";	
 }
 function button_detalles_cc() {
-console.log("Test"+ gl_curr_cuenta)
+	//console.log("Test"+ gl_curr_cuenta)
 	var secc_det = document.getElementById("detalles_cc");
 	var class_name = secc_det.className;
 	if(class_name == "element_style_hidden")
@@ -303,6 +309,16 @@ console.log("Test"+ gl_curr_cuenta)
 		secc_det.setAttribute("class", "element_style_hidden");
 }
 
+function button_marcar_cuenta() {
+	var butt = document.getElementById("butt_qcc");
+	var name = 	butt.innerHTML;
+	if(name =="Quitar"){
+		butt.innerHTML = "Confirmar";
+	}
+	else {
+		alert("Cuenta Descartada");
+	}
+}
 
 function mostrar_detalles_cl(){
 	var secc_cc = document.getElementById("detalles_cc");
@@ -328,8 +344,8 @@ function mostrar_detalles_cl(){
 
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
-
-					detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong></div>";
+					var buttq = "<button type='button' class='butt_style' onclick='button_quit_pg("+j+","+i+");'>Quitar</button>";
+					detalles += "<div class='div_list_style'>["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttq+"</div>";
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"</div> "+ inside+"</div>";
@@ -346,5 +362,22 @@ function button_detalles_pg(index) {
 		secc_det.setAttribute("class", "");
 	else
 		secc_det.setAttribute("class", "element_style_hidden");
+}
+
+function button_quit_pg(a,b) {
+	var butt = document.activeElement;
+	butt.setAttribute("class","element_style_hidden");
+	
+	gl_cliente.monto_totl[a] -= gl_cliente.monto_dol[a][b];						//Se resta el monto total
+
+	gl_cliente.actual_bs[a].splice(b, 1);
+	gl_cliente.monto_dol[a].splice(b, 1);
+	gl_cliente.monto_bs[a].splice(b, 1);
+	gl_cliente.hora[a].splice(b, 1);
+	gl_cliente.fecha[a].splice(b, 1);
+	gl_cliente.indx_b[a]--;
+
+ 	agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
+	mostrar_detalles_cl();
 }
 

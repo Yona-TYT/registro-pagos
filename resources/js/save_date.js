@@ -196,7 +196,9 @@ function general_datos() {
 	this.fecha = null;					//Fecha actual
 	this.fechalist = new Array(); 		//Lista de fechas por di
 
+	//Gestion de las cuentas
 	this.cuentlist = new Array(); 		//Lista de cuentas
+	this.etdtlist = new Array(); 		//Marca las cuentas para ser ingnoradas
 }
 
 //Datos de la cuenta

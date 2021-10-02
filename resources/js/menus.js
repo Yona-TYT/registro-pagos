@@ -67,7 +67,7 @@ function visible_element(opt) {
 	var menu_opt = document.getElementById("menuopt"+opt);
 	title.innerHTML = menu_opt.innerHTML;
 
-	for(var j = 1; j<6;j++){
+	for(var j = 1; j<7;j++){
 		var bot_temp = document.getElementById("butopt"+j);
 		bot_temp.setAttribute("class","mask_style");
 		
@@ -78,66 +78,72 @@ function visible_element(opt) {
 		bott.setAttribute("class","butt_selec_style");
 
 
-	var table_regvent = document.getElementById("seccion1");
-	var table_regpro = document.getElementById("seccion2");
-	var historial = document.getElementById("seccion3");
-	var table_list = document.getElementById("tablproductos");
-	var table_panel = document.getElementById("seccion4");
-	var table = document.getElementById("tableprev0");
-	var import_data = document.getElementById("seccion5");
+	var menu_regpg = document.getElementById("seccion1");
+	var menu_regcc = document.getElementById("seccion2");
+	var menu_hist = document.getElementById("seccion3");
+	var menu_gest = document.getElementById("seccion4");
+	var menu_import = document.getElementById("seccion5");
+	var menu_export = document.getElementById("seccion6");
 
 
 	//Registro de Pagos
 	if(opt==1) {
 		selec_moneda_cl();	
-		table_list.setAttribute("class","element_style_hidden");
-		table_panel.setAttribute("class","element_style_hidden");
-		import_data.setAttribute("class","element_style_hidden");
-		historial.setAttribute("class","element_style_hidden");
-		table_regpro.setAttribute("class","element_style_hidden");
-		table_regvent.setAttribute("class","label_style");
+		menu_gest.setAttribute("class","element_style_hidden");
+		menu_import.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","label_style");
 
 	}
 	//Registro de Cuentas
 	if(opt==2) {
 		selec_moneda_rc();
-		table_list.setAttribute("class","element_style_hidden");
-		table_panel.setAttribute("class","element_style_hidden");
-		import_data.setAttribute("class","element_style_hidden");
-		table_regvent.setAttribute("class","element_style_hidden");
-		historial.setAttribute("class","element_style_hidden");
-		table_regpro.setAttribute("class","label_style");
+		menu_gest.setAttribute("class","element_style_hidden");
+		menu_import.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","label_style");
 	}
-	//Historial de Pagos
+	//Gestion de Datos
 	if(opt==3) {
-		table_list.setAttribute("class","element_style_hidden");
-		table_panel.setAttribute("class","element_style_hidden");
-		import_data.setAttribute("class","element_style_hidden");
-		table_regvent.setAttribute("class","element_style_hidden");
-		table_regpro.setAttribute("class","element_style_hidden");
-		historial.setAttribute("class","label_style");
+		menu_gest.setAttribute("class","label_style");
+		menu_import.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","element_style_hidden");
 
 	}
-	//Lista general de productos
+	//Historial de Pagos
 	if(opt==4) {
-		table_list.setAttribute("class","fila_style");
-		table_panel.setAttribute("class","label_style");
-		import_data.setAttribute("class","element_style_hidden");
-		table.setAttribute("class","element_style_hidden");
-		table_regvent.setAttribute("class","element_style_hidden");
-		historial.setAttribute("class","element_style_hidden");
-		table_regpro.setAttribute("class","element_style_hidden");
+		menu_gest.setAttribute("class","element_style_hidden");
+		menu_import.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","label_style");
 
 	}
 	//Importar datos
 	if(opt==5) {
-		table_list.setAttribute("class","element_style_hidden");
-		table_panel.setAttribute("class","element_style_hidden");
-		table_regvent.setAttribute("class","element_style_hidden");
-		historial.setAttribute("class","element_style_hidden");
-		table_regpro.setAttribute("class","element_style_hidden");
-		import_data.setAttribute("class","label_style");
-		table.setAttribute("class","label_style");
+		menu_gest.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","element_style_hidden");
+		menu_import.setAttribute("class","label_style");
+	}
+	//Exportar datos
+	if(opt==6) {
+		menu_gest.setAttribute("class","element_style_hidden");
+		menu_regpg.setAttribute("class","element_style_hidden");
+		menu_hist.setAttribute("class","element_style_hidden");
+		menu_regcc.setAttribute("class","element_style_hidden");
+		menu_import.setAttribute("class","element_style_hidden");
+		menu_export.setAttribute("class","label_style");
 	}
 }
 

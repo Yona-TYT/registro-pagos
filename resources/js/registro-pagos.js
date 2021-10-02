@@ -155,7 +155,10 @@ function button_reg_pago(){
 
 	var monto_a = gl_general.temp_monto_dol;
 	var monto_b = gl_general.temp_monto_bs;
-
+	if (!check_text_resv(nombre.value)){
+		nombre.value = "";
+		return null;
+	}
 	if(vl_nombre != "" && monto_a != 0 && monto_b != 0){
 		var hoy = new Date();
 		var curr_hora =  hoy.getHours() + ":" + hoy.getMinutes() + ":" + hoy.getSeconds();

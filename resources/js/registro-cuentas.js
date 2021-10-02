@@ -79,6 +79,16 @@ function guardar_cuenta(){
 
 	var gen_bs = gl_general.gen_bs;
 
+	if (!check_text_resv(nombre.value)){
+		nombre.value = "";
+		return null;
+	}
+
+	if (!check_text_resv(desc.value)){
+		desc.value = "";
+		return null;
+	}
+
 	var titulo = nombre.value + " " + desc.value;	//Titulo para la cuenta
 	var result = false;
 	for (var j = 0; j<gl_general.cu_save_id; j++) {

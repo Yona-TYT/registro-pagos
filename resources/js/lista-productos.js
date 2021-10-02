@@ -2,15 +2,7 @@ var gl_current_selec = null;
 
 
 function check_edit_mode(){
-	var input_edit = document.getElementById("edit_mode");
-	edit_mode = input_edit.checked;
-	input_edit.addEventListener("change", function(){
 
-		chlistnameinput_a();
-		reset_inputs_rv();
-		activadesactiva_editmode()
-
-	});
 }
 
 function activadesactiva_editmode(){

@@ -201,15 +201,15 @@ function init(){
 	select_list_x();
 
 	//Leer documentos tipo hojas de datos
-	importar_datos();
+	//importar_datos();
 
 	//Tabal vista previa de documentos
-	table_preview_ex()
+	//table_preview_ex()
 
 	//Solo visible la tabla de lista
  	visible_element(1);
 
-	example_preview();
+	//example_preview();
 
 
 
@@ -218,7 +218,7 @@ function init(){
 	check_edit_mode();
 
 	//Crea la tabla de lista productos
-	create_table();
+	//create_table();
 
 	//Crea la tabla de Registro de Cuentas
 	create_table_cuentas();
@@ -239,8 +239,8 @@ function init(){
 	//boton.addEventListener("focus", cambio_valor);
 
 	//Buscador para la lista de productos
-	var input_buscar = document.getElementById("buscar");
-	input_buscar.addEventListener("input", function(){buscar_lista(input_buscar.value);});
+	//var input_buscar = document.getElementById("buscar");
+	//input_buscar.addEventListener("input", function(){buscar_lista(input_buscar.value);});
 
 
 }

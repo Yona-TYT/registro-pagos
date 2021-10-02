@@ -339,7 +339,7 @@
 	width: 100%;
 	height:var(--all-height);
 
-	background-color: rgba(206, 24, 30, 0.5);
+	background-color: rgba(210, 24, 30, 0.7);
 	overflow: hidden;
 }
 .div_list_style {
@@ -519,15 +519,15 @@ tr, .fila_style:hover {
 
 }
 
-
-
-
-.butt_style:active {
+button:active {
 	border-width: var(--butt-bord);
 	border-style: solid;
 	border-color: #fafafa;
 
 	background-color: rgba(206, 24, 30, 0.5);
+}
+button:hover {
+	background-color: rgba(2, 24, 30, 0.5);
 }
 
 
@@ -547,6 +547,15 @@ tr, .fila_style:hover {
 
 }
 
+button {
+	border-radius: 5px;
+
+	border-width: var(--butt-bord);
+	border-style: solid;
+	border-color: #b3b3b3;
+
+}
+
 .butt_style {
 	text-align: center;
 	font-weight: bold;
@@ -556,15 +565,26 @@ tr, .fila_style:hover {
 	width: 90px;
 	height: var(--all-height);
 
-	border-width: var(--butt-bord);
-	border-style: solid;
-	border-color: #959595
-	border-radius: 15px;
-
 	margin:2px;
 
 	background: #6e3068;
 	overflow: hidden;
+}
+
+.butt_menu_style {
+
+
+	text-align: center;
+	font-weight: bold;
+	font-size:var(--siz-text);
+
+	color: #ffffff;
+	width: 100%;
+	height:var(--all-height);
+
+	background: rgba(55, 64, 145, 0.4);
+	overflow: hidden;
+
 }
 
 input::placeholder{

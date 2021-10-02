@@ -307,7 +307,7 @@ function create_table_cuentas(){
 					var button = document.createElement("button");
 					button.setAttribute("class", "mask_style");
 					button.setAttribute("type", "button");
-					button.innerHTML= "Registrar";
+					button.innerHTML= "Guardar";
 					button.setAttribute("onclick","guardar_cuenta();");
 					button.setAttribute("id", "buttrp"+j);
 					celda.appendChild(button);

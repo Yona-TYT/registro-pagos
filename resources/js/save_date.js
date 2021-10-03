@@ -72,7 +72,7 @@ function obtener_general(evento) {
 	if(resultado){
 		gl_general = resultado.datos_gene;
 
-		console.log("Claave gn "+gl_general.cu_save_id +" Nr: "+gl_cliente.indx_a)
+		//console.log("Claave gn "+gl_general.cu_save_id +" Nr: "+gl_cliente.indx_a)
 		//----------------------------------------------
 		var gen_bs = document.getElementById("input_gnbs");
 		var mask_bs = document.getElementById("text_mask_gnbs");

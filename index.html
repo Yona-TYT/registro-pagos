@@ -52,7 +52,6 @@
 					<button class='menu_list_style' type="button" id="menuopt3" onclick="visible_element(3);">Gestion Clientes</button>
 					<button class='menu_list_style' type="button" id="menuopt4" onclick="visible_element(4);">Historial de Pagos</button>
 					<button class='menu_list_style' type="button" id="menuopt5" onclick="visible_element(5);">Impor./Expor Datos</button>
-					<button class='menu_list_style' type="button" id="menuopt6" onclick="visible_element(6);">Exportar Datos</button>
 				</div>
 			</div>
 
@@ -76,10 +75,6 @@
 				<div class="cajas_style">
 					<button class="butt_menu_style" type="button" id="butopt5" onclick="visible_element(5);">
 					Impor./Expor Datos
-				</div>
-				<div class="cajas_style">
-					<button class="butt_menu_style" type="button" id="butopt6" onclick="visible_element(6);">
-					Exportar Datos
 				</div>
 			</div>
 		<! ---------------- Seccion Siempre Visible ------------------>
@@ -143,18 +138,29 @@
 			</label>
 		</section>
 
-		<! ---------------- Seccion5 Inportar los datos   ------------------>
+		<! ---------------- Seccion5 Inportar/Exportar los datos   ------------------>
 
 		<section class="label_style" id="seccion5">
-
-
+			<div class="label_style">Obtener Datos Desde un archivo CVS:</div>
+			<div class="cajas_style">
+				<label class="" for="archivos">Seleccione archivo: </label>
+				<input class="custom-file-input" type="file" name="archivos" id="archivos" accept=".csv">
+			</div>
+			<div class="cajas_style">Integracion de los datos: 
+				<select class="mask_style" id="selc_integr" onchange = "selec_moneda_chg();">
+					<option  value="0">Nuevo (Crear Cuenta)</option>
+					<option  value="1">Combinar (Cuenta Seleccionada)</option>
+					<option  value="3">Remplazar (Cuenta Seleccionada)</option>
+				</select>
+			</div>
+			<div class="cajas_style">Pulse para Integrar los Datos: 
+				<button class="mask_style" type="button" id="butt_integr" onclick="">Confirmar</button>
+			</div>
+			<div class="label_style">Guardar datos en un archivo CVS:</div>
+			<div class="cajas_style">Pulse para guardar el CVS: 
+				<button class="mask_style" type="button" id="butt_cvs" onclick="arrayObjToCsv();">Guardar</button>
+			</div>
 		</section>
 
-		<! ---------------- Seccion6 Exportar los datos   ------------------>
-
-		<section class="label_style" id="seccion6">
-
-
-		</section>
 	</body>
 </html>

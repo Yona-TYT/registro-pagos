@@ -25,7 +25,7 @@ function visible_element(opt) {
 	var menu_opt = document.getElementById("menuopt"+opt);
 	title.innerHTML = menu_opt.innerHTML;
 
-	for(var j = 1; j<7;j++){
+	for(var j = 1; j<6;j++){
 		var bot_temp = document.getElementById("butopt"+j);
 		bot_temp.setAttribute("class","butt_menu_style");
 		
@@ -40,15 +40,12 @@ function visible_element(opt) {
 	var menu_regcc = document.getElementById("seccion2");
 	var menu_hist = document.getElementById("seccion3");
 	var menu_gest = document.getElementById("seccion4");
-	var menu_import = document.getElementById("seccion5");
-	var menu_export = document.getElementById("seccion6");
-
+	var menu_impr_expr = document.getElementById("seccion5");
 
 	//Registro de Pagos
 	if(opt==1) {
 		menu_gest.setAttribute("class","element_style_hidden");
-		menu_import.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","element_style_hidden");
+		menu_impr_expr.setAttribute("class","element_style_hidden");
 		menu_hist.setAttribute("class","element_style_hidden");
 		menu_regcc.setAttribute("class","element_style_hidden");
 		menu_regpg.setAttribute("class","label_style");
@@ -57,8 +54,7 @@ function visible_element(opt) {
 	//Registro de Cuentas
 	if(opt==2) {
 		menu_gest.setAttribute("class","element_style_hidden");
-		menu_import.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","element_style_hidden");
+		menu_impr_expr.setAttribute("class","element_style_hidden");
 		menu_regpg.setAttribute("class","element_style_hidden");
 		menu_hist.setAttribute("class","element_style_hidden");
 		menu_regcc.setAttribute("class","label_style");
@@ -66,8 +62,7 @@ function visible_element(opt) {
 	//Gestion de Datos
 	if(opt==3) {
 		menu_gest.setAttribute("class","label_style");
-		menu_import.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","element_style_hidden");
+		menu_impr_expr.setAttribute("class","element_style_hidden");
 		menu_regpg.setAttribute("class","element_style_hidden");
 		menu_hist.setAttribute("class","element_style_hidden");
 		menu_regcc.setAttribute("class","element_style_hidden");
@@ -76,30 +71,19 @@ function visible_element(opt) {
 	//Historial de Pagos
 	if(opt==4) {
 		menu_gest.setAttribute("class","element_style_hidden");
-		menu_import.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","element_style_hidden");
+		menu_impr_expr.setAttribute("class","element_style_hidden");
 		menu_regpg.setAttribute("class","element_style_hidden");
 		menu_regcc.setAttribute("class","element_style_hidden");
 		menu_hist.setAttribute("class","label_style");
 
 	}
-	//Importar datos
+	//Importar/Exportar datos
 	if(opt==5) {
 		menu_gest.setAttribute("class","element_style_hidden");
 		menu_regpg.setAttribute("class","element_style_hidden");
 		menu_hist.setAttribute("class","element_style_hidden");
 		menu_regcc.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","element_style_hidden");
-		menu_import.setAttribute("class","label_style");
-	}
-	//Exportar datos
-	if(opt==6) {
-		menu_gest.setAttribute("class","element_style_hidden");
-		menu_regpg.setAttribute("class","element_style_hidden");
-		menu_hist.setAttribute("class","element_style_hidden");
-		menu_regcc.setAttribute("class","element_style_hidden");
-		menu_import.setAttribute("class","element_style_hidden");
-		menu_export.setAttribute("class","label_style");
+		menu_impr_expr.setAttribute("class","label_style");
 	}
 }
 

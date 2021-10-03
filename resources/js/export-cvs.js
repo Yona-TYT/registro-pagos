@@ -25,7 +25,7 @@ function arrayObjToCsv() {
 			save.href = event.target.result;
 			save.target = '_blank';
 			//aquí le damos nombre al archivo
-			save.download = "log_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() +".csv";
+			save.download = "datos-guardados_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() + "_" + d.getHours() + d.getMinutes() + d.getSeconds()+".csv";
 			try {
 				//creamos un evento click
 				clicEvent = new MouseEvent('click', {
@@ -54,8 +54,12 @@ function arrayObjToCsv() {
 
 function crear_array_cc() {
 
+	var nombre = check_text_resv(gl_cuenta.nombre)?gl_cuenta.nombre:"null";
+	var desc = check_text_resv(gl_cuenta.desc)?gl_cuenta.desc:"null";
+	
+
 	var result = 	[	"cc_inicio",
-						gl_cuenta.clave, gl_cuenta.nombre, gl_cuenta.desc, 
+						gl_cuenta.clave, nombre, desc, 
 						gl_cuenta.monto_dol, gl_cuenta.monto_bs,
 						gl_cuenta.monto_pagado, gl_cuenta.fecha,
 						gl_cuenta.hora, gl_cuenta.estado,
@@ -69,9 +73,10 @@ function crear_array_cl() {
 
 	if(gl_cliente.start){
 		for (var j = 0;j < gl_cliente.indx_a; j++) {
+			var cliente = check_text_resv(gl_cliente.cliente[j])?gl_cliente.cliente[j]:"null";
 			result.push("cl_list_inicio");
 			result.push(j);
-			result.push(gl_cliente.cliente[j]);
+			result.push(cliente);
 			result.push(gl_cliente.monto_totl[j]);
 			for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 				result.push("cl_inicio");

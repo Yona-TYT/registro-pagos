@@ -184,7 +184,7 @@ function init(){
 
 
 	//Solo visible la tabla de lista
- 	visible_element(1);
+ 	visible_element(5);
 
 
 	//--------------------------------------------

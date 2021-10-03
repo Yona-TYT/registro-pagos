@@ -242,7 +242,8 @@ function create_table_cuentas(){
 				input.setAttribute("value", name_cel[siz_c]);
 				input.setAttribute("readonly", "");
 				input.setAttribute("class","colum_name_style");
-				//celda.appendChild(input);
+				input.setAttribute("onselect", "el_unselec();");
+
 				celda.innerHTML= input.outerHTML;
 			
 				fila.appendChild(celda);
@@ -255,8 +256,6 @@ function create_table_cuentas(){
 
 				var celda = document.createElement("td");
 				celda.setAttribute("id", "celdcc"+celda_id)
-
-				
 
 				// Creamos 2 elementos de entrada
 				var input = document.createElement("input");
@@ -382,7 +381,8 @@ function create_table_pagos(){
 				input.setAttribute("value", name_cel[siz_c]);
 				input.setAttribute("readonly", "");
 				input.setAttribute("class","colum_name_style");
-				//celda.appendChild(input);
+				input.setAttribute("onselect", "el_unselec();");
+
 				celda.innerHTML= input.outerHTML;
 			
 				fila.appendChild(celda);
@@ -398,7 +398,7 @@ function create_table_pagos(){
 				input.setAttribute("type", "number");
 
 				input.setAttribute("id", "pginput"+celda_id);
-
+				input.setAttribute("onselect", "el_unselec();");
 				//Cuadros de Textos
 				if (siz_c != 3){
 					input.setAttribute("class","input_style_td");

@@ -4,9 +4,9 @@ function importar_datos() {
 	files.value = "";
 	var type_1 = "text/csv";
 	files.addEventListener("change", function(e) {
-		alert("No hay archivo seleccionado!.")
 		var file_date = e.target.files[0];
 		if(file_date){
+					alert("No hay archivo seleccionado! 2222222222.")
 			var current_type = file_date.type;
 			//console.log(current_type);
 			if(current_type == type_1){

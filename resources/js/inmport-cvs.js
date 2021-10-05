@@ -180,7 +180,7 @@ function save_exp_date(results) {
 			if(value[i]=="SHA-256"){
 				i++;
 				gl_save_cc.hash = value[i];
-				//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+				alert("Hash !. "+value[i]);
 			}
 		}
 	}

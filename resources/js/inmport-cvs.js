@@ -204,10 +204,12 @@ function butt_integrar() {
 				break;
 			}
 		}
-		if(result == -1) {
+		console.log(" Valor leido: "+result);
+		if(result == -1 || result === false) {
 
 
 			gl_save_cc.clave = gl_general.cu_save_id;
+			gl_save_cl.start = true;
 			gl_save_cl.clave = gl_general.cu_save_id;
 			agregar_cuenta(gl_save_cc, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
  			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes

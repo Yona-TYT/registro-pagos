@@ -118,7 +118,7 @@ function obtener_cuentas(evento) {
 	if(resultado){
 		gl_cuenta = resultado.rg_cuenta;
 	}
-	console.log("Claave cc "+gl_cuenta.clave +" Nr: "+gl_cliente.indx_a)
+	//console.log("Claave cc "+gl_cuenta.clave +" Nr: "+gl_cliente.indx_a)
 }
 //----------------------------------------------------------------------
 
@@ -201,6 +201,7 @@ function general_datos() {
 //Datos de la cuenta
 function reg_cuenta() {
 	this.clave = 0;						//Clave para guardar/cargar el registro
+	this.hash = null;					//Hash para identificar la cuenta
 
 	this.nombre = null;					//Nombre de propietario
 	this.desc = null;					//Texto descritivo
@@ -216,10 +217,11 @@ function reg_cuenta() {
 
 //Datos de cada cliente
 function reg_cliente() {
-	this.start = false;						//Para saber si ha sido guardada o no en el almacen
+	this.start = false;					//Para saber si ha sido guardada o no en el almacen
 	this.clave = 0;						//Clave para guardar/cargar el registro
 	this.indx_a = 0;					//index maximo para los arrays
-	this.indx_b = new Array();					//index maximo para los arrays
+	this.pagoid = new Array();
+	this.indx_b = new Array();			//index maximo para los arrays
 
 	this.cliente = new Array();			//Nombre de cada Cliente
 	this.monto_totl = new Array();		//Monoto total de cada cliente

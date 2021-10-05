@@ -2,31 +2,16 @@
 var save_expdate = new Array();
 var save_expdate_cell = new Array();
 
-var fila_selec = new Array(3);
-var col_selec = new Array(6);
-
-//Necesitan guardarse ---------------------------------------
-var doc_siz_fila = 0;
-var doc_siz_col = 0;
-var table_col = 7;
-var table_fila = 10;
-
 var save_id_filas = new Array(); 
 var save_id_colum = new Array();
 var save_celda = new Array();
 var save_id = new Array();
 //-------------------------------------------------------
 
-var edit_mode = false;
-
 var current_element = null;
 var current_key = null;
 var gloval_test = "";
 
-
-//Test lista de productos
-var gl_list = new Array();
-var gl_selc = 0;
 
 var gl_general = new general_datos();
 var start_one = true;
@@ -114,30 +99,6 @@ var gl_lista_ventas = new all_ventas();
 
 }
 
-//contador para esperar mientras los valores se cargan
-var segundos = 0;
-// var contador = setInterval(cambio_valor, 1000);
-var cont_sw = true;
-
-/*function cambio_valor(){
-	if(segundos>=3){ 
-		clearInterval(contador);
-		//alert("Total: " + segundos + " segundos");
-		segundos=0;
-	}
-	segundos++;
-
-	//update_celdas_generales(0,2);
-	//update_celdas_generales(0,4);
-
-	for (var j = 2; j < table_fila; j++) {
-		var multiplo = (j*table_col);
-		save_celda[j] = new Array();
-		//update_celda_precio_dolar(j,multiplo)
-		//update_celda_precio_bolivar(j,multiplo);		
-	}
-}*/
-
 function cursor_en_fila(id)
 {
 	var fila = document.getElementById("fila"+id);
@@ -167,7 +128,7 @@ function init(){
 
 	check_windows_siz();
 
-	//Crea la tabla de Registro de pAGOS
+	//Crea la tabla de Registro de Pagos
 	create_table_pagos();
 
 	//Crea la tabla de Registro de Cuentas
@@ -195,6 +156,7 @@ function init(){
 	// Inicializa las funciones del registro cuentas
 	cuentas_main();
 
+	importar_datos();
 	//---------------------------------------------
 
 	var boton = document.getElementById("load_start");
@@ -235,6 +197,9 @@ window.addEventListener("keypress", function() {
 		if(class_name == "input_style_visible"){
     		return soloNumeros(event);
 		}
+		else if(class_name == "mask_style" || class_name == "input_style_edicion_td"){
+    		return soloLetras(event);
+		}
 });
 window.addEventListener("keyup", function() {
 	var input = document.activeElement;
@@ -246,30 +211,30 @@ window.addEventListener("keyup", function() {
 		return soltar_tecla(event);
 		}, false);
 	}
-var key = window.event.key;
-if(key == "Enter"){
-	var id_name = input.id;
-			//add_message(id_name);
-	if(id_name.includes("input")){
-		var class_name = input.className;
-		//add_message(class_name);
-		if(class_name == "input_style_visible"){
-			ocultar_input()
+	var key = window.event.key;
+	if(key == "Enter"){
+		var id_name = input.id;
+				//add_message(id_name);
+		if(id_name.includes("input")){
+			var class_name = input.className;
+			//add_message(class_name);
+			if(class_name == "input_style_visible"){
+				ocultar_input()
+			}
+		}
+		input.blur();
+	}
+	if(key == "Tab"){
+		var id_name = input.id;
+		//id_name = id_name.replace("text_mask", "input"); //remplaza  palabaras en cadenas de texto
+		//add_message(id_name);
+		var mask = document.getElementById(id_name.replace("input", "text_mask"));
+		if(mask && id_name.includes("input")){
+			input.setAttribute("class","input_style_hidden");
+			mask.setAttribute("readwrite", "");
+			mask.focus();
 		}
 	}
-	input.blur();
-}
-if(key == "Tab"){
-	var id_name = input.id;
-	//id_name = id_name.replace("text_mask", "input"); //remplaza  palabaras en cadenas de texto
-	//add_message(id_name);
-	var mask = document.getElementById(id_name.replace("input", "text_mask"));
-	if(mask && id_name.includes("input")){
-		input.setAttribute("class","input_style_hidden");
-		mask.setAttribute("readwrite", "");
-		mask.focus();
-	}
-}
 });
 
 //Solo permite introducir números.
@@ -295,6 +260,24 @@ function soloNumeros(e){
     }
 
 }
+
+//Solo permite introducir letras.
+function soloLetras(e){
+	var input_test = document.getElementById("inputest");
+
+	var input = document.activeElement;
+	var num = input.value;
+    var key = window.event ? e.which : e.keyCode;
+	//console.log("key: "+key);
+    if ((key < 97 || key > 122) && (key < 65 || key > 90) ) {
+        //Usando la definición del DOM level 2, "return" NO funciona.
+		if(key != 241 && key != 209 && key != 32){
+        	e.preventDefault();
+		}
+    }
+
+}
+
 function soltar_tecla(e){
 	var key = window.event.key;
 	//add_message(key);
@@ -304,7 +287,7 @@ function soltar_tecla(e){
 		var input = document.activeElement;
 		var num = input.value;
 	 	if (!num.includes(".")){
-			input.value = remplace_test(num);
+			//input.value = remplace_test(num);
 			//input.value = parseFloat(input.value).toFixed(2);
 			return null;
 		}

@@ -19,11 +19,10 @@
 
 		<script src="resources/js/registro-cuentas.js"></script>
 		<script src="resources/js/registro-pagos.js"></script>
-		<script src="resources/js/lista-productos.js"></script>
 		<script src="resources/js/historial.js"></script>
 
-		<script type="text/javascript" src="https://unpkg.com/xlsx@0.14.1/dist/xlsx.full.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.1.0/papaparse.min.js"></script>
+		<script src="vendors/PapaParse-5.0.2/papaparse.min.js"></script>
 
 		<! Fin del js -->
 		<! Aquí definimos los estilo CSS para esta página -->
@@ -106,6 +105,9 @@
 			<div class="cajas_style">Ingrese Nombre:
 				<input class="mask_style" type="text" id="input_nombre_pg" placeholder="Ingrese Nombre de Cliente" list="listcliente">
 			</div>
+			<div class="cajas_style">Ingrese Descripcion:
+				<input class="mask_style" type="text" id="input_desc_pg" placeholder="Ingrese Descripcion">
+			</div>
 			<div class="cajas_style"><button class="mask_style" type="button" id="butt_savepg" onclick="button_reg_pago();">Registrar</button></div>
 			<section class="label_style" id="registroactual"></section>
 			<datalist id="listcliente"></datalist>
@@ -154,7 +156,7 @@
 				</select>
 			</div>
 			<div class="cajas_style">Pulse para Integrar los Datos: 
-				<button class="mask_style" type="button" id="butt_integr" onclick="">Confirmar</button>
+				<button class="mask_style" type="button" id="butt_integr" onclick="butt_integrar();">Confirmar</button>
 			</div>
 			<div class="label_style">Guardar datos en un archivo CVS:</div>
 			<div class="cajas_style">Pulse para guardar el CVS: 

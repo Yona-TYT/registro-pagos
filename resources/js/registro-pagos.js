@@ -110,18 +110,20 @@ function save_inputs_cliente(){
 
 
 //Array doble para registrar multiples datos por cliente
-gl_actual_bs = new Array();
-gl_monto_dol = new Array();
-gl_monto_bs = new Array();
-gl_detalles = new Array();
-gl_fecha = new Array();
-gl_hora = new Array();
+var gl_desc = new Array();
+var gl_actual_bs = new Array();
+var gl_monto_dol = new Array();
+var gl_monto_bs = new Array();
+var gl_fecha = new Array();
+var gl_hora = new Array();
 //------------------------------------------------------
 
 function button_reg_pago(){
 	if(!gl_curr_cuenta) return alert("Primero Debe Elejir una Cuenta!.");
 	var gen_bs = gl_general.gen_bs;
 	var nombre = document.getElementById("input_nombre_pg");
+	var desc = document.getElementById("input_desc_pg");
+
 	var vl_nombre = nombre.value;
 	var mask = document.getElementById("text_mask_monto_pg");
 	var monto = document.getElementById("input_monto_pg");
@@ -153,19 +155,17 @@ function button_reg_pago(){
 		var index_a = res.a;
 		var index_b = res.b;
 
-
-
+		gl_desc[index_b] = desc.value;
 		gl_actual_bs[index_b] = gen_bs;
 		gl_monto_dol[index_b] = monto_a;
 		gl_monto_bs[index_b] = monto_b;
-		gl_detalles[index_b] = "Proximamente";
 		gl_fecha[index_b] = curr_fecha;
 		gl_hora[index_b] = curr_hora;
 
+		gl_cliente.desc[index_a] = gl_desc;
 		gl_cliente.actual_bs[index_a] = gl_actual_bs;
 		gl_cliente.monto_dol[index_a] = gl_monto_dol;
 		gl_cliente.monto_bs[index_a] = gl_monto_bs;
-		gl_cliente.detalles[index_a] = gl_detalles;
 		gl_cliente.fecha[index_a] = gl_fecha;
 		gl_cliente.hora[index_a] = gl_hora;
 
@@ -173,22 +173,24 @@ function button_reg_pago(){
 		if (gl_cliente.monto_totl[index_a]) gl_cliente.monto_totl[index_a] += monto_a
 		else gl_cliente.monto_totl[index_a] = monto_a;
 
-
 		//console.log("Save Ind a "+index_a+" Monto Dol: "+monto_a+" total: "+gl_cliente.monto_totl[index_a]);
 
 		gl_cliente.start = true;									//Se marca como iniciado
 		gl_cliente.clave = gl_cuenta.clave;
  		agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
 		agregar_gene_datos(gl_general);
+		gl_cuenta.hash = null;
+ 		agregar_cuenta(gl_cuenta, gl_cuenta.clave);				//Se guardan la informacion de Cuenta
 		nombre.value = "";
+		desc.value = "";
 		mask.value = "";
 		monto.value = "";
 		mostrar_detalles_cl();
 
+		gl_desc = new Array();
 		gl_actual_bs = new Array();
 		gl_monto_dol = new Array();
 		gl_monto_bs = new Array();
-		gl_detalles = new Array();
 		gl_fecha = new Array();
 		gl_hora = new Array();
 
@@ -214,10 +216,10 @@ function cliente_check(text) {
 			gl_cliente.indx_b[index.a]++;
 			index.b = gl_cliente.indx_b[index.a];
 
+			gl_desc = gl_cliente.hora[index.a];
 			gl_actual_bs = gl_cliente.actual_bs[index.a];
 			gl_monto_dol = gl_cliente.monto_dol[index.a];
 			gl_monto_bs = gl_cliente.monto_bs[index.a];
-			gl_detalles = gl_cliente.detalles[index.a];
 			gl_fecha = gl_cliente.fecha[index.a];
 			gl_hora = gl_cliente.hora[index.a];
 
@@ -249,7 +251,6 @@ function crear_datalist_cl() {
 		data_lista.innerHTML += "<option value='"+gl_cliente.cliente[j]+"'>";
 	}
 }
-
 
 function mostrar_detalles_cc(){
 	var secc_det = document.getElementById("detalles_cc");
@@ -309,6 +310,17 @@ function mostrar_detalles_cl(){
 				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+					var desc = "";
+
+					var result = true;
+					try {
+						gl_cliente.desc[j][i];
+					}
+					catch (err) {
+						result = false;
+					}
+					if(result) desc = gl_cliente.desc[j][i];
+
 					var actual_bs = gl_cliente.actual_bs[j][i];
 					var monto_dol = gl_cliente.monto_dol[j][i];
 					var monto_bs = gl_cliente.monto_bs[j][i];
@@ -317,7 +329,7 @@ function mostrar_detalles_cl(){
 					var hora = gl_cliente.hora[j][i];
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+""+i+");'>Capture</button>";
-					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>";
+					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>";
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
@@ -359,6 +371,8 @@ function button_quit_pg(a,b) {
 	gl_cliente.indx_b[a]--;
 
  	agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
+	gl_cuenta.hash = null;
+ 	agregar_cuenta(gl_cuenta, gl_cuenta.clave);					//Se guardan la informacion de Cuenta
 	mostrar_detalles_cl();
 }
 

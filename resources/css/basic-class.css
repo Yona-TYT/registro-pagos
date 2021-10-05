@@ -581,7 +581,7 @@ button {
 	font-size:90%;
 
 	color: #ffffff;
-	width: 30px;
+	width: 28px;
 	height: var(--all-height);
 
 	background: #6e3068;
@@ -589,8 +589,6 @@ button {
 }
 
 .butt_menu_style {
-
-
 	text-align: center;
 	font-weight: bold;
 	font-size:var(--siz-text);
@@ -601,7 +599,6 @@ button {
 
 	background: rgba(55, 64, 145, 0.4);
 	overflow: hidden;
-
 }
 
 input::placeholder{

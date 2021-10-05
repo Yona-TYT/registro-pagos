@@ -34,8 +34,6 @@ function create_table(){
 		//fila.setAttribute("onmouseover", "cursor_en_fila("+j+");" );
 		//fila.setAttribute("onmouseout", "cursor_no_fila("+j+");" );
 
-		var multiplo = (j*table_col);
-		save_id_filas[j] = j+multiplo;
 		for (var i = 0; i < 3; i++) {
 
 			var celda_id = i+""+j;
@@ -52,10 +50,10 @@ function create_table(){
 				input.setAttribute("id", "input"+celda_id);
 				input.setAttribute("type", "number");
 				var tex_mask = document.createElement("input");
-				input.setAttribute(edit_mode?"readwrite":"readonly", "");
+				//input.setAttribute(edit_mode?"readwrite":"readonly", "");
 
 				tex_mask.setAttribute("readonly", "");
-				tex_mask.setAttribute("class", edit_mode?"input_style_edicion_td":"mask_style");
+				//tex_mask.setAttribute("class", edit_mode?"input_style_edicion_td":"mask_style");
 				if(i==0){
 
 					input.setAttribute("type", "text");
@@ -81,11 +79,11 @@ function create_table(){
 				// Creamos 2 elementos de entrada
 				var input = document.createElement("input");
 				input.setAttribute("type", "number");
-				input.setAttribute(edit_mode?"readwrite":"readonly", "");
+				//input.setAttribute(edit_mode?"readwrite":"readonly", "");
 
 				var tex_mask = document.createElement("input");
 				tex_mask.setAttribute("readonly", "");
-				tex_mask.setAttribute("class", edit_mode?"input_style_edicion_td":"input_text_style");
+				//tex_mask.setAttribute("class", edit_mode?"input_style_edicion_td":"input_text_style");
 
 				input.setAttribute("id", "input"+celda_id);
 
@@ -97,7 +95,7 @@ function create_table(){
 					//input.setAttribute("onwheel","get_celda_value_test();");
 					input.setAttribute("onchange","enviar_index();");
 
-					input.setAttribute("class",edit_mode?"input_style_edicion_td":"input_text_style");
+					//input.setAttribute("class",edit_mode?"input_style_edicion_td":"input_text_style");
 					input.setAttribute("type", "text");
 					celda.appendChild(input);
 					input.setAttribute("onFocus", "ocultar_input();");
@@ -121,12 +119,10 @@ function create_table(){
 					celda.appendChild(tex_mask);
 					celda.appendChild(input);
 
-					var total_id_a = j;
-					var total_id_b = multiplo;
 					//input.setAttribute("onkeyup", "enviar_index("+total_id_a+","+total_id_b+");" );
-					tex_mask.setAttribute("onClick", edit_mode?"mostrar_input();":"");
-					tex_mask.setAttribute("onSelect", edit_mode?"mostrar_input();":"");
-					input.setAttribute("onFocus", edit_mode?"ocultar_input();":"");
+					//tex_mask.setAttribute("onClick", edit_mode?"mostrar_input();":"");
+					//tex_mask.setAttribute("onSelect", edit_mode?"mostrar_input();":"");
+					//input.setAttribute("onFocus", edit_mode?"ocultar_input();":"");
 
 				}
 				//Cuadros de texto no editables
@@ -139,7 +135,7 @@ function create_table(){
 				//Borrar
 				if(j==3 ){
 					if(i==1) {
-						celda.setAttribute("class",  edit_mode?"celda_style_x":"input_style_hidden");
+						//celda.setAttribute("class",  edit_mode?"celda_style_x":"input_style_hidden");
 						var div = document.createElement("div");
 						div.setAttribute("class","input_style_edicion_td");
 						div.setAttribute("id", "listp_div");
@@ -150,7 +146,7 @@ function create_table(){
 						celda.appendChild(div);
 					}
 					if(i==2) {
-						celda.setAttribute("class",  edit_mode?"celda_style_x":"input_style_hidden");
+						//celda.setAttribute("class",  edit_mode?"celda_style_x":"input_style_hidden");
 						var button = document.createElement("button");
 						button.setAttribute("class","mask_style");
 						button.setAttribute("type", "button");
@@ -213,8 +209,6 @@ function create_table_cuentas(){
 
 		fila.setAttribute("id", "filacc"+j);
 
-		var multiplo = (j*table_col);
-		save_id_filas[j] = j+multiplo;
 		for (var i = 0; i < siz_col; i++) {
 
 			var siz_f = gl_mobil?i:j;
@@ -233,7 +227,7 @@ function create_table_cuentas(){
 				input.setAttribute("id", "inputcc"+celda_id);
 				input.setAttribute("type", "number");
 				var tex_mask = document.createElement("input");
-				input.setAttribute(edit_mode?"readwrite":"readonly", "");
+				input.setAttribute("readonly", "");
 
 				tex_mask.setAttribute("readonly", "");
 				tex_mask.setAttribute("class", "input_style_edicion_td");
@@ -352,8 +346,6 @@ function create_table_pagos(){
 
 		fila.setAttribute("id", "filarv"+j);
 
-		var multiplo = (j*table_col);
-		save_id_filas[j] = j+multiplo;
 		for (var i = 0; i < siz_col; i++) {
 
 			var siz_f = gl_mobil?i:j;
@@ -372,7 +364,7 @@ function create_table_pagos(){
 				input.setAttribute("id", "inputrv"+celda_id);
 				input.setAttribute("type", "number");
 				var tex_mask = document.createElement("input");
-				input.setAttribute(edit_mode?"readwrite":"readonly", "");
+				input.setAttribute("readonly", "");
 
 				tex_mask.setAttribute("readonly", "");
 				tex_mask.setAttribute("class", "input_style_edicion_td");

@@ -1,8 +1,7 @@
 
-var gl_save_list = new save_list_ex();
-
 function importar_datos() {
 	var files = document.getElementById("archivos");
+	files.value = "";
 	var type_1 = "text/csv";
 	files.addEventListener("change", function(e) {
 		var file_date = e.target.files[0];
@@ -17,7 +16,7 @@ function importar_datos() {
 					complete: function(results) {
 						save_exp_date(results.data);
 						//console.log("Finished:",results.data);
-						mostrar_tabla();
+						//mostrar_tabla();
 					}
 				});
 			}
@@ -42,421 +41,345 @@ function mostrar_tabla() {
     }
 }
 
+var gl_save_cc = new reg_cuenta();
+var gl_save_cl = new reg_cliente();
+
 function save_exp_date(results) {
+	//Array doble para registrar multiples datos por cliente
+	var sav_a = new Array();
+	var sav_b = new Array();
+	var sav_c = new Array();
+	var sav_d = new Array();
+	var sav_e = new Array();
+
     var data = results
-	save_expdate = new Array();
-	doc_siz_fila = data.length;
-	gl_save_list.filas = data.length;
-    for (var i = 0; i < data.length; i++) {
-
-        var row = data[i];
-        var cells = row.join(",").split(",");
-		save_expdate[i] = new Array();
-        for (var j = 0; j < cells.length; j++) {
-
-			if(cells[j].includes("ï»¿"))
-				cells[j] = cells[j].replaceAll("ï»¿", "");
-
-			if(cells[j].includes("Ã")){
-				cells[j] = cells[j].replaceAll("Ã", "Ñ");
-				cells[j] = cells[j].replaceAll("Ã³", "ó");
-				cells[j] = cells[j].replaceAll("Ã", "Ó");
-			}
-			if(cells[j].includes("ã"))
-				cells[j] = cells[j].replaceAll("ã", "ñ");
-
-			save_expdate[i][j] = cells[j];
-			
-        }
-		if(i==0)
-		doc_siz_col = cells.length;
-    }
-}
-
-
-function recovery_data() {
-	gl_result_temp = new result_list_a();
-
-
-	var select = document.getElementById("listbasedato");
-
-	var current_opt = select.options[select.selectedIndex];
-	var clave = current_opt.value;
-
-
-	gl_result_temp.listatamaño=doc_siz_fila;
-
-	var index = gl_save_list.start_filas_index;
-
-	//console.log(index);
-    for (var i = index; (save_expdate[0] && i < doc_siz_fila ); i++) {
-        for (var j = 0;( j < save_expdate[0].length); j++) {
-			if(j == gl_save_list.nombre_index){
-				gl_result_temp.nombre[i-index] = save_expdate[i][j];
-			}
-			if(j == gl_save_list.cantida_index){
-				gl_result_temp.cantidad[i-index] = save_expdate[i][j];
-			}
-			if(j == gl_save_list.precio_index){
-				gl_result_temp.precio[i-index] = save_expdate[i][j];
-			}
-			//console.log(gl_result_temp.precio[i]);
-			gl_result_temp.margen[i] = 0;		
-        }
-    }
-	remove_empy_name();			//Quita filas con nombres vacios
-	var opt = 1;
-	start_one = true;
-	agregarobjeto(gl_result_temp, parseInt(clave), opt);
- 	reset_preview();
-	gl_result_temp = new result_list_a();
-	alert("Lista Guardada Correctamente.");
-}
-
-function remove_empy_name(){
-	var siz = gl_result_temp.listatamaño;
-    for (var j = 0;j<siz ; j++) {
-		if(!gl_result_temp.nombre[j] ){
-			gl_result_temp.listatamaño--;
-		}
-		else if(gl_result_temp.nombre[j].length==0){
-			gl_result_temp.nombre.splice(j, 1);
-			gl_result_temp.cantidad.splice(j, 1);
-			gl_result_temp.margen.splice(j, 1);
-			gl_result_temp.precio.splice(j, 1);
-			gl_result_temp.listatamaño--;
-		}
-	}
-}
-
-function tableformato(results) {
-
-    var table = "<table id='tableformato'>";
-    var data = results.data;
-	var colum_name = ["Columna A","Columna B","Columna C","Columna D","Columna E","Columna F","Columna G"];
-	var name_siz = colum_name.length;
-	var fila_name = ["Fila 1", "Fila 2", "Fila 3", "Fila 4"]
-
-    for (i = 0; i < data.length-1 && i<4; i++) {
-        table += "<tr class='fila_style' id="+"fila01"+i+">";
-        var row = data[i];
-        var cells = row.join(",").split(",");
-
-		if(i ==0){
-			table += "<tr class='fila_style' id="+"exfila"+i+">";
-			table += "<td class='celda_style_name'></td>";
-		    for (j = 0; j < cells.length; j++) {	
-					if(j==name_siz)break
-		   			table += "<td class='celda_style_name' id="+"exceldacol"+i+j+"> "+colum_name[j]+"</td>"; //Nombres para el numero de columnas	
-				
-			}
-			table += "</tr>";
-		}
-
-		if(i < data.length-1)
-			table += "<td class='celda_style_name' id="+"exceldafil"+i+"> "+fila_name[i]+"</td>"; //Nombres para el numero de filas
-        for (j = 0; j < cells.length; j++) {
-			if(j==name_siz)break
-
-            table += "<td class='celda_style' id="+"celda01"+i+j+"></td>";
-        }
-        table += "</tr>";
-    }
-    table += "</table>";
-}
-
-function example_preview() {
-	var cuadro = document.getElementById("templatetable");
-    var table = "<table id='tableformato'>";
-    var data = "";
-	var colum_name = ["Nombre Producto", "Cantidad Dispon.", "Precio Entrada"];
-	var name_siz = colum_name.length;
-    for (i = 0; i<4; i++) {
-		if(i ==0){
-			table += "<tr class='fila_style' id="+"exfila2"+i+">";
-
-		    for (j = 0; j < 3; j++) {	
-		   			table += "<td class='celda_style_name' id="+"exceldacol2"+i+j+"> "+colum_name[j]+"</td>"; //Nombres para el numero de columnas		
-			}
-			table += "</tr>";
-		}
-        table += "<tr class='fila_style' id="+"fila02"+i+">";
-        for (j = 0; j <3 ; j++) {
-
-            table += "<td class='celda_style' id="+"celda01"+i+j+"><input type='text' class='input_text_style' id="+"exinput2"+i+""+j+" readonly></td>";
-        }
-        table += "</tr>";
-    }
-    table += "</table>";
-	cuadro.innerHTML += table;
-}
-
-function table_preview_ex() {
-	for (var i = 0; i<4; i++) {
-		var input_fila = document.getElementById("fila01"+i+"");
-		//input_fila.setAttribute("onmouseover", "cursor_en_fila_ex("+i+");" );
-		//input_fila.setAttribute("onmouseout", "cursor_no_fila_ex("+i+");" );
-		for (var j = 0; j<7; j++) {
-			var input_colum = document.getElementById("check0"+j+"");
-			input_colum.setAttribute("onclick", "cursor_click_input_ex("+j+");" );
-
-			var colum_name = document.getElementById("exceldacol0"+j+"");
-			colum_name.setAttribute("onmouseover", "cursor_en_colum_ex("+j+");" );
-			colum_name.setAttribute("onmouseout", "cursor_no_colum_ex("+j+");" );
-
-			var colum = document.getElementById("celda01"+i+""+j+"");
-			colum.setAttribute("onmouseover", "cursor_en_colum_ex("+j+");" );
-			colum.setAttribute("onmouseout", "cursor_no_colum_ex("+j+");" );
-			colum.setAttribute("onclick", "cursor_click_colum_ex("+j+");" );
-		}
-	}
-}
-
-function cursor_en_colum_ex(j) {
-
-	for (var i = 0; i<4; i++) {
-		var colum = document.getElementById("celda01"+i+""+j);
-		var class_name = colum.className;
-		if(class_name != "colum_click_style")
-			colum.setAttribute("class","colum_selec_style");
-	
-	}
-}
-
-function cursor_no_colum_ex(j) {
-	for (var i = 0; i<4; i++) {
-		var colum = document.getElementById("celda01"+i+""+j);
-		var class_name = colum.className;
-		if(class_name != "colum_click_style")
-			colum.setAttribute("class","celda_style");
-	}	
-}
-function cursor_click_colum_ex(j) {
-	for (var i = 0; i<4; i++) {
-		var input_colum = document.getElementById("check0"+j+"");
-		input_colum.checked = true;
-		var colum = document.getElementById("celda01"+i+""+j);
-		var class_name = colum.className;
-		if(class_name == "colum_click_style"){
-			colum.setAttribute("class","celda_style");
-			input_colum.checked = false;
-		}
-		else
-			colum.setAttribute("class","colum_click_style");
-	}
-}
-function cursor_click_input_ex(j) {
-	for (var i = 0; i<4; i++) {
-		var input_colum = document.getElementById("check0"+j+"");
-		var colum = document.getElementById("celda01"+i+""+j);
-		if(input_colum.checked){
-			colum.setAttribute("class","colum_click_style");
-		}
-		else{
-			colum.setAttribute("class","celda_style");
-		}
-	}	
-}
-
-function cursor_en_fila_ex(j) {
-
-	for (var i = 0; i<5; i++) {
-		var input_fila = document.getElementById("fila01"+i+"");
-		if(i>=j){
-			input_fila.setAttribute("class","fila_selec_style");
-		}
-		else {
-			input_fila.setAttribute("class","fila_style");
-		}	
-	}
-}
-
-function cursor_no_fila_ex(j) {
-
-	for (var i = 0; i<j; i++) {
-		var input_fila = document.getElementById("fila01"+(i)+"");
-		input_fila.setAttribute("class","fila_style");
-	}
-}
-function focus_celda_ex(id){
-	var input = document.getElementById(id);
-	input.checked = true;
-	input.focus();
-	//console.log("focus");
-}
-
-var in_use = [false, false, false, false, false, false, false, false];
-var in_selec = [false, false, false, false, false, false, false, false];
-var in_colum = [null, null, null, null, null, null, null, null];
-function button_selelc_fila(){
-
-	var sel_start = document.getElementById("startfila");
-	var st_value = sel_start.options[sel_start.selectedIndex];
-	var start = parseInt(st_value.value);
-	var opt = 0;
-	var inc = 0;
-	var radio = document.getElementsByName("fila");   
-    for(i = 0; i < radio.length; i++) { 
-        if(radio[i].checked){
-			opt = i;
-			break;
-		}
-		inc++;
-    } 
-
-	gl_save_list.start_filas_index = inc+start;
-	var select = document.getElementById("listcolum");
-
-	var col_nr = 0;
-
-
-	for (var i = 0; i<7 ; i++) {
-		if(col_nr>2) break;
-		var input_colum = document.getElementById("check0"+i+"");
-		var sel_value = select.value=="default"?col_nr:select.value;
-		if(input_colum.checked){
-
-			if(!in_use[i]){
-			if(!in_selec[sel_value]){
-
-				for (var j = 0; j<4 && save_expdate[(j+start)]; j++) {
-					var exinput= document.getElementById("exinput2"+j+""+(sel_value));
-					if(j>=opt){
-						if(exinput){
-
-							//add_message(save_celda[2][0]);
-							exinput.value= save_expdate[j+start][input_colum.value];
-							if(sel_value==0){
-								//console.log("Nombre:" +gl_save_list.nombre_index + " "+sel_value);
-								gl_save_list.nombre_index = input_colum.value;
-								//console.log("Nombre:" +save_expdate[0].length);
-							}
-
-							if(sel_value==1){
-								gl_save_list.cantida_index = input_colum.value;
-								//console.log("Cantidad:" +gl_save_list.cantida_index);
-							}
-
-							if(sel_value==2){
-								gl_save_list.precio_index = input_colum.value;
-								//console.log("Precio:" +gl_save_list.precio_index);
-							}
-		
-						}
+    var siz_a = data.length;
+	for (var j = 0; j < siz_a; j++) {
+        var value = data[j];
+        var cells = value.join(",").split(",");
+		var i_a = 0;
+        for (var i = 0; i < value.length; i++) {	//Inicio lectura de Cuenta---------------------------------------
+			//console.log("Valor leido: "+value[i]);	
+			if(value[i]=="cc_inicio"){
+				i++;
+				var nr = 0;
+				for (; value[i] != "cc_fin"; i++) {
+					//Se obtienen los datos de Cuenta
+					if(nr==0){
+						gl_save_cc.clave = value[i];
+						//console.log("Valor leido: "+value[i]);
 					}
-					else {
-						exinput.value= "";
+					else if(nr==1){
+						gl_save_cc.nombre = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==2){
+						gl_save_cc.desc = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==3){
+						gl_save_cc.monto_dol = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==4){
+						gl_save_cc.monto_bs = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==5){
+						gl_save_cc.monto_pagado = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==6){
+						gl_save_cc.fecha = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==7){
+						gl_save_cc.hora = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					else if(nr==8){
+						gl_save_cc.estado = value[i];
+						//console.log("Valor leido: "+value[i]);
+					}
+					nr++;	
+				}
+			}	//----------------------------------------------------------------------------------------------------
+			if(value[i]=="cl_list_inicio"){		//Inicio lectura cliente lista---------------------------------------
+				i++;
+				var i_b = 0;
+				var nr_a = 0;
+				gl_save_cl.pagoid[i_a] = "";
+				for (; value[i] != "cl_list_fin"; i++) {
+					//Se obtienen los datos de primer nivel del array
+					if(nr_a==0){
+						gl_save_cl.indx_a = parseInt(value[i]);
+						//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+					}
+					if(nr_a==1){
+						gl_save_cl.indx_b[i_a] = parseInt(value[i]);
+						//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+					}
+					if(nr_a==2){	
+						gl_save_cl.cliente[i_a] = value[i];
+						//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+					}
+					if(nr_a==3){
+						gl_save_cl.monto_totl[i_a] = parseFloat(value[i]);
+						//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+					}
+					if(value[i]=="cl_inicio"){	//Inicio lectura del cliente -----------
+						i++;
+						var nr = 0;
+						for (; value[i] != "cl_fin"; i++) {
+							//Se obtienen los datos de segundo nivel del array
+							if(nr == 0){
+								sav_a[i_b] = parseFloat(value[i]);
+								gl_save_cl.actual_bs[i_a] = sav_a;
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							else if(nr == 1){
+								sav_b[i_b] = parseFloat(value[i]);
+								gl_save_cl.monto_dol[i_a] = sav_b;
+								gl_save_cl.pagoid[i_a] += sav_b;
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							else if(nr == 2){
+								sav_c[i_b] = parseFloat(value[i]);
+								gl_save_cl.monto_bs[i_a] = sav_c;
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							else if(nr == 3){
+								sav_d[i_b] = value[i];
+								gl_save_cl.fecha[i_a] = sav_d;
+								gl_save_cl.pagoid[i_a] += sav_d;
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							else if(nr == 4){
+								sav_e[i_b] = value[i];
+								gl_save_cl.hora[i_a] = sav_e;
+								gl_save_cl.pagoid[i_a] += sav_e+";";
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							nr++;
+						}
+						i_b++;
+					}	//---------------------------------------------------------------
+					nr_a++;
+				}
+				i_a++;
+				sav_a = new Array();
+				sav_b = new Array();
+				sav_c = new Array();
+				sav_d = new Array();
+				sav_e = new Array();
+			}	//------------------------------------------------------------------------------------------------------
+			if(value[i]=="SHA-256"){
+				i++;
+				gl_save_cc.hash = value[i];
+				//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+			}
+		}
+	}
+	//	console.log(" Valor leido 2: "+gl_save_cl.fecha[0][0]);
+}
+
+function butt_integrar() {
+	var hash = gl_save_cc.hash;
+	if(hash){
+
+		var nombre = gl_save_cc.nombre;
+		var desc = gl_save_cc.desc;
+		var titulo = nombre + " " + desc;	//Titulo para la cuenta
+		titulo = titulo.toLowerCase();
+		var result = false;
+		for (var j = 0; j<gl_general.cu_save_id; j++) {
+			var save_tx = gl_general.cuentlist[j];
+			if (save_tx!="") save_tx = save_tx.toLowerCase();
+			else continue;
+			result = save_tx.search(new RegExp("(^)" + titulo + "($)"));
+
+			if(result != -1){
+				mostrar_inmp_cc(j);
+				//console.log(" Valor leido: "+hash);
+				break;
+			}
+		}
+		if(result == -1) {
+
+
+			gl_save_cc.clave = gl_general.cu_save_id;
+			gl_save_cl.clave = gl_general.cu_save_id;
+			agregar_cuenta(gl_save_cc, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
+ 			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+
+			gl_general.cuentlist[gl_general.cu_save_id] = titulo;				//Titulo para la cuenta
+			gl_general.etdtlist[gl_general.cu_save_id] = true;
+			gl_general.cu_save_id++;											//Se incrementa para la siguiente cuenta
+			agregar_gene_datos(gl_general);									//Se guardan los datos Generales
+
+			crear_datalist_cc();
+		}
+	}
+	else alert("Primero Seleccione un Archivo Valido!.");
+}
+
+
+//Manejo de datos para las cuentas-----------------------------------------
+function mostrar_inmp_cc(clave) {
+	var transaccion = bd.transaction(["cuenta_deposito"]);
+	var almacen = transaccion.objectStore("cuenta_deposito");
+	var solicitud = almacen.get(clave);
+	solicitud.addEventListener("success", obtener_inmp_cc);
+}
+
+function obtener_inmp_cc(evento) {
+	var resultado = evento.target.result;
+	if(resultado){
+		var cuenta = resultado.rg_cuenta;
+		if(gl_save_cc.hash != cuenta.hash){
+			gl_save_cc.clave = cuenta.clave;
+			gl_save_cc.monto_dol = cuenta.monto_dol;
+			gl_save_cc.monto_bs = cuenta.monto_bs;
+			gl_save_cc.monto_pagado = cuenta.monto_pagado;
+			gl_save_cc.fecha = cuenta.fecha;
+			gl_save_cc.hora = cuenta.hora;
+			gl_save_cc.estado = cuenta.estado;
+
+			mostrar_inmp_cl(cuenta.clave);
+		}
+		else alert("Estos datos ya estan guardados!.");
+	}
+}
+//----------------------------------------------------------------------
+
+//Manejo de datos para los Clientes-----------------------------------------
+function mostrar_inmp_cl(clave) {
+	var transaccion = bd.transaction(["cuenta_clientes"]);
+	var almacen = transaccion.objectStore("cuenta_clientes");
+	var solicitud = almacen.get(clave);
+	solicitud.addEventListener("success", obtener_inmp_cl);
+}
+
+function obtener_inmp_cl(evento) {
+	var resultado = evento.target.result;
+	if(resultado){
+		//Array doble para registrar multiples datos por cliente
+		var sav_a = new Array();
+		var sav_b = new Array();
+		var sav_c = new Array();
+		var sav_d = new Array();
+		var sav_e = new Array();
+		var cl = resultado.rg_cliente;
+
+		var list = cl.cliente;
+		var siz = list.length;
+
+		var tx_b = gl_save_cl.cliente.join(",");
+		tx_b = tx_b.replace(/$/, ",");
+		var tx_a = "";
+		for (var j = 0; j < siz; j++) {
+			var nombre = list[j];
+			if(tx_b.includes(nombre+",")){
+				for (var i = 0; i < gl_save_cl.indx_a; i++) {
+					if (nombre == gl_save_cl.cliente[i]){
+						cl.indx_b[j]++;
+						for(var nr = 0; nr < gl_save_cl.indx_b[i]+(1); nr++) {
+
+							/*sav_a = gl_save_cl.actual_bs[i][nr];
+							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
+							sav_b = gl_save_cl.monto_dol[i][nr];
+							sav_c = gl_save_cl.monto_bs[i][nr];
+							sav_d = gl_save_cl.fecha[i][nr];
+							sav_e = gl_save_cl.hora[i][nr];
+
+
+							cl.actual_bs[j][cl.indx_b[j]+nr] = sav_a;
+							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
+							cl.monto_dol[j][cl.indx_b[j]+nr] = sav_b;
+							cl.monto_bs[j][cl.indx_b[j]+nr] = sav_c;
+							cl.fecha[j][cl.indx_b[j]+nr] = sav_d;
+							cl.hora[j][cl.indx_b[j]+nr] = sav_e;
+
+							//console.log(" Valor leido: "+i+" "+nr+" "+gl_save_cl.monto_dol[i][nr]);	
+							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
+							//console.log(" Valor leido: "+i+" "+nr+" "+cl.fecha[j][cl.indx_b[j]+nr]);	*/
+
+
+							cl.actual_bs[j][cl.indx_b[j]+nr] = gl_save_cl.actual_bs[i][nr];
+							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
+							cl.monto_dol[j][cl.indx_b[j]+nr] = gl_save_cl.monto_dol[i][nr];
+							cl.monto_bs[j][cl.indx_b[j]+nr] = gl_save_cl.monto_bs[i][nr];
+							cl.fecha[j][cl.indx_b[j]+nr] = gl_save_cl.fecha[i][nr];
+							cl.hora[j][cl.indx_b[j]+nr] = gl_save_cl.hora[i][nr];
+
+							//console.log(" Valor leido: "+i+" "+nr+" "+gl_save_cl.monto_dol[i][nr]);	
+							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
+
+							cl.indx_b[j] += nr;
+							//console.log(" Valor leido: "+i+" "+nr+" "+cl.fecha[j][cl.indx_b[j]+nr]);	
+						}
+						var sav_a = new Array();
+						var sav_b = new Array();
+						var sav_c = new Array();
+						var sav_d = new Array();
+						var sav_e = new Array();						
 					}
 				}
-				in_selec[sel_value]=true;
-				in_use[input_colum.value]=true;
-				in_colum[sel_value]=i;
-		}
-				//if(col_nr == sel_value)
+				//	var tx_id = gl_save_cl.pagoid[j];
+				//console.log(" Valor leido 2: "+nombre);
+				tx_b = tx_b.replace(new RegExp("(^|[\,])" + nombre + "([\,]|$)"), "");
 
-				//col_nr++;
-				//continue;
+				//console.log(" Valor leido: "+list[j]);
+				//console.log(" Valor leido: "+tx_b);
 			}
-
-
-			col_nr++;
 		}
-		else {
 
-			if(select.value=="default"){
-				//console.log("block i:"+i+"--"+in_use[i]);
-				//console.log("block in_selec:"+sel_value+"--"+in_selec[sel_value]);
-				//console.log("block col_nr:"+col_nr+"--"+in_use[col_nr]);
-				if (in_use[i]){
-					for (var col = 0; col<3; col++) {
-						if (in_colum[col]==i){
-							for (var j = 0; j<4; j++) {
-								var exinput= document.getElementById("exinput2"+j+""+col);
-								if(exinput){
-									exinput.value= "";
+		tx_b = tx_b.replace(/^[\,]/, "");
+		tx_b = tx_b.replace(/[\,]$/, "");
 
-									if(col==0){
-										gl_save_list.nombre_index = 0;
-										//console.log("Nombre:" +save_expdate[0].length);
-									}
+		var nw_list = tx_b.split(",");
 
-									if(col==1){
-										gl_save_list.cantida_index = 0;
-										//console.log("Cantidad:" +gl_save_list.cantida_index);
-									}
+		// Se analiza en busca de nombres de clienbtes nuevos =====================================================================
+		var indx_a = siz;
+		for (var j = 0; j < nw_list.length; j++) {
+			var test_name = nw_list[j];
+		//console.log(" Valor leido: "+test_name);
+			for (var i = 0; i < gl_save_cl.indx_a; i++) {
+				if (test_name == gl_save_cl.cliente[i]){
+					cl.indx_b[indx_a] = gl_save_cl.indx_b[i];
+					cl.cliente[indx_a] = gl_save_cl.cliente[i];
+					cl.actual_bs[indx_a] = gl_save_cl.actual_bs[i];
+					cl.monto_dol[indx_a] = gl_save_cl.monto_dol[i];
+					cl.monto_bs[indx_a] = gl_save_cl.monto_bs[i];
+					cl.fecha[indx_a] = gl_save_cl.fecha[i];
+					cl.hora[indx_a] = gl_save_cl.hora[i];
 
-									if(col==2){
-										gl_save_list.precio_index = 0;
-										//console.log("Precio:" +gl_save_list.precio_index);
-									}
-								}
-							}
-							in_use[i] = false;
-							in_selec[col]=false;
-							in_colum[col]=null;
-							break;							
-						}
-					}			
-				}
-				continue
-			}
-			if(in_use[i]){
-				for (var col = 0; col<3; col++) {
-					if (in_colum[col]==i && in_selec[col]){
-						for (var j = 0; j<4; j++) {
-							var exinput= document.getElementById("exinput2"+j+""+col);
-							if(exinput){
-								exinput.value= "";
+					cl.monto_totl[indx_a] += gl_save_cl.monto_totl[i];
 
-								if(col==0){
-									gl_save_list.nombre_index = 0;
-									//console.log("Nombre:" +save_expdate[0].length);
-								}
+					cl.start = true;									//Se marca como iniciado
+					cl.indx_a++;
 
-								if(col==1){
-									gl_save_list.cantida_index = 0;
-									//console.log("Nombre:" +gl_save_list.nombre_index);
-								}
-
-								if(col==2){
-									gl_save_list.precio_index = 0;
-									//console.log("Precio:" +gl_save_list.precio_index);
-								}
-							}
-						}
-						in_use[i] = false;
-						in_selec[col]=false;
-						in_colum[col]=null;
-					}
+					//console.log(" Valor leido 2: "+test_name);
 				}
 			}
 		}
-	}	
-}
-function reset_preview(){
-	in_use = [false, false, false, false, false, false, false, false];
-	in_selec = [false, false, false, false, false, false, false, false];
-	in_colum = [null, null, null, null, null, null, null, null];
+		//==============================================================================================================================
 
-	gl_save_list.nombre_index = 0;
-	gl_save_list.cantida_index = 0;
-	gl_save_list.precio_index = 0;
-	gl_save_list.filas_index = 0;
-	gl_save_list.start_filas_index = 3;
-	for (var i = 0; i<3; i++) {
-		for (var j = 0; j<4; j++) {
-			var exinput= document.getElementById("exinput2"+j+""+i);
-			if(exinput){
-				exinput.value= "";
-			}
-		}							
+		agregar_cuenta(gl_save_cc, gl_save_cc.clave);				//Se guardan la informacion de Cuenta
+ 		agregar_cliente(cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+		//crear_datalist_cc();
 	}
 }
-function save_list_ex() {
-	this.filas_index = 0;
-	this.start_filas_index = 3;
-	this.nombre_index = 0;
-	this.cantida_index = 0;
-	this.precio_index = 0;
+//----------------------------------------------------------------------
+
+function compare_save_cl(nombre){
+	for (var i = 0; i < gl_save_cl.indx_a; i++) {
+		if (nombre == gl_save_cl.cliente[i])
+			return true;
+	}
+	return null;
 }
+
+
+
 

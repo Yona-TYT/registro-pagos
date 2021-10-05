@@ -190,7 +190,6 @@ function save_exp_date(results) {
 function butt_integrar() {
 	var hash = gl_save_cc.hash;
 	if(hash){
-
 		var nombre = gl_save_cc.nombre;
 		var desc = gl_save_cc.desc;
 		var titulo = nombre + " " + desc;	//Titulo para la cuenta
@@ -226,7 +225,7 @@ function butt_integrar() {
 			crear_datalist_cc();
 		}
 	}
-	else alert("Primero Seleccione un Archivo Valido!.");
+	else alert("Primero Seleccione un Archivo Valido!. "+hash);
 }
 
 

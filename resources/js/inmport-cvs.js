@@ -51,6 +51,7 @@ function save_exp_date(results) {
 	var sav_c = new Array();
 	var sav_d = new Array();
 	var sav_e = new Array();
+	var sav_f = new Array();
 
     var data = results
     var siz_a = data.length;
@@ -140,7 +141,6 @@ function save_exp_date(results) {
 							else if(nr == 1){
 								sav_b[i_b] = parseFloat(value[i]);
 								gl_save_cl.monto_dol[i_a] = sav_b;
-								gl_save_cl.pagoid[i_a] += sav_b;
 								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							else if(nr == 2){
@@ -157,7 +157,11 @@ function save_exp_date(results) {
 							else if(nr == 4){
 								sav_e[i_b] = value[i];
 								gl_save_cl.hora[i_a] = sav_e;
-								gl_save_cl.pagoid[i_a] += sav_e+";";
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+							}
+							else if(nr == 5){
+								sav_f[i_b] = value[i];
+								gl_save_cl.desc[i_a] = sav_f;
 								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							nr++;
@@ -287,6 +291,8 @@ function obtener_inmp_cl(evento) {
 		var sav_e = new Array();
 		var cl = resultado.rg_cliente;
 
+		cl.start = true;									//Se marca como iniciado
+
 		var list = cl.cliente;
 		var siz = list.length;
 
@@ -301,32 +307,12 @@ function obtener_inmp_cl(evento) {
 						cl.indx_b[j]++;
 						for(var nr = 0; nr < gl_save_cl.indx_b[i]+(1); nr++) {
 
-							/*sav_a = gl_save_cl.actual_bs[i][nr];
-							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
-							sav_b = gl_save_cl.monto_dol[i][nr];
-							sav_c = gl_save_cl.monto_bs[i][nr];
-							sav_d = gl_save_cl.fecha[i][nr];
-							sav_e = gl_save_cl.hora[i][nr];
-
-
-							cl.actual_bs[j][cl.indx_b[j]+nr] = sav_a;
-							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
-							cl.monto_dol[j][cl.indx_b[j]+nr] = sav_b;
-							cl.monto_bs[j][cl.indx_b[j]+nr] = sav_c;
-							cl.fecha[j][cl.indx_b[j]+nr] = sav_d;
-							cl.hora[j][cl.indx_b[j]+nr] = sav_e;
-
-							//console.log(" Valor leido: "+i+" "+nr+" "+gl_save_cl.monto_dol[i][nr]);	
-							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
-							//console.log(" Valor leido: "+i+" "+nr+" "+cl.fecha[j][cl.indx_b[j]+nr]);	*/
-
-
 							cl.actual_bs[j][cl.indx_b[j]+nr] = gl_save_cl.actual_bs[i][nr];
-							//cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
 							cl.monto_dol[j][cl.indx_b[j]+nr] = gl_save_cl.monto_dol[i][nr];
 							cl.monto_bs[j][cl.indx_b[j]+nr] = gl_save_cl.monto_bs[i][nr];
 							cl.fecha[j][cl.indx_b[j]+nr] = gl_save_cl.fecha[i][nr];
 							cl.hora[j][cl.indx_b[j]+nr] = gl_save_cl.hora[i][nr];
+							cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
 
 							//console.log(" Valor leido: "+i+" "+nr+" "+gl_save_cl.monto_dol[i][nr]);	
 							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
@@ -369,10 +355,10 @@ function obtener_inmp_cl(evento) {
 					cl.monto_bs[indx_a] = gl_save_cl.monto_bs[i];
 					cl.fecha[indx_a] = gl_save_cl.fecha[i];
 					cl.hora[indx_a] = gl_save_cl.hora[i];
+					cl.desc[indx_a] = gl_save_cl.desc[i];
 
 					cl.monto_totl[indx_a] += gl_save_cl.monto_totl[i];
 
-					cl.start = true;									//Se marca como iniciado
 					cl.indx_a++;
 
 					//console.log(" Valor leido 2: "+test_name);

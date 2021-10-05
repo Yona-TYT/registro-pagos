@@ -104,6 +104,7 @@ function crear_array_cl() {
 
 				result.push(gl_cliente.fecha[j][i]);
 				result.push(gl_cliente.hora[j][i]);
+				result.push(gl_cliente.desc[j][i]);
 				result.push("cl_fin");
 			}
 			result.push("cl_list_fin");

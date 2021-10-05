@@ -97,6 +97,16 @@ function crear_array_cl() {
 			result.push(gl_cliente.cliente[j]);
 			result.push(gl_cliente.monto_totl[j]);
 			for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+				var desc = "";
+				var er = true;
+				try {
+					gl_cliente.desc[j][i];
+				}
+				catch (err) {
+					er = false;
+				}
+				if(er) desc = gl_cliente.desc[j][i];
+
 				result.push("cl_inicio");
 				result.push(gl_cliente.actual_bs[j][i]);
 				result.push(gl_cliente.monto_dol[j][i]);
@@ -104,7 +114,7 @@ function crear_array_cl() {
 
 				result.push(gl_cliente.fecha[j][i]);
 				result.push(gl_cliente.hora[j][i]);
-				result.push(gl_cliente.desc[j][i]);
+				result.push(desc);
 				result.push("cl_fin");
 			}
 			result.push("cl_list_fin");

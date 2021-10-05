@@ -344,6 +344,18 @@
 	background: rgba(55, 64, 145, 0.4);
 	overflow: hidden;
 }
+.butt_selec_style {
+	text-align: center;
+	font-weight: bold;
+	font-size:var(--siz-text);
+
+	color: #ffffff;
+	width: 100%;
+	height:var(--all-height);
+
+	background-color: rgba(210, 24, 30, 0.7);
+	overflow: hidden;
+}
 .div_list_style {
 	text-align: left;
 	font-weight: bold;

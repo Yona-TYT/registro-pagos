@@ -162,7 +162,7 @@ function save_exp_date(results) {
 							else if(nr == 5){
 								sav_f[i_b] = value[i];
 								gl_save_cl.desc[i_a] = sav_f;
-								console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							nr++;
 						}

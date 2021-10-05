@@ -16,58 +16,7 @@ var gloval_test = "";
 var gl_general = new general_datos();
 var start_one = true;
 var is_start = true;
-function load_save_data(){
 
-	//console.log(gl_list[gl_selc].cantidad[3])
-	table_fila = gl_list[gl_selc].listatamaño;
-
-	//Comprueba y activa/desactiva el modo editor
-	check_edit_mode();
-
-	//Crea la tabla de lista productos
-	create_table();
-
-	//Crea la tabla de Registro de productos
-	create_table_rp();
-
-	//crea la lista de productos
-	crear_lista_productos();
-
-
-	var r_margen = gl_general.genmargen;
-	var r_precio = gl_general.genprecio;
-
-	var precio = document.getElementById("input02");
-	var margen = document.getElementById("input04");
-	var precio_mask = document.getElementById("text_mask02");
-	var margen_mask = document.getElementById("text_mask04");
-
-	margen.value = r_margen;
-	margen_mask.value = get_mask_simple(r_margen,"%");
-	precio.value = r_precio;
-	precio_mask.value = get_mask(r_precio,"BsF");
-
-	var rv_dolar = document.getElementById("dolar_rv");
-	rv_dolar.value = get_mask(r_precio,"BsF");
-
-	if(is_start){
-		menu_main();
-		is_start=false;
-	}
-	//cambio_valor();
-
-	//console.log(gl_list[gl_selc].precio[4]);
-	start_one = false;
-
-	
-	buscar_lista_rv("buscar_rv");
-	
-}
-
-function add_message(text)
-{
-	alert(text);
-}
 
 function notSupported(){ alert("El navegador no lo soporta."); }
 
@@ -144,8 +93,8 @@ function init(){
 	menu_main();
 
 
-	//Solo visible la tabla de lista
- 	visible_element(5);
+	//Panel de inicio
+ 	visible_element(1);
 
 
 	//--------------------------------------------

@@ -46,7 +46,7 @@ function start_save(hash, cuenta, cliente) {
 		save.href = event.target.result;
 		save.target = '_blank';
 		//aquí le damos nombre al archivo
-		save.download = "respaldo-"+cuenta[2]+ "_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() + "_" + d.getHours() + d.getMinutes() + d.getSeconds()+".csv";
+		save.download = cuenta[2] + "-respaldo" + "_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() + "_" + d.getHours() + d.getMinutes() + d.getSeconds()+".csv";
 		try {
 			//creamos un evento click
 			clicEvent = new MouseEvent('click', {

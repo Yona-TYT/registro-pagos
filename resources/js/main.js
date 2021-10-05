@@ -149,6 +149,8 @@ window.addEventListener("keypress", function() {
 		else if(class_name == "mask_style" || class_name == "input_style_edicion_td"){
     		return soloLetras(event);
 		}
+		else if(class_name == "input_desc_style")
+			  return soloAlfnNumer(event);
 });
 window.addEventListener("keyup", function() {
 	var input = document.activeElement;
@@ -219,6 +221,23 @@ function soloLetras(e){
     var key = window.event ? e.which : e.keyCode;
 	//console.log("key: "+key);
     if ((key < 97 || key > 122) && (key < 65 || key > 90) ) {
+        //Usando la definición del DOM level 2, "return" NO funciona.
+		if(key != 241 && key != 209 && key != 32){
+        	e.preventDefault();
+		}
+    }
+
+}
+
+//Solo permite introducir letras y numeros.
+function soloAlfnNumer(e){
+	var input_test = document.getElementById("inputest");
+
+	var input = document.activeElement;
+	var num = input.value;
+    var key = window.event ? e.which : e.keyCode;
+	//console.log("key: "+key);
+    if ((key < 97 || key > 122) && (key < 65 || key > 90) && (key < 48 || key > 57) ) {
         //Usando la definición del DOM level 2, "return" NO funciona.
 		if(key != 241 && key != 209 && key != 32){
         	e.preventDefault();

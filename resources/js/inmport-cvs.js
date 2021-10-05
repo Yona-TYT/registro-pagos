@@ -24,22 +24,6 @@ function importar_datos() {
 	});
 }
 
-function mostrar_tabla() {
-	var select = document.getElementById("startfila");
-	var st_value = select.options[select.selectedIndex];
-	var start = parseInt(st_value.value);
-	//console.log("Ddd"+start);
-	for (i = 0; i < 4; i++) {
-        for (j = 0; j <7 && save_expdate[i+start]; j++) {
-			var celda = document.getElementById("celda01"+i+j);
-			var save = save_expdate[i+start][j];
-			if(save){
-				celda.innerHTML = save;
-			}
-			else celda.innerHTML = "";
-		}
-    }
-}
 
 var gl_save_cc = new reg_cuenta();
 var gl_save_cl = new reg_cliente();
@@ -55,9 +39,10 @@ function save_exp_date(results) {
 
     var data = results
     var siz_a = data.length;
+				alert("Hash !. "+siz_a);
 	for (var j = 0; j < siz_a; j++) {
         var value = data[j];
-        var cells = value.join(",").split(",");
+      	value.join(",").split(",");
 		var i_a = 0;
         for (var i = 0; i < value.length; i++) {	//Inicio lectura de Cuenta---------------------------------------
 			//console.log("Valor leido: "+value[i]);	
@@ -180,7 +165,6 @@ function save_exp_date(results) {
 			if(value[i]=="SHA-256"){
 				i++;
 				gl_save_cc.hash = value[i];
-				alert("Hash !. "+value[i]);
 			}
 		}
 	}

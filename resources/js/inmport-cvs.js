@@ -162,7 +162,7 @@ function save_exp_date(results) {
 							else if(nr == 5){
 								sav_f[i_b] = value[i];
 								gl_save_cl.desc[i_a] = sav_f;
-								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
+								console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							nr++;
 						}
@@ -189,6 +189,8 @@ function save_exp_date(results) {
 
 function butt_integrar() {
 	var hash = gl_save_cc.hash;
+	console.log(" Valor leido hash: "+hash);
+	//alert("Primero Seleccione un Archivo Valido!. "+hash);
 	if(hash){
 		var nombre = gl_save_cc.nombre;
 		var desc = gl_save_cc.desc;
@@ -207,7 +209,6 @@ function butt_integrar() {
 				break;
 			}
 		}
-		console.log(" Valor leido: "+result);
 		if(result == -1 || result === false) {
 
 

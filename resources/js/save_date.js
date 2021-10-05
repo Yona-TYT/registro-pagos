@@ -32,6 +32,10 @@ function crearbd(evento) {
 	var alma_clientes = basededatos.createObjectStore("cuenta_clientes", {keyPath:"id", autoIncrement: true});
 	alma_clientes.createIndex("buscarnombre", "nombre", {unique: true});
 
+	//Guarda los Captures de cada pago
+	var alma_capture = basededatos.createObjectStore("capture_clientes", {keyPath:"id", autoIncrement: true});
+	alma_capture.createIndex("buscarnombre", "nombre", {unique: true});
+
 }
 
 //Guarda los datos generales
@@ -53,6 +57,13 @@ function agregar_cliente(datos,clave) {
 	var transaccion = bd.transaction(["cuenta_clientes"], "readwrite");
 	var almacen = transaccion.objectStore("cuenta_clientes");
 	var solicitud = almacen.put({id: clave, rg_cliente: datos});
+}
+
+//Guarda los Captures de los pagos
+function agregar_capture(datos,clave) {
+	var transaccion = bd.transaction(["capture_clientes"], "readwrite");
+	var almacen = transaccion.objectStore("capture_clientes");
+	var solicitud = almacen.put({id: clave, rg_capture: datos});
 }
 
 
@@ -138,6 +149,22 @@ function obtener_clientes(evento) {
 	}
 	mostrar_detalles_cl();
 	crear_datalist_cl();
+}
+//----------------------------------------------------------------------
+
+//Manejo de datos para los Clientes-----------------------------------------
+function mostrar_captures(clave) {
+	var transaccion = bd.transaction(["capture_clientes"]);
+	var almacen = transaccion.objectStore("capture_clientes");
+	var solicitud = almacen.get(clave);
+	solicitud.addEventListener("success", obtener_captures);
+}
+
+function obtener_captures(evento) {
+	var resultado = evento.target.result;
+	if(resultado){
+		resultado.rg_capture;
+	}
 }
 //----------------------------------------------------------------------
 

@@ -328,8 +328,10 @@ function mostrar_detalles_cl(){
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
-					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+""+i+");'>Capture</button>";
-					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>";
+					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+","+i+");'>Capture</button>";
+					var inp_file = "<input type='file' class='custom-file-input' onchange='mostrar_capture(event);' accept='.jpg'>Capture</input>";
+					var cap_div = "<div class='element_style_hidden' id='divcapt"+j+""+i+"'>"+inp_file+"</div>";
+					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
@@ -377,5 +379,22 @@ function button_quit_pg(a,b) {
 }
 
 function button_cap_pg(a,b){
+	var secc_capt = document.getElementById("divcapt"+a+""+b);
+	var class_name = secc_capt.className;
+	if(class_name == "element_style_hidden")
+		secc_capt.setAttribute("class", "");
+	else
+		secc_capt.setAttribute("class", "element_style_hidden");
+}
+
+function mostrar_capture(e){
+	var file_date = e.target.files[0];
+	var type_1 = "image/jpeg";
+	if(file_date){
+		var current_type = file_date.type;
+		console.log(current_type);
+		if(current_type == type_1){
+		}
+	}
 }
 

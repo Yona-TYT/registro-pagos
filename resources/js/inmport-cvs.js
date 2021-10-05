@@ -21,6 +21,7 @@ function importar_datos() {
 				});
 			}
 		}
+		else alert("No hay archivo seleccionado!.")
 	});
 }
 

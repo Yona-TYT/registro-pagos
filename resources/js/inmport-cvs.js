@@ -44,7 +44,6 @@ function save_exp_date(results) {
 
     var data = results
     var siz_a = data.length;
-				alert("Hash !. "+siz_a);
 	for (var j = 0; j < siz_a; j++) {
         var value = data[j];
       	value.join(",").split(",");
@@ -178,7 +177,7 @@ function save_exp_date(results) {
 
 function butt_integrar() {
 	var hash = gl_save_cc.hash;
-	console.log(" Valor leido hash: "+hash);
+	//console.log(" Valor leido hash: "+hash);
 	//alert("Primero Seleccione un Archivo Valido!. "+hash);
 	if(hash){
 		var nombre = gl_save_cc.nombre;

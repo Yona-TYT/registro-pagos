@@ -236,18 +236,32 @@ function obtener_inmp_cc(evento) {
 	var resultado = evento.target.result;
 	if(resultado){
 		var cuenta = resultado.rg_cuenta;
-		if(gl_save_cc.hash != cuenta.hash){
-			gl_save_cc.clave = cuenta.clave;
-			gl_save_cc.monto_dol = cuenta.monto_dol;
-			gl_save_cc.monto_bs = cuenta.monto_bs;
-			gl_save_cc.monto_pagado = cuenta.monto_pagado;
-			gl_save_cc.fecha = cuenta.fecha;
-			gl_save_cc.hora = cuenta.hora;
-			gl_save_cc.estado = cuenta.estado;
 
-			mostrar_inmp_cl(cuenta.clave);
+		gl_save_cc.clave = cuenta.clave;
+		gl_save_cc.monto_dol = cuenta.monto_dol;
+		gl_save_cc.monto_bs = cuenta.monto_bs;
+		gl_save_cc.monto_pagado = cuenta.monto_pagado;
+		gl_save_cc.fecha = cuenta.fecha;
+		gl_save_cc.hora = cuenta.hora;
+		gl_save_cc.estado = cuenta.estado;
+
+		var selec_intg = document.getElementById("selc_integr");
+		var opt = selec_intg.options[selec_intg.selectedIndex].value;
+
+		if(opt == 0){
+			if(gl_save_cc.hash != cuenta.hash) {
+				mostrar_inmp_cl(cuenta.clave);
+			}
+			else alert("Estos datos ya estan guardados!.");
 		}
-		else alert("Estos datos ya estan guardados!.");
+		else if(opt == 1){
+				gl_save_cl.start = true;
+		console.log(" Valor leido:  "+gl_save_cl.start);	
+			agregar_cuenta(gl_save_cc, gl_save_cc.clave);					//Se guardan la informacion de Cuenta
+			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+		}
+		
+
 	}
 }
 //----------------------------------------------------------------------
@@ -367,7 +381,7 @@ function obtener_inmp_cl(evento) {
 
 		agregar_cuenta(gl_save_cc, gl_save_cc.clave);				//Se guardan la informacion de Cuenta
  		agregar_cliente(cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
-		//crear_datalist_cc();
+		crear_datalist_cc();
 	}
 }
 //----------------------------------------------------------------------

@@ -16,6 +16,10 @@ function pagos_main(){
 
 function buscar_lista_cuenta()
 {
+	//Limpia los captures
+	gl_captures = new Array();
+	gl_capt_id = new Array();
+
 	var text = document.getElementById("buscar_cc").value;
 	reset_inputs_pagos();
 	var result = false;
@@ -329,8 +333,8 @@ function mostrar_detalles_cl(){
 					var hora = gl_cliente.hora[j][i];
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+","+i+");'>Capture</button>";
-					var inp_file = "<input type='file' class='custom-file-input' onchange='mostrar_capture(event);' accept='.jpg'>Capture</input>";
-					var cap_div = "<div class='element_style_hidden' id='divcapt"+j+""+i+"'>"+inp_file+"</div>";
+					var inp_file = "<input type='file' class='custom-file-input' name='"+j+""+i+"' onchange='mostrar_capture(event);' accept='.jpg'/>";
+					var cap_div = "<div class='element_style_hidden' id='divcapt"+j+""+i+"'><img></img>"+inp_file+"</div>";
 					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
@@ -381,19 +385,45 @@ function button_quit_pg(a,b) {
 function button_cap_pg(a,b){
 	var secc_capt = document.getElementById("divcapt"+a+""+b);
 	var class_name = secc_capt.className;
-	if(class_name == "element_style_hidden")
+	if(class_name == "element_style_hidden"){
 		secc_capt.setAttribute("class", "");
+		mostrar_captures(a+""+b)
+	}
 	else
 		secc_capt.setAttribute("class", "element_style_hidden");
 }
 
 function mostrar_capture(e){
-	var file_date = e.target.files[0];
+	var elm = e.target;
+	var file_date = elm.files[0];
+	var index = elm.name;
 	var type_1 = "image/jpeg";
 	if(file_date){
 		var current_type = file_date.type;
-		console.log(current_type);
+		//console.log(current_type);
 		if(current_type == type_1){
+
+			//var img = document.createElement("img");
+			//img.classList.add("obj");
+			//img.file_date = file_date;
+			//preview.appendChild(img);
+			var reader = new FileReader();
+			reader.onload = function (e) {
+
+				var div = document.getElementById('divcapt'+index);
+				var img = div.getElementsByTagName("img")[0];
+
+				var filePreview = document.createElement('img');
+				//console.log(index);
+				img.src = e.target.result;
+
+				agregar_capture(e.target.result,index);
+
+			}
+			reader.readAsDataURL(elm.files[0]);
+
+        
+
 		}
 	}
 }

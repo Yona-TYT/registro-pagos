@@ -642,6 +642,11 @@ input[type=file]::file-selector-button {
 	transition: 1s;
 }
 
+img {
+	width: 100%;
+	height: auto;
+}
+
 
 
 

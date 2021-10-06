@@ -1,3 +1,10 @@
+var gl_captures = new Array();
+var gl_capt_id = new Array();
+
+function export_main() {
+	var check = document.getElementById("captcheck");
+	check.checked = false;
+}
 
 function arrayObjToCsv() {
 
@@ -67,6 +74,10 @@ function start_save(hash, cuenta, cliente) {
 	//leemos como url
 	reader.readAsDataURL(blob);
 
+	//Desmarca el checkbox
+	var check = document.getElementById("captcheck");
+	check.checked = false;
+
 }
 
 
@@ -128,8 +139,52 @@ function crear_array_cl() {
 	return result;
 }
 
+function crear_array_capt(e) {
+	var check = e.target.checked;
+	//console.log(""+check+"");
+	if(gl_curr_cuenta &&  gl_cliente.start){
+		if(check){
+			gl_captures.push("ct_inicio");
+			for (var j = 0;j < gl_cliente.indx_a; j++) {
+
+				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+					var clave = ""+j+""+i;
+					//console.log(""+check+"");
+					mostrar_capt_exp(clave);
+				}
+			}
+		}
+		else {
+			gl_captures = new Array();
+			gl_capt_id = new Array();
+		}	
+	}
+}
+
+//Manejo de Captures de pago -----------------------------------------
+function mostrar_capt_exp(clave) {
+	var transaccion = bd.transaction(["capture_clientes"]);
+	var almacen = transaccion.objectStore("capture_clientes");
+	var solicitud = almacen.get(clave);
+	solicitud.addEventListener("success", obtener_capt_exp);
+}
+
+function obtener_capt_exp(evento) {
+	var resultado = evento.target.result;
+	if(resultado){
+		var index =	resultado.id;
+		var capt = resultado.rg_capture;
+		gl_captures.push(capt);
+		gl_capt_id.push(index);
+
+		console.log(""+index+"");
+	
+	}
+}
+//----------------------------------------------------------------------
+
 function check_text_resv(text) {
-	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null"];
+	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null" , "ct_inicio"];
 	for (var j = 0; j < palabras_resv.length; j++) {
 		//console.log(text);
 		if( text == palabras_resv[j]){

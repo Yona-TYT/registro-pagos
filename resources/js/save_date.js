@@ -1,7 +1,7 @@
 var bd;
 function set_basededatos(name)
 {
-	var solicitud = indexedDB.open(name, 1);
+	var solicitud = indexedDB.open(name, 2);
 	solicitud.addEventListener("error", mostrarerror);
 	solicitud.addEventListener("success", comenzar);
 	solicitud.addEventListener("upgradeneeded", crearbd);
@@ -152,7 +152,7 @@ function obtener_clientes(evento) {
 }
 //----------------------------------------------------------------------
 
-//Manejo de datos para los Clientes-----------------------------------------
+//Manejo de Captures de pago -----------------------------------------
 function mostrar_captures(clave) {
 	var transaccion = bd.transaction(["capture_clientes"]);
 	var almacen = transaccion.objectStore("capture_clientes");
@@ -163,7 +163,14 @@ function mostrar_captures(clave) {
 function obtener_captures(evento) {
 	var resultado = evento.target.result;
 	if(resultado){
-		resultado.rg_capture;
+		var index =	resultado.id;
+		var capt = resultado.rg_capture;
+
+		var div = document.getElementById('divcapt'+index);
+		var img = div.getElementsByTagName("img")[0];
+
+		//console.log(index);
+		img.src = capt;
 	}
 }
 //----------------------------------------------------------------------

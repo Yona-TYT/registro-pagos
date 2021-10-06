@@ -88,17 +88,6 @@ function visible_element(opt) {
 }
 
 
-function select_list_x(){
-
-	set_basededatos("registro_agenda");
-
-	var select = document.getElementById("selectlistaname");
-	//select.setAttribute("onchange","test_select_base('selectlistaname');");
-
-	var input = document.getElementById("inputlistaname");
-	
-}
-
 function selec_moneda_chg(){
 	var selec_moneda = document.getElementById("selc_moneda");
 	var opt = selec_moneda.options[selec_moneda.selectedIndex];

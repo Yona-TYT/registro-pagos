@@ -83,8 +83,8 @@ function init(){
 	//Crea la tabla de Registro de Cuentas
 	create_table_cuentas();
 
-	//Para cambiar entre listas
-	select_list_x();
+	//Iniciar Base de datos
+	set_basededatos("registroagenda");
 
 	//Leer documentos tipo hojas de datos
 	//importar_datos();
@@ -105,7 +105,9 @@ function init(){
 	// Inicializa las funciones del registro cuentas
 	cuentas_main();
 
-	importar_datos();
+	export_main();
+
+	importar_main();
 	//---------------------------------------------
 
 	var boton = document.getElementById("load_start");

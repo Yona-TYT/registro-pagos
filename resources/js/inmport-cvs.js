@@ -1,5 +1,5 @@
 
-function importar_datos() {
+function importar_main() {
 	var files = document.getElementById("archivos");
 	files.value = "";
 	var type_1 = "text/csv";
@@ -10,7 +10,7 @@ function importar_datos() {
 
 			var current_type = file_date.type;
 
-					//alert("No hay archivo seleccionado! 2222222222." + current_type +" "+type_1)
+			//alert("No hay archivo seleccionado! 2222222222." + current_type +" "+type_1)
 			//console.log(current_type);
 			if(current_type == type_1 || current_type == type_2){
 				Papa.parse(file_date,{

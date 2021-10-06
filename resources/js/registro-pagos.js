@@ -27,6 +27,9 @@ function buscar_lista_cuenta()
 	var secc_det = document.getElementById("detalles_cc");
 	secc_det.setAttribute("class", "element_style_hidden");
 
+	var check = document.getElementById("captcheck");
+	check.checked = false;
+
 	//console.log("Finished: "+gl_curr_cuenta);
 	for (var j = 0; j<gl_general.cu_save_id; j++) {
 		var nombre = gl_general.cuentlist[j];

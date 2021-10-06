@@ -240,7 +240,7 @@ function obtener_capt_exp(evento) {
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
 		gl_captures.push(capt);
-		gl_capt_id.push(index);
+		gl_capt_id.push(gl_cuenta.clave +""+index);
 		console.log(""+index+"");
 	
 	}

@@ -18,9 +18,15 @@ function importar_main() {
 						delimiter: "auto"
 					},
 					complete: function(results) {
-						save_exp_date(results.data);
-						//console.log("Finished:",results.data);
-						//mostrar_tabla();
+						var selec_intg = document.getElementById("selc_integr");
+						var opt = selec_intg.options[selec_intg.selectedIndex].value;
+						if(opt == 3) {
+							save_exp_capt(results.data);
+						}
+						else {
+							save_exp_date(results.data);
+							//console.log("Finished:",results.data);
+						}
 					}
 				});
 			}
@@ -29,6 +35,32 @@ function importar_main() {
 	});
 }
 
+var gl_save_idlist = new Array();
+function save_exp_capt(results) {
+    var data = results
+    var siz_a = data.length;
+	var siz_id = gl_save_idlist.length;
+
+
+	//console.log("Valor ok");
+	if(siz_id>0){
+		for (var j = 0; j < siz_a; j++) {
+		    var value = data[j];
+			value = value.join("&").split("&");
+			var siz_val = value.length;
+			var nr = 0;
+			for (var i = 0; i < siz_val; i++) {	//Inicio lectura las imagenes---------------------------------------
+				if(value[i] == "data:image/jpeg;base64" && nr<siz_id){
+					console.log(""+i+" Valor leido: "+value[i]+","+gl_save_idlist[nr]);
+					agregar_capture((value[i]+","+value[i+1]),gl_save_idlist[nr])
+					nr++;
+				}
+
+			}			
+		}
+	}
+	else alert("Primero debe cargar un archivo de respaldo!.");
+}
 
 var gl_save_cc = new reg_cuenta();
 var gl_save_cl = new reg_cliente();
@@ -41,16 +73,22 @@ function save_exp_date(results) {
 	var sav_d = new Array();
 	var sav_e = new Array();
 	var sav_f = new Array();
-
     var data = results
     var siz_a = data.length;
 	for (var j = 0; j < siz_a; j++) {
         var value = data[j];
       	value.join("|").split("|");
 		var siz_val = value.length;
+		//console.log("Valor leido: ? "+ siz_val);	
 		var i_a = 0;
         for (var i = 0; i < siz_val; i++) {	//Inicio lectura de Cuenta---------------------------------------
-			//console.log("Valor leido: "+value[i]);	
+			//console.log("Valor leido: "+value[i]);
+			if( j == 0 && i == 0){
+				if (value[i] != "cc_inicio"){
+					return alert("Archivo de respaldo Errado!.")
+					break;
+				}
+			}
 			if(value[i]=="cc_inicio"){
 				i++;
 				var nr = 0;
@@ -170,17 +208,15 @@ function save_exp_date(results) {
 			if(value[i]=="SHA-256"){
 				i++;
 				gl_save_cc.hash = value[i];
+				//console.log(" Valor leido: "+value[i]);
 			}
 			if(value[i]=="ct_inicio"){
 				i++;
-				for (; i < siz_val; i++) {
-					if (value[i] == "img_inicio"){
-						i++;
-						var clave = value[i];
-						i++;
-						var capt = value[i];
-						agregar_capture(capt,clave);
-					}
+				var nr = 0;
+				for (; value[i]!="ct_fin"; i++) {
+					gl_save_idlist[nr] = value[i];
+					//console.log(""+nr+" Valor leido: "+value[i]);
+					nr++;
 				}
 			}
 		}
@@ -189,45 +225,58 @@ function save_exp_date(results) {
 }
 
 function butt_integrar() {
-	var hash = gl_save_cc.hash;
-	//console.log(" Valor leido hash: "+hash);
-	//alert("Primero Seleccione un Archivo Valido!. "+hash);
-	if(hash){
-		var nombre = gl_save_cc.nombre;
-		var desc = gl_save_cc.desc;
-		var titulo = nombre + " " + desc;	//Titulo para la cuenta
-		titulo = titulo.toLowerCase();
-		var result = false;
-		for (var j = 0; j<gl_general.cu_save_id; j++) {
-			var save_tx = gl_general.cuentlist[j];
-			if (save_tx!="") save_tx = save_tx.toLowerCase();
-			else continue;
-			result = save_tx.search(new RegExp("(^)" + titulo + "($)"));
 
-			if(result != -1){
-				mostrar_inmp_cc(j);
-				//console.log(" Valor leido: "+hash);
-				break;
+	var selec_intg = document.getElementById("selc_integr");
+	var opt = selec_intg.options[selec_intg.selectedIndex].value;
+	if(opt == 3) {
+		//alert("Voy aqui"+gl_save_idlist.length);
+		var siz = gl_save_idlist.length;
+		if(siz > 0){
+		}
+		else alert("Debes cargar un respaldo primero, captures: "+ siz);
+	}
+	else {
+		var hash = gl_save_cc.hash;
+		//console.log(" Valor leido hash: "+hash);
+		//alert("Primero Seleccione un Archivo Valido!. "+hash);
+		
+		if(hash){
+			var nombre = gl_save_cc.nombre;
+			var desc = gl_save_cc.desc;
+			var titulo = nombre + " " + desc;	//Titulo para la cuenta
+			titulo = titulo.toLowerCase();
+			var result = false;
+			for (var j = 0; j<gl_general.cu_save_id; j++) {
+				var save_tx = gl_general.cuentlist[j];
+				if (save_tx!="") save_tx = save_tx.toLowerCase();
+				else continue;
+				result = save_tx.search(new RegExp("(^)" + titulo + "($)"));
+
+				if(result != -1){
+					mostrar_inmp_cc(j);
+					//console.log(" Valor leido: "+hash);
+					break;
+				}
+			}
+			if(result == -1 || result === false) {
+
+
+				gl_save_cc.clave = gl_general.cu_save_id;
+				gl_save_cl.start = true;
+				gl_save_cl.clave = gl_general.cu_save_id;
+				agregar_cuenta(gl_save_cc, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
+	 			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+
+				gl_general.cuentlist[gl_general.cu_save_id] = titulo;				//Titulo para la cuenta
+				gl_general.etdtlist[gl_general.cu_save_id] = true;
+				gl_general.cu_save_id++;											//Se incrementa para la siguiente cuenta
+				agregar_gene_datos(gl_general);									//Se guardan los datos Generales
+
+				crear_datalist_cc();
 			}
 		}
-		if(result == -1 || result === false) {
-
-
-			gl_save_cc.clave = gl_general.cu_save_id;
-			gl_save_cl.start = true;
-			gl_save_cl.clave = gl_general.cu_save_id;
-			agregar_cuenta(gl_save_cc, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
- 			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
-
-			gl_general.cuentlist[gl_general.cu_save_id] = titulo;				//Titulo para la cuenta
-			gl_general.etdtlist[gl_general.cu_save_id] = true;
-			gl_general.cu_save_id++;											//Se incrementa para la siguiente cuenta
-			agregar_gene_datos(gl_general);									//Se guardan los datos Generales
-
-			crear_datalist_cc();
-		}
+		else alert("Primero Seleccione un Archivo Valido!. "+hash);
 	}
-	else alert("Primero Seleccione un Archivo Valido!. "+hash);
 }
 
 

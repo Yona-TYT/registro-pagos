@@ -6,7 +6,65 @@ function export_main() {
 	check.checked = false;
 }
 
-function arrayObjToCsv() {
+
+function butt_guardar_datos() {
+	var check = document.getElementById("captcheck").checked;
+
+	if(check)
+		capt_datos_csv();
+
+	else
+		cuent_datos_csv();
+}
+
+function capt_datos_csv() {
+	var contenido = "",
+		d = new Date(),
+		blob,
+		reader,
+		save,
+		clicEvent;
+	//creamos contenido del archivo
+	contenido += gl_captures.join("&") ;		//Se agregan las claves de captures
+	
+	//creamos el blob
+	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
+	//creamos el reader
+	var reader = new FileReader();
+	reader.onload = function (event) {
+		//escuchamos su evento load y creamos un enlace en dom
+		save = document.createElement('a');
+		save.href = event.target.result;
+		save.target = '_blank';
+		//aquí le damos nombre al archivo
+		save.download = "captures" + "_"+ d.getDate() + "_" + (d.getMonth()+1) + "_" + d.getFullYear() + "_" + d.getHours() + d.getMinutes() + d.getSeconds()+".csv";
+		try {
+			//creamos un evento click
+			clicEvent = new MouseEvent('click', {
+				'view': window,
+				'bubbles': true,
+				'cancelable': true
+			});
+		} catch (e) {
+			//si llega aquí es que probablemente implemente la forma antigua de crear un enlace
+			clicEvent = document.createEvent("MouseEvent");
+			clicEvent.initEvent('click', true, true);
+		}
+		//disparamos el evento
+		save.dispatchEvent(clicEvent);
+		//liberamos el objeto window.URL
+		(window.URL || window.webkitURL).revokeObjectURL(save.href);
+	}
+	//leemos como url
+	reader.readAsDataURL(blob);
+
+	//Desmarca el checkbox
+	var check = document.getElementById("captcheck");
+	check.checked = false;
+
+}
+
+function cuent_datos_csv() {
 
 	var cuenta = crear_array_cc();
 	var cliente = crear_array_cl();
@@ -40,10 +98,11 @@ function start_save(hash, cuenta, cliente) {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
+	gl_capt_id.push("ct_fin");
 	contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
 	contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
-	contenido += "|SHA-256|"+hash+"|";					//Se agrega un hash para los datos
-	contenido += gl_captures.join("|") + "\n";		//Se agregan los captures
+	contenido += "|SHA-256|"+hash+"|";				//Se agrega un hash para los datos
+	contenido += gl_capt_id.join("|") + "\n";		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -81,7 +140,6 @@ function start_save(hash, cuenta, cliente) {
 	check.checked = false;
 
 }
-
 
 function crear_array_cc() {
 
@@ -147,21 +205,25 @@ function crear_array_capt(e) {
 	//console.log(""+check+"");
 	if(gl_curr_cuenta &&  gl_cliente.start){
 		if(check){
-			gl_captures = new Array();
-			gl_capt_id = new Array();
-
-			gl_captures.push("ct_inicio");
-			for (var j = 0;j < gl_cliente.indx_a; j++) {
-
-				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
-					var clave = ""+j+""+i;
-					//console.log(""+check+"");
-					mostrar_capt_exp(clave);
-				}
-			}
-			//gl_captures.push("ct_fin");
+			start_array_capt();
 		}
 	}
+}
+
+function start_array_capt() {
+	gl_captures = new Array();
+	gl_capt_id = new Array();
+
+	gl_capt_id.push("ct_inicio");
+	for (var j = 0;j < gl_cliente.indx_a; j++) {
+
+		for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+			var clave = ""+j+""+i;
+			//console.log(""+check+"");
+			mostrar_capt_exp(clave);
+		}
+	}
+	//gl_captures.push("ct_fin");
 }
 
 //Manejo de Captures de pago -----------------------------------------
@@ -177,9 +239,8 @@ function obtener_capt_exp(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
-		gl_captures.push("img_inicio");
-		gl_captures.push(index);
 		gl_captures.push(capt);
+		gl_capt_id.push(index);
 		console.log(""+index+"");
 	
 	}
@@ -187,7 +248,7 @@ function obtener_capt_exp(evento) {
 //----------------------------------------------------------------------
 
 function check_text_resv(text) {
-	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null" , "ct_inicio" , "img_inicio"];
+	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null" , "ct_inicio" , "ct_fin"];
 	for (var j = 0; j < palabras_resv.length; j++) {
 		//console.log(text);
 		if( text == palabras_resv[j]){

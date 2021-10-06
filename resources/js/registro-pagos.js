@@ -45,6 +45,7 @@ function buscar_lista_cuenta()
 			break;
 		}
 	}
+	start_array_capt();
 }
 
 function reset_inputs_pagos() {

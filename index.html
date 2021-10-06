@@ -152,6 +152,7 @@
 				<select class="mask_style" id="selc_integr" onchange = "">
 					<option  value="0">Combinar Datos</option>
 					<option  value="1">Remplazar Datos</option>
+					<option  value="3">Leer Captures</option>
 				</select>
 			</div>
 			<div class="cajas_style">Pulse para Integrar los Datos: 
@@ -159,7 +160,7 @@
 			</div>
 			<div class="label_style">Guardar datos en un archivo CVS:</div>
 			<div class="cajas_style">Pulse para guardar el CVS: 
-				<button class="mask_style" type="button" id="butt_cvs" onclick="arrayObjToCsv();">Guardar</button>
+				<button class="mask_style" type="button" id="butt_cvs" onclick="butt_guardar_datos();">Guardar</button>
 			</div>
 			<label class="mask_style" id="histlabel">
 				Marque para guardar Captures: <input  type="checkbox" id="captcheck" onclick = "crear_array_capt(event);">

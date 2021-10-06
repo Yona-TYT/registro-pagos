@@ -46,9 +46,10 @@ function save_exp_date(results) {
     var siz_a = data.length;
 	for (var j = 0; j < siz_a; j++) {
         var value = data[j];
-      	value.join(",").split(",");
+      	value.join("|").split("|");
+		var siz_val = value.length;
 		var i_a = 0;
-        for (var i = 0; i < value.length; i++) {	//Inicio lectura de Cuenta---------------------------------------
+        for (var i = 0; i < siz_val; i++) {	//Inicio lectura de Cuenta---------------------------------------
 			//console.log("Valor leido: "+value[i]);	
 			if(value[i]=="cc_inicio"){
 				i++;
@@ -170,6 +171,18 @@ function save_exp_date(results) {
 				i++;
 				gl_save_cc.hash = value[i];
 			}
+			if(value[i]=="ct_inicio"){
+				i++;
+				for (; i < siz_val; i++) {
+					if (value[i] == "img_inicio"){
+						i++;
+						var clave = value[i];
+						i++;
+						var capt = value[i];
+						agregar_capture(capt,clave);
+					}
+				}
+			}
 		}
 	}
 	//	console.log(" Valor leido 2: "+gl_save_cl.fecha[0][0]);
@@ -249,8 +262,8 @@ function obtener_inmp_cc(evento) {
 			else alert("Estos datos ya estan guardados!.");
 		}
 		else if(opt == 1){
-				gl_save_cl.start = true;
-		console.log(" Valor leido:  "+gl_save_cl.start);	
+			if (gl_save_cl.indx_a > 0) gl_save_cl.start = true;
+		//console.log(" Valor leido:  "+gl_save_cl.start);	
 			agregar_cuenta(gl_save_cc, gl_save_cc.clave);					//Se guardan la informacion de Cuenta
 			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
 		}
@@ -279,7 +292,7 @@ function obtener_inmp_cl(evento) {
 		var sav_e = new Array();
 		var cl = resultado.rg_cliente;
 
-		cl.start = true;									//Se marca como iniciado
+		if (gl_save_cl.indx_a > 0) gl_save_cl.start = true;
 
 		var list = cl.cliente;
 		var siz = list.length;

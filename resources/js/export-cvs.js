@@ -14,8 +14,9 @@ function arrayObjToCsv() {
 	//comprobamos compatibilidad
 	if(window.Blob && (window.URL || window.webkitURL)){
 		var contenido = "";
-		contenido += cuenta.join(",") + "\n";			//Se agregan datos de cuenta
-		contenido += cliente.join(",") + "\n";			//Se agregan datos de cliente
+		contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
+		contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
+
 		//Esto genera los hast
 		(async function() {
 			const hash = await sha256(contenido);
@@ -39,9 +40,10 @@ function start_save(hash, cuenta, cliente) {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-	contenido += cuenta.join(",") + "\n";			//Se agregan datos de cuenta
-	contenido += cliente.join(",") + "\n";			//Se agregan datos de cliente
-	contenido += ",SHA-256,"+hash;			//Se agrega un hash para los datos
+	contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
+	contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
+	contenido += "|SHA-256|"+hash+"|";					//Se agrega un hash para los datos
+	contenido += gl_captures.join("|") + "\n";		//Se agregan los captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -133,7 +135,8 @@ function crear_array_cl() {
 	}
 	else {
 		result.push("cl_list_inicio");
-		result.push("null");
+		result.push("cl_inicio");
+		result.push("cl_fin");
 		result.push("cl_list_fin");
 	}
 	return result;
@@ -144,6 +147,9 @@ function crear_array_capt(e) {
 	//console.log(""+check+"");
 	if(gl_curr_cuenta &&  gl_cliente.start){
 		if(check){
+			gl_captures = new Array();
+			gl_capt_id = new Array();
+
 			gl_captures.push("ct_inicio");
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
 
@@ -153,11 +159,8 @@ function crear_array_capt(e) {
 					mostrar_capt_exp(clave);
 				}
 			}
+			//gl_captures.push("ct_fin");
 		}
-		else {
-			gl_captures = new Array();
-			gl_capt_id = new Array();
-		}	
 	}
 }
 
@@ -174,9 +177,9 @@ function obtener_capt_exp(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
+		gl_captures.push("img_inicio");
+		gl_captures.push(index);
 		gl_captures.push(capt);
-		gl_capt_id.push(index);
-
 		console.log(""+index+"");
 	
 	}
@@ -184,7 +187,7 @@ function obtener_capt_exp(evento) {
 //----------------------------------------------------------------------
 
 function check_text_resv(text) {
-	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null" , "ct_inicio"];
+	var palabras_resv = ["cc_inicio", "cc_fin", "cl_list_inicio", "cl_list_fin", "cl_inicio", "cl_fin", "SHA-256", "null" , "ct_inicio" , "img_inicio"];
 	for (var j = 0; j < palabras_resv.length; j++) {
 		//console.log(text);
 		if( text == palabras_resv[j]){

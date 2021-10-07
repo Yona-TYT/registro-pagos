@@ -322,7 +322,7 @@ function mostrar_detalles_cl(){
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 
-					gl_capt_id.push(/*gl_cuenta.clave +*/""+j+""+i);			//Guarda la clave para los captures
+					gl_capt_id.push(/*gl_cuenta.clave +*/j+""+i);			//Guarda la clave para los captures
 					var desc = "";
 
 					var result = true;

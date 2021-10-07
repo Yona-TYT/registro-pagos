@@ -207,6 +207,7 @@ function crear_array_capt(e) {
 	//console.log(""+check+"");
 	if(gl_curr_cuenta &&  gl_cliente.start){
 		if(check){
+			alert("Test "+gl_capt_id.length);
 			start_array_capt();
 		}
 	}

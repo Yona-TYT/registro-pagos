@@ -222,7 +222,7 @@ function start_array_capt() {
 
 		//console.log(" "+gl_capt_id[j]);
 		var clave = gl_capt_id[j];
-		mostrar_capt_exp(clave);
+		mostrar_capt_exp(""+clave+"");
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);

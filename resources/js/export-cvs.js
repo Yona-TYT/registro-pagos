@@ -218,17 +218,17 @@ function start_array_capt() {
 	gl_new_id = new Array();
 
 	
-//	for (var j = 0;j < gl_capt_id.length; j++) {
+	for (var j = 0;j < gl_capt_id.length; j++) {
 
 		//console.log(" "+gl_capt_id[j]);
-		//var clave = gl_capt_id[j];
-		//mostrar_capt_exp(clave);
+		var clave = gl_capt_id[j];
+		mostrar_capt_exp(clave);
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
 			//mostrar_capt_exp(clave);
 		//}
-	//}
+	}
 	//gl_captures.push("ct_fin");
 }
 
@@ -246,7 +246,7 @@ function obtener_capt_exp(evento) {
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
 		gl_captures.push(capt);
-		gl_new_id.push(index);
+		//gl_new_id.push(index);
 		//console.log(""+index+"");
 	
 	}

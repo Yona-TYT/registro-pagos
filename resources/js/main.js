@@ -14,6 +14,8 @@ var gloval_test = "";
 
 
 var gl_general = new general_datos();
+
+var gl_genactu = new general_datos();
 var start_one = true;
 var is_start = true;
 
@@ -21,8 +23,39 @@ var is_start = true;
 function notSupported(){ alert("El navegador no lo soporta."); }
 
 
-function click_test(){
+function butt_actu_test(){
 
+	gl_genactu.clave = gl_general.clave;						//Clave para guardar/cargar el registro
+	gl_genactu.cu_save_id = gl_general.cu_save_id;				//Clave clave mayor para el registro cuentas
+	gl_genactu.cl_save_id = gl_general.cl_save_id;				//Clave clave mayor para el registro clientes
+
+	//Gurda valores de los inputs
+	gl_genactu.gen_bs = gl_general.gen_bs;
+
+	//Guarda estado temporal de valores de cuenta
+	gl_genactu.temp_monto_dol_cc = gl_general.temp_monto_dol_cc;
+	gl_genactu.temp_monto_bs_cc = gl_general.temp_monto_bs_cc;
+
+	//Guarda estado temporal de valores del cliente
+	gl_genactu.temp_selec = gl_general.temp_selec;
+	gl_genactu.temp_nombre = gl_general.temp_nombre;
+	gl_genactu.temp_monto_dol = gl_general.temp_monto_dol;
+	gl_genactu.temp_monto_bs = gl_general.temp_monto_bs;
+	gl_genactu.temp_monto_pagado = gl_general.temp_monto_pagado;
+
+	//Guarda el estado del selector
+	gl_genactu.sel_moneda = gl_general.sel_moneda;
+
+	//Se registran las fechas
+	gl_genactu.index = gl_general.index;						//Index actual (Va incrementando por operacion, regresa a 0 por dia)
+	gl_genactu.fecha = gl_general.fecha;					//Fecha actual
+	gl_genactu.fechalist = gl_general.fechalist; 		//Lista de fechas por di
+
+	//Gestion de las cuentas
+	gl_genactu.cuentlist = gl_general.cuentlist; 		//Lista de cuentas
+	gl_genactu.etdtlist = gl_general.etdtlist; 		//Marca las cuentas para ser ingnoradas
+
+	agregar_gene_datos(gl_genactu);
 	//var result = new result_list();
 	//agregarobjeto(result);
 
@@ -43,8 +76,7 @@ function click_test(){
 	//gloval_test ="";
 
 	//get_celda_value(table_fila,table_col);
-var gl_lista_ventas = new all_ventas();
-		agregarventas(gl_lista_ventas);
+
 
 }
 
@@ -94,7 +126,7 @@ function init(){
 
 
 	//Panel de inicio
- 	visible_element(1);
+ 	visible_element(5);
 
 
 	//--------------------------------------------

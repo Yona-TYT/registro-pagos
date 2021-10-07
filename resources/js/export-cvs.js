@@ -27,7 +27,7 @@ function capt_datos_csv() {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-	contenido += gl_captures.join("&") ;		//Se agregan las claves de captures
+	contenido += gl_general.captid.join("&") ;		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -208,7 +208,7 @@ function crear_array_capt(e) {
 	if(gl_curr_cuenta &&  gl_cliente.start){
 		if(check){
 			//alert("Test "+gl_capt_id.length);
-			start_array_capt();
+			//start_array_capt();
 		}
 	}
 }
@@ -222,7 +222,7 @@ function start_array_capt() {
 
 		//console.log(" "+gl_capt_id[j]);
 		var clave = gl_capt_id[j];
-		mostrar_capt_exp(clave);
+		//mostrar_capt_exp(clave);
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);

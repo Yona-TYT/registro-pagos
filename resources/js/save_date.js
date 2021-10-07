@@ -165,7 +165,8 @@ function obtener_captures(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
-
+		gl_general.captid.push(capt);
+		alert("Add");
 		var div = document.getElementById('divcapt'+index);
 		var img = div.getElementsByTagName("img")[0];
 
@@ -230,6 +231,10 @@ function general_datos() {
 	//Gestion de las cuentas
 	this.cuentlist = new Array(); 		//Lista de cuentas
 	this.etdtlist = new Array(); 		//Marca las cuentas para ser ingnoradas
+
+	//Gestion de los captures
+	this.captid = new Array();			//Guarda ids de los captures
+	this.etdcapt = new Array();			//Guarda ids de los captures
 }
 
 //Datos de la cuenta

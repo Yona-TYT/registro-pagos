@@ -321,18 +321,16 @@ function mostrar_detalles_cl(){
 				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+					var desc = gl_cliente.desc[j][i];
 
-					gl_capt_id.push(/*gl_cuenta.clave +*/j+""+i);			//Guarda la clave para los captures
-					var desc = "";
-
-					var result = true;
+				/*	var result = true;
 					try {
-						gl_cliente.desc[j][i];
+						
 					}
 					catch (err) {
 						result = false;
 					}
-					if(result) desc = gl_cliente.desc[j][i];
+					if(result) desc = gl_cliente.desc[j][i];*/
 
 					var actual_bs = gl_cliente.actual_bs[j][i];
 					var monto_dol = gl_cliente.monto_dol[j][i];
@@ -342,7 +340,7 @@ function mostrar_detalles_cl(){
 					var hora = gl_cliente.hora[j][i];
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+","+i+");'>Capture</button>";
-					var inp_file = "<input type='file' class='custom-file-input' name='"+j+""+i+"' onchange='mostrar_capture(event);' accept='.jpg'/>";
+					var inp_file = "<input type='file' class='custom-file-input' name='"+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg'/>";
 					var cap_div = "<div class='element_style_hidden' id='divcapt"+j+""+i+"'><img></img>"+inp_file+"</div>";
 					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
@@ -403,7 +401,7 @@ function button_cap_pg(a,b){
 		secc_capt.setAttribute("class", "element_style_hidden");
 }
 
-function mostrar_capture(e){
+function cargar_capture(e){
 	var elm = e.target;
 	var file_date = elm.files[0];
 	var index = elm.name;

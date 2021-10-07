@@ -1,6 +1,8 @@
 var gl_captures = new Array();
 var gl_capt_id = new Array();
 
+var gl_new_id = new Array();			//Se construye un nuevo array con ids
+
 function export_main() {
 	var check = document.getElementById("captcheck");
 	check.checked = false;
@@ -9,7 +11,7 @@ function export_main() {
 
 function butt_guardar_datos() {
 	var check = document.getElementById("captcheck").checked;
-
+	start_array_capt();
 	if(check)
 		capt_datos_csv();
 
@@ -98,11 +100,11 @@ function start_save(hash, cuenta, cliente) {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-	gl_capt_id.push("ct_fin");
+	gl_new_id.push("ct_fin");
 	contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
 	contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
 	contenido += "|SHA-256|"+hash+"|";				//Se agrega un hash para los datos
-	contenido += gl_capt_id.join("|") + "\n";		//Se agregan las claves de captures
+	contenido += gl_new_id.join("|") + "\n";		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -212,16 +214,19 @@ function crear_array_capt(e) {
 
 function start_array_capt() {
 	gl_captures = new Array();
-	gl_capt_id = new Array();
+	gl_new_id = new Array();
 
-	gl_capt_id.push("ct_inicio");
-	for (var j = 0;j < gl_cliente.indx_a; j++) {
+	gl_new_id.push("ct_inicio");
+	for (var j = 0;j < gl_capt_id.length; j++) {
 
-		for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
-			var clave = ""+j+""+i;
-			//console.log(""+check+"");
-			mostrar_capt_exp(clave);
-		}
+		//console.log(" "+gl_capt_id[j]);
+		var clave = gl_capt_id[j];
+		mostrar_capt_exp(clave);
+		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+			//var clave = ""+j+""+i;
+			//console.log(""+clave+" "+gl_cliente.indx_a);
+			//mostrar_capt_exp(clave);
+		//}
 	}
 	//gl_captures.push("ct_fin");
 }
@@ -240,8 +245,8 @@ function obtener_capt_exp(evento) {
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
 		gl_captures.push(capt);
-		gl_capt_id.push(gl_cuenta.clave +""+index);
-		console.log(""+index+"");
+		gl_new_id.push(index);
+		//console.log(""+index+"");
 	
 	}
 }

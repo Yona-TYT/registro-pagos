@@ -45,7 +45,6 @@ function buscar_lista_cuenta()
 			break;
 		}
 	}
-	start_array_capt();
 }
 
 function reset_inputs_pagos() {
@@ -307,9 +306,12 @@ function mostrar_detalles_cl(){
 	//console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
 	gl_cuenta.monto_pagado = 0;
 	var gen_bs = gl_general.gen_bs;
+
+	gl_capt_id = new Array();				//Limpia la lista de claves para los captures
 	if(gl_curr_cuenta){
 		if(gl_cliente.start){
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
+				//console.log("Registro de pagos: "+gl_cliente.indx_a);
 				var cliente = gl_cliente.cliente[j];
 				var monto_total = gl_cliente.monto_totl[j];
 				gl_cuenta.monto_pagado += monto_total;
@@ -318,6 +320,8 @@ function mostrar_detalles_cl(){
 				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+
+					gl_capt_id.push(/*gl_cuenta.clave +*/""+j+""+i);			//Guarda la clave para los captures
 					var desc = "";
 
 					var result = true;

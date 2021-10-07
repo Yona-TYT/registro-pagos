@@ -308,6 +308,7 @@ function mostrar_detalles_cl(){
 	var gen_bs = gl_general.gen_bs;
 
 	gl_capt_id = new Array();				//Limpia la lista de claves para los captures
+	gl_capt_id.push("ct_inicio");
 	if(gl_curr_cuenta){
 		if(gl_cliente.start){
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
@@ -352,6 +353,7 @@ function mostrar_detalles_cl(){
 		start_inputs_pagos();
 		mostrar_detalles_cc();
 	}
+	gl_capt_id.push("ct_fin");
 }
 function button_detalles_pg(index) {
 	var secc_det = document.getElementById("div_pag"+index);

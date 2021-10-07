@@ -250,6 +250,7 @@ function obtener_capt_exp(evento) {
 		//console.log(""+index+"");
 	
 	}
+	else alert("Noppppp");
 }
 //----------------------------------------------------------------------
 

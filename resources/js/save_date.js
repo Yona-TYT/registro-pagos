@@ -165,8 +165,8 @@ function obtener_captures(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
-		gl_general.captid.push(capt);
-		alert("Add");
+		//gl_general.captid.push(capt);
+		//alert("Add");
 		var div = document.getElementById('divcapt'+index);
 		var img = div.getElementsByTagName("img")[0];
 

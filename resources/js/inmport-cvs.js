@@ -52,7 +52,7 @@ function save_exp_capt(results) {
 			for (var i = 0; i < siz_val; i++) {	//Inicio lectura las imagenes---------------------------------------
 				if(value[i] == "data:image/jpeg;base64" && nr<siz_id){
 					console.log(""+i+" Valor leido: "+value[i]+","+gl_save_idlist[nr]);
-					agregar_capture((value[i]+","+value[i+1]),gl_save_idlist[nr])
+					agregar_capture((value[i]+","+value[i+1]),gl_save_cc.clave +""+ gl_save_idlist[nr])
 					nr++;
 				}
 

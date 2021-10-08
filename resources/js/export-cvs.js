@@ -11,12 +11,15 @@ function export_main() {
 
 function butt_guardar_datos() {
 	var check = document.getElementById("captcheck").checked;
-	start_array_capt();
+	if(gl_data_count == 1) start_array_capt();
+	if(gl_data_count < gl_capt_id.length) return alert("Cargando los datos, vuelva a pulsar")
 	if(check)
 		capt_datos_csv();
 
 	else
 		cuent_datos_csv();
+
+	gl_data_count = 1;
 }
 
 function capt_datos_csv() {
@@ -27,7 +30,7 @@ function capt_datos_csv() {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-	contenido += gl_general.captid.join("&") ;		//Se agregan las claves de captures
+	contenido += gl_captures.join("&") ;		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -101,10 +104,12 @@ function start_save(hash, cuenta, cliente) {
 		clicEvent;
 	//creamos contenido del archivo
 
+	gl_new_id.push("ct_fin");
+
 	contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
 	contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
 	contenido += "|SHA-256|"+hash+"|";				//Se agrega un hash para los datos
-	contenido += gl_capt_id.join("|") + "\n";		//Se agregan las claves de captures
+	contenido += gl_new_id.join("|") + "\n";		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -202,27 +207,21 @@ function crear_array_cl() {
 	return result;
 }
 
-function crear_array_capt(e) {
-	var check = e.target.checked;
-	//console.log(""+check+"");
-	if(gl_curr_cuenta &&  gl_cliente.start){
-		if(check){
-			//alert("Test "+gl_capt_id.length);
-			//start_array_capt();
-		}
-	}
-}
 
+
+var gl_data_count = 1;
 function start_array_capt() {
 	gl_captures = new Array();
 	gl_new_id = new Array();
 
+	gl_new_id.push("ct_inicio");
 	
+	gl_data_count = 1; //Se inicia el contador de lecturas
 	for (var j = 0;j < gl_capt_id.length; j++) {
 
 		//console.log(" "+gl_capt_id[j]);
-		var clave = gl_capt_id[j];
-		//mostrar_capt_exp(clave);
+		//var clave = gl_capt_id[j];
+		mostrar_capt_exp(gl_capt_id[j]);
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
@@ -230,6 +229,19 @@ function start_array_capt() {
 		//}
 	}
 	//gl_captures.push("ct_fin");
+}
+
+//contador para esperar mientras los valores se cargan
+var segundos = 0;
+var contador = setInterval(cambio_valor, 1000);
+var cont_sw = true;
+function cambio_valor(){
+	if(segundos>5){ 
+		clearInterval(contador);
+		//alert("Total: " + segundos + " segundos");
+		segundos=0;
+	}
+	segundos++;
 }
 
 //Manejo de Captures de pago -----------------------------------------
@@ -244,13 +256,14 @@ function obtener_capt_exp(evento) {
 	var resultado = evento.target.result;
 	if(resultado){
 		var index =	resultado.id;
-		var capt = resultado.rg_capture;
-		gl_captures.push(capt);
-		//gl_new_id.push(index);
-		//console.log(""+index+"");
+		//var capt = resultado.rg_capture;
+		//gl_captures.push(capt);
+		gl_new_id.push(index);
+		console.log(""+index+"");
+		
 	
 	}
-	else alert("Noppppp");
+	gl_data_count++;
 }
 //----------------------------------------------------------------------
 

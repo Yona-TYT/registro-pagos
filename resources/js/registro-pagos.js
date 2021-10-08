@@ -30,6 +30,8 @@ function buscar_lista_cuenta()
 	var check = document.getElementById("captcheck");
 	check.checked = false;
 
+	gl_data_count = 1;
+
 	//console.log("Finished: "+gl_curr_cuenta);
 	for (var j = 0; j<gl_general.cu_save_id; j++) {
 		var nombre = gl_general.cuentlist[j];
@@ -308,7 +310,6 @@ function mostrar_detalles_cl(){
 	var gen_bs = gl_general.gen_bs;
 
 	gl_capt_id = new Array();				//Limpia la lista de claves para los captures
-	gl_capt_id.push("ct_inicio");
 	if(gl_curr_cuenta){
 		if(gl_cliente.start){
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
@@ -322,7 +323,7 @@ function mostrar_detalles_cl(){
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 					var desc = gl_cliente.desc[j][i];
-
+					gl_capt_id.push(gl_cuenta.clave+""+j+""+i);
 				/*	var result = true;
 					try {
 						
@@ -339,9 +340,10 @@ function mostrar_detalles_cl(){
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
-					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+j+","+i+");'>Capture</button>";
-					var inp_file = "<input type='file' class='custom-file-input' name='"+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg'/>";
-					var cap_div = "<div class='element_style_hidden' id='divcapt"+j+""+i+"'><img></img>"+inp_file+"</div>";
+
+					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+gl_cuenta.clave+","+j+","+i+");'>Capture</button>";
+					var inp_file = "<input type='file' class='custom-file-input' name='"+gl_cuenta.clave+""+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg'/>";
+					var cap_div = "<div class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</div>";
 					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
@@ -351,7 +353,6 @@ function mostrar_detalles_cl(){
 		start_inputs_pagos();
 		mostrar_detalles_cc();
 	}
-	gl_capt_id.push("ct_fin");
 }
 function button_detalles_pg(index) {
 	var secc_det = document.getElementById("div_pag"+index);
@@ -390,12 +391,14 @@ function button_quit_pg(a,b) {
 	mostrar_detalles_cl();
 }
 
-function button_cap_pg(a,b){
-	var secc_capt = document.getElementById("divcapt"+a+""+b);
+function button_cap_pg(a,b,c){
+
+	//	console.log("Test: ");
+	var secc_capt = document.getElementById("divcapt"+a+b+c);
 	var class_name = secc_capt.className;
 	if(class_name == "element_style_hidden"){
 		secc_capt.setAttribute("class", "");
-		mostrar_captures(a+""+b)
+		mostrar_captures(a+""+b+""+c)
 	}
 	else
 		secc_capt.setAttribute("class", "element_style_hidden");
@@ -410,11 +413,6 @@ function cargar_capture(e){
 		var current_type = file_date.type;
 		//console.log(current_type);
 		if(current_type == type_1){
-
-			//var img = document.createElement("img");
-			//img.classList.add("obj");
-			//img.file_date = file_date;
-			//preview.appendChild(img);
 			var reader = new FileReader();
 			reader.onload = function (e) {
 
@@ -425,13 +423,9 @@ function cargar_capture(e){
 				//console.log(index);
 				img.src = e.target.result;
 
-				agregar_capture(e.target.result,index);
-
+				agregar_capture(e.target.result,(gl_cuenta.clave+""+index));
 			}
 			reader.readAsDataURL(elm.files[0]);
-
-        
-
 		}
 	}
 }

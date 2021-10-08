@@ -323,7 +323,7 @@ function mostrar_detalles_cl(){
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 					var desc = gl_cliente.desc[j][i];
-					gl_capt_id.push(gl_cuenta.clave+""+j+""+i);
+					gl_capt_id.push(""+j+""+i);
 				/*	var result = true;
 					try {
 						
@@ -423,7 +423,7 @@ function cargar_capture(e){
 				//console.log(index);
 				img.src = e.target.result;
 
-				agregar_capture(e.target.result,(gl_cuenta.clave+""+index));
+				agregar_capture(e.target.result,(index));
 			}
 			reader.readAsDataURL(elm.files[0]);
 		}

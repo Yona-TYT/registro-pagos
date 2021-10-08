@@ -198,6 +198,15 @@ function remove_cliente(clave) {
 	var solicitud = almacen.delete(clave);
 }
 
+function remove_capture(clave) {
+
+	var transaccion = bd.transaction(["capture_clientes"], "readwrite");
+	var almacen = transaccion.objectStore("capture_clientes");
+	var solicitud = almacen.delete(clave);
+}
+
+
+
 //--------------------------------------------------------------------------
 
 //Datos generales

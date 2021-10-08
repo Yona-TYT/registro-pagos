@@ -43,23 +43,39 @@ function save_exp_capt(results) {
 
 
 	//console.log("Valor ok");
-	if(siz_id>0){
+	if(gl_curr_cuenta){
 		for (var j = 0; j < siz_a; j++) {
 		    var value = data[j];
-			value = value.join("&").split("&");
+			value = value.join("|").split("|");
 			var siz_val = value.length;
 			var nr = 0;
-			for (var i = 0; i < siz_val; i++) {	//Inicio lectura las imagenes---------------------------------------
-				if(value[i] == "data:image/jpeg;base64" && nr<siz_id){
-					console.log(""+i+" Valor leido: "+value[i]+","+gl_save_idlist[nr]);
-					agregar_capture((value[i]+","+value[i+1]),gl_save_cc.clave +""+ gl_save_idlist[nr])
+			for (var i = 0; i < siz_val; i++) {	
+
+				//Inicia lectura de ides
+				if(value[i]=="ct_inicio"){
+					i++;
+					var count = 0;
+					for (; value[i]!="ct_fin"; i++) {
+						gl_save_idlist[count] = value[i];
+						//console.log(""+count+" Valor leido: "+value[i]);
+						count++;
+					}
+					i++;
+				}
+				//Inicio lectura las imagenes---------------------------------------
+
+				//console.log(""+gl_save_idlist.length+" Valor leido: "+gl_save_idlist[nr]);
+				for (; nr<gl_save_idlist.length; i++) {
+					//console.log(""+i+" Valor leido: "+gl_save_idlist[nr]);
+					agregar_capture(value[i],(""+gl_save_cc.clave +""+ gl_save_idlist[nr]))
 					nr++;
 				}
 
 			}			
 		}
+	
 	}
-	else alert("Primero debe cargar un archivo de respaldo!.");
+	else alert("Primero seleccione una Cuenta!.");
 }
 
 var gl_save_cc = new reg_cuenta();
@@ -210,15 +226,7 @@ function save_exp_date(results) {
 				gl_save_cc.hash = value[i];
 				//console.log(" Valor leido: "+value[i]);
 			}
-			if(value[i]=="ct_inicio"){
-				i++;
-				var nr = 0;
-				for (; value[i]!="ct_fin"; i++) {
-					gl_save_idlist[nr] = value[i];
-					//console.log(""+nr+" Valor leido: "+value[i]);
-					nr++;
-				}
-			}
+
 		}
 	}
 	//	console.log(" Valor leido 2: "+gl_save_cl.fecha[0][0]);

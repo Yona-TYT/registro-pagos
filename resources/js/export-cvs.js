@@ -30,7 +30,10 @@ function capt_datos_csv() {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-	contenido += gl_captures.join("&") ;		//Se agregan las claves de captures
+	gl_new_id.push("ct_fin|");
+	contenido += gl_new_id.join("|");		//Se agregan las claves de captures
+	contenido += gl_captures.join("|") ;		//Se agregan las claves de captures
+
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -103,13 +106,9 @@ function start_save(hash, cuenta, cliente) {
 		save,
 		clicEvent;
 	//creamos contenido del archivo
-
-	gl_new_id.push("ct_fin");
-
 	contenido += cuenta.join("|") + "\n";			//Se agregan datos de cuenta
 	contenido += cliente.join("|") + "\n";			//Se agregan datos de cliente
 	contenido += "|SHA-256|"+hash+"|";				//Se agrega un hash para los datos
-	contenido += gl_new_id.join("|") + "\n";		//Se agregan las claves de captures
 	
 	//creamos el blob
 	blob =  new Blob(["\ufeff", contenido], {type: 'text/csv'});
@@ -221,7 +220,7 @@ function start_array_capt() {
 
 		//console.log(" "+gl_capt_id[j]);
 		//var clave = gl_capt_id[j];
-		mostrar_capt_exp(gl_capt_id[j]);
+		mostrar_capt_exp(gl_cuenta.clave+""+gl_capt_id[j]);
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
@@ -256,9 +255,9 @@ function obtener_capt_exp(evento) {
 	var resultado = evento.target.result;
 	if(resultado){
 		var index =	resultado.id;
-		//var capt = resultado.rg_capture;
-		//gl_captures.push(capt);
-		gl_new_id.push(index);
+		var capt = resultado.rg_capture;
+		gl_captures.push(capt);
+		gl_new_id.push(gl_capt_id[gl_data_count-1]);
 		console.log(""+index+"");
 		
 	

@@ -182,6 +182,10 @@ function eliminar_todo(opt){
 }
 function clear_history(){
 
+	for (var j = 0; j <= 10; j++) {	
+		remove_capture(j);
+	}
+
 	remove_general(0);
 
 	for (var j = 0; j <= gl_general.cu_save_id; j++) {

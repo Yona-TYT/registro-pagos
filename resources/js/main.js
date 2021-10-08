@@ -126,7 +126,7 @@ function init(){
 
 
 	//Panel de inicio
- 	visible_element(5);
+ 	visible_element(1);
 
 
 	//--------------------------------------------

@@ -20,7 +20,9 @@ function buscar_lista_cuenta()
 	gl_captures = new Array();
 	gl_capt_id = new Array();
 
-	var text = document.getElementById("buscar_cc").value;
+	var input_cc = document.getElementById("buscar_cc");
+	var text = input_cc.value;
+	text = text.toLowerCase();
 	reset_inputs_pagos();
 	var result = false;
 
@@ -37,9 +39,14 @@ function buscar_lista_cuenta()
 		var nombre = gl_general.cuentlist[j];
 		if (nombre!=null) nombre = nombre.toLowerCase();
 		else continue;
-		result = nombre.includes(text.toLowerCase());
+		result = nombre.includes(text);
 
 		if(result){
+			var test = nombre.search(new RegExp("(^)" + text + "($)"));
+			if( test != -1){
+				el_unselec();
+			}
+			//console.log("Text: "+test);
 			gl_curr_cuenta = true;
 			mostrar_cuentas(j);
 			mostrar_clientes(j);

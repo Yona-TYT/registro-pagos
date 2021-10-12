@@ -29,7 +29,7 @@ function chg_name_vle(index){
 	gl_cliente.cliente[index] = input.value;
 
  	agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
-	mostrar_detalles_cl();
+	crear_datalist_cl();
 }
 
 function ocultar_gclx(index) {

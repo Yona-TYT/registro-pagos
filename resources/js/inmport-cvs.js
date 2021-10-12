@@ -153,7 +153,6 @@ function save_exp_date(results) {
 				i++;
 				var i_b = 0;
 				var nr_a = 0;
-				gl_save_cl.pagoid[i_a] = "";
 				for (; value[i] != "cl_list_fin"; i++) {
 					//Se obtienen los datos de primer nivel del array
 					if(nr_a==0){
@@ -195,7 +194,6 @@ function save_exp_date(results) {
 							else if(nr == 3){
 								sav_d[i_b] = value[i];
 								gl_save_cl.fecha[i_a] = sav_d;
-								gl_save_cl.pagoid[i_a] += sav_d;
 								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							else if(nr == 4){
@@ -204,7 +202,7 @@ function save_exp_date(results) {
 								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
 							else if(nr == 5){
-								sav_f[i_b] = value[i];
+								sav_f[i_b] = value[i]==""?"n/a":value[i];
 								gl_save_cl.desc[i_a] = sav_f;
 								//console.log(""+i_a+","+i_b+" Valor leido: "+value[i]);
 							}
@@ -385,7 +383,6 @@ function obtener_inmp_cl(evento) {
 						var sav_e = new Array();						
 					}
 				}
-				//	var tx_id = gl_save_cl.pagoid[j];
 				//console.log(" Valor leido 2: "+nombre);
 				tx_b = tx_b.replace(new RegExp("(^|[\,])" + nombre + "([\,]|$)"), "");
 

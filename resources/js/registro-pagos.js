@@ -65,7 +65,6 @@ function start_inputs_pagos() {
 	var nombre = gl_cuenta.nombre + " - " + gl_cuenta.desc;	//Titulo para la cuenta
 	var monto = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_dol,"$"):get_mask(monto_tot_bs,"Bs");
 
-
 	var monto_pgdo_bs = calc_dolar_a_bs(gl_cuenta.monto_pagado, gen_bs);
 	var pagado = gl_opt_moneda == 0?get_mask(gl_cuenta.monto_pagado,"$"):get_mask(monto_pgdo_bs,"Bs");
 
@@ -131,7 +130,7 @@ function button_reg_pago(){
 	if(!gl_curr_cuenta) return alert("Primero Debe Elejir una Cuenta!.");
 	var gen_bs = gl_general.gen_bs;
 	var nombre = document.getElementById("input_nombre_pg");
-	var desc = document.getElementById("input_desc_pg");
+	var inp_desc = document.getElementById("input_desc_pg");
 
 	var vl_nombre = nombre.value;
 	var mask = document.getElementById("text_mask_monto_pg");
@@ -164,7 +163,7 @@ function button_reg_pago(){
 		var index_a = res.a;
 		var index_b = res.b;
 
-		gl_desc[index_b] = desc.value;
+		gl_desc[index_b] = inp_desc.value == ""?"n/a":inp_desc.value;
 		gl_actual_bs[index_b] = gen_bs;
 		gl_monto_dol[index_b] = monto_a;
 		gl_monto_bs[index_b] = monto_b;
@@ -191,7 +190,7 @@ function button_reg_pago(){
 		gl_cuenta.hash = null;
  		agregar_cuenta(gl_cuenta, gl_cuenta.clave);				//Se guardan la informacion de Cuenta
 		nombre.value = "";
-		desc.value = "";
+		inp_desc.value = "";
 		mask.value = "";
 		monto.value = "";
 		mostrar_detalles_cl();
@@ -225,7 +224,7 @@ function cliente_check(text) {
 			gl_cliente.indx_b[index.a]++;
 			index.b = gl_cliente.indx_b[index.a];
 
-			gl_desc = gl_cliente.hora[index.a];
+			gl_desc = gl_cliente.desc[index.a];
 			gl_actual_bs = gl_cliente.actual_bs[index.a];
 			gl_monto_dol = gl_cliente.monto_dol[index.a];
 			gl_monto_bs = gl_cliente.monto_bs[index.a];
@@ -305,6 +304,8 @@ function mostrar_detalles_cl(){
 	secc_cc.innerHTML = "";
 	var secc_reg = document.getElementById("registroactual");
 	secc_reg.innerHTML = "";
+	var secc_gcl = document.getElementById("gestioncl");
+	secc_gcl.innerHTML = "";
 	//console.log("Div Ind a "+gl_cliente.indx_a+" Ind b "+gl_cliente.indx_b[0]);
 	gl_cuenta.monto_pagado = 0;
 	var gen_bs = gl_general.gen_bs;
@@ -314,6 +315,8 @@ function mostrar_detalles_cl(){
 		if(gl_cliente.start){
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
 				//console.log("Registro de pagos: "+gl_cliente.indx_a);
+
+				mostrar_gcl(j);
 				var cliente = gl_cliente.cliente[j];
 				var monto_total = gl_cliente.monto_totl[j];
 				gl_cuenta.monto_pagado += monto_total;
@@ -322,7 +325,9 @@ function mostrar_detalles_cl(){
 				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
-					var desc = gl_cliente.desc[j][i];
+					var desc = " - "+ gl_cliente.desc[j][i];
+
+					//console.log("Test: "+gl_cliente.desc[j][i]);
 					gl_capt_id.push(""+j+""+i);
 				/*	var result = true;
 					try {
@@ -344,7 +349,7 @@ function mostrar_detalles_cl(){
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+gl_cuenta.clave+","+j+","+i+");'>Capture</button>";
 					var inp_file = "<input type='file' class='custom-file-input' name='"+gl_cuenta.clave+""+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg, .png'/>";
 					var cap_div = "<div class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</div>";
-					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+"] "+desc+" Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
+					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+""+desc+"]  Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
@@ -378,6 +383,7 @@ function button_quit_pg(a,b) {
 	
 	gl_cliente.monto_totl[a] -= gl_cliente.monto_dol[a][b];						//Se resta el monto total
 
+	gl_cliente.desc[a].splice(b, 1);
 	gl_cliente.actual_bs[a].splice(b, 1);
 	gl_cliente.monto_dol[a].splice(b, 1);
 	gl_cliente.monto_bs[a].splice(b, 1);
@@ -413,7 +419,7 @@ function cargar_capture(e){
 	var type_2 = "image/png";
 	if(file_date){
 		var current_type = file_date.type;
-		console.log(current_type);
+		//console.log(current_type);
 		if(current_type == type_1 || current_type == type_2){
 			var reader = new FileReader();
 			reader.onload = function (e) {

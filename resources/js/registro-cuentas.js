@@ -132,7 +132,7 @@ function guardar_cuenta(){
 function crear_datalist_cc() {
 	var data_lista = document.getElementById("list_datacc");
 	data_lista.innerHTML = "";
-	console.log("Finished:"+gl_general.cu_save_id)
+	//console.log("Finished:"+gl_general.cu_save_id)
 	for (var j = 0; j <gl_general.cu_save_id; j++) {
 		data_lista.innerHTML += "<option value='"+gl_general.cuentlist[j]+"'>";
 	}

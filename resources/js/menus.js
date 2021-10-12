@@ -162,7 +162,6 @@ function ocultar_input(otros = false)
 			input_old.setAttribute("class","input_style_hidden");
 			mask_old.setAttribute("placeholder", "Ingrese Valor");
 			mask_old.disabled=false;
-			//add_message(""+id_name_old+"  "+current_id_name+"")
 			if(id_name_old != current_id_name)
 				current_element = null;
 		}
@@ -179,4 +178,9 @@ function el_unselec(){
 	var sel = elm.blur();
 
 }
+
+
+
+
+
 

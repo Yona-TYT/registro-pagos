@@ -10,6 +10,21 @@ function pagos_main(){
 
 	//Buscador para los clientes
 	var input_cliente = document.getElementById("input_nombre_pg");
+	input_cliente.addEventListener("input", function(e) {
+		var elm = e.target;
+		var text = elm.value.toLowerCase();
+		for (var j = 0; j < gl_cliente.indx_a; j++) {
+			var nombre = gl_cliente.cliente[j];
+			if (nombre!=null) nombre = nombre.toLowerCase();
+			else continue;
+
+			var test = nombre.search(new RegExp("(^)" + text + "($)"));
+			console.log("Test: "+test)
+			if( test != -1){
+				el_unselec();
+			}
+		}
+	});
 	input_cliente.addEventListener("focus", function(){el_selec("input_nombre_pg");});
 	input_cliente.addEventListener("dblclick", function(){el_selec("input_nombre_pg");});
 }

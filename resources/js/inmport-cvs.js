@@ -263,7 +263,6 @@ function butt_integrar() {
 			}
 			if(result == -1 || result === false) {
 
-
 				gl_save_cc.clave = gl_general.cu_save_id;
 				gl_save_cl.start = true;
 				gl_save_cl.clave = gl_general.cu_save_id;
@@ -276,6 +275,8 @@ function butt_integrar() {
 				agregar_gene_datos(gl_general);									//Se guardan los datos Generales
 
 				crear_datalist_cc();
+				mostrar_detalles_cl();
+				alert("Proceso Completado!.");
 			}
 		}
 		else alert("Primero Seleccione un Archivo Valido!. "+hash);
@@ -318,6 +319,10 @@ function obtener_inmp_cc(evento) {
 		//console.log(" Valor leido:  "+gl_save_cl.start);	
 			agregar_cuenta(gl_save_cc, gl_save_cc.clave);					//Se guardan la informacion de Cuenta
 			agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+
+			crear_datalist_cc();
+			mostrar_detalles_cl();
+			alert("Proceso Completado!.");
 		}
 		
 
@@ -422,6 +427,8 @@ function obtener_inmp_cl(evento) {
 		agregar_cuenta(gl_save_cc, gl_save_cc.clave);				//Se guardan la informacion de Cuenta
  		agregar_cliente(cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
 		crear_datalist_cc();
+		mostrar_detalles_cl();
+		alert("Proceso Completado!.");
 	}
 }
 //----------------------------------------------------------------------

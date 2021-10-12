@@ -258,9 +258,7 @@ function obtener_capt_exp(evento) {
 		var capt = resultado.rg_capture;
 		gl_captures.push(capt);
 		gl_new_id.push(gl_capt_id[gl_data_count-1]);
-		console.log(""+index+"");
-		
-	
+		//console.log(""+index+"");
 	}
 	gl_data_count++;
 }

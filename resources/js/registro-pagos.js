@@ -19,7 +19,7 @@ function pagos_main(){
 			else continue;
 
 			var test = nombre.search(new RegExp("(^)" + text + "($)"));
-			console.log("Test: "+test)
+			//console.log("Test: "+test)
 			if( test != -1){
 				el_unselec();
 			}

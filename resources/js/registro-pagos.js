@@ -200,7 +200,7 @@ function button_reg_pago(){
 		gl_cliente.hora[index_a] = gl_hora;
 
 		gl_cliente.cliente[index_a] = vl_nombre.toLowerCase();
-		if (gl_cliente.monto_totl[index_a]) gl_cliente.monto_totl[index_a] += monto_a
+		if (gl_cliente.monto_totl[index_a]) gl_cliente.monto_totl[index_a] += monto_a;
 		else gl_cliente.monto_totl[index_a] = monto_a;
 
 		//console.log("Save Ind a "+index_a+" Monto Dol: "+monto_a+" total: "+gl_cliente.monto_totl[index_a]);

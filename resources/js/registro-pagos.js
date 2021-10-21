@@ -29,6 +29,8 @@ function pagos_main(){
 	input_cliente.addEventListener("dblclick", function(){el_selec("input_nombre_pg");});
 }
 
+var gl_bus_sw = true;
+
 function buscar_lista_cuenta()
 {
 	//Limpia los captures
@@ -59,7 +61,13 @@ function buscar_lista_cuenta()
 		if(result){
 			var test = nombre.search(new RegExp("(^)" + text + "($)"));
 			if( test != -1){
-				el_unselec();
+				if(gl_bus_sw){
+					el_unselec();
+					gl_bus_sw = false;
+				}
+			}
+			else {
+				gl_bus_sw = true;
 			}
 			//console.log("Text: "+test);
 			gl_curr_cuenta = true;

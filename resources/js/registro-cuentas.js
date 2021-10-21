@@ -114,7 +114,7 @@ function guardar_cuenta(){
 		agregar_cuenta(gl_cuenta, gl_general.cu_save_id);				//Se guardan la informacion de Cuenta
 
 		gl_general.cuentlist[gl_general.cu_save_id] = titulo;			//Titulo para la cuenta
-		gl_general.etdtlist[gl_general.cu_save_id] = true;
+		gl_general.etdtlist[gl_general.cu_save_id] = true;				//Estado de las cuentas
 		gl_general.cu_save_id++;										//Se incrementa para la siguiente cuenta
 		agregar_gene_datos(gl_general);									//Se guardan los datos Generales
 
@@ -134,7 +134,9 @@ function crear_datalist_cc() {
 	data_lista.innerHTML = "";
 	//console.log("Finished:"+gl_general.cu_save_id)
 	for (var j = 0; j <gl_general.cu_save_id; j++) {
-		data_lista.innerHTML += "<option value='"+gl_general.cuentlist[j]+"'>";
+		//console.log("Nr: "+j+" Name: "+gl_general.cuentlist[j]+" Estd: "+gl_general.etdtlist[j] );
+		if(gl_general.etdtlist[j])
+			data_lista.innerHTML += "<option value='"+gl_general.cuentlist[j]+"'>";
 	}
 }
 

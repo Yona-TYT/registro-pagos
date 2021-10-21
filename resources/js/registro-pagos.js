@@ -58,7 +58,7 @@ function buscar_lista_cuenta()
 		else continue;
 		result = nombre.includes(text);
 
-		if(result){
+		if(result && gl_general.etdtlist[j]){
 			var test = nombre.search(new RegExp("(^)" + text + "($)"));
 			if( test != -1){
 				if(gl_bus_sw){
@@ -324,8 +324,16 @@ function button_marcar_cuenta() {
 	if(name =="Quitar"){
 		butt.innerHTML = "Confirmar";
 	}
-	else {
-		alert("Cuenta Descartada");
+	else if(name == "Confirmar"){
+		gl_general.etdtlist[gl_cuenta.clave] = false;
+		crear_datalist_cc();
+		butt.innerHTML = "Deshacer";
+		return alert("Cuenta Descartada");
+	}
+	else{
+		gl_general.etdtlist[gl_cuenta.clave] = true;
+		crear_datalist_cc();
+		butt.innerHTML = "Quitar";
 	}
 }
 

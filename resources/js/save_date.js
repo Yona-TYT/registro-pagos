@@ -215,7 +215,7 @@ function general_datos() {
 	this.cu_save_id = 0;				//Clave clave mayor para el registro cuentas
 	this.cl_save_id = 0;				//Clave clave mayor para el registro clientes
 
-	//Gurda valores de los inputs
+	//Guarda valor de input bolivares
 	this.gen_bs = 0;
 
 	//Guarda estado temporal de valores de cuenta

@@ -303,10 +303,14 @@ function mostrar_detalles_cc(){
 	var fecha = "<div class='div_list_style'> Fecha: "+ gl_cuenta.fecha +"</div>";
 	var hora = "<div class='div_list_style'> Hora: "+ gl_cuenta.hora +"</div>";
 
-	var butt_name = "Quitar"
-	var butt = "<div class='div_list_style'>Quitar esta Cuenta: <button type='button' class='butt_style' id='butt_qcc' onclick='button_marcar_cuenta();'>"+butt_name+"</button> </div>";
+	var but_nam_q = "Quitar";
+	var but_q = "<button type='button' class='butt_style' id='butt_qcc' onclick='button_marcar_cuenta();'>"+but_nam_q+"</button>"
 
-	secc_det.innerHTML = "<div class=''>"+ monto_d + monto_b + monto_p + estado + fecha + hora + butt +"</div>";	
+	var but_nam_r = "Restaurar";
+	var but_r = "<button type='button' class='butt_style' id='butt_rcl' onclick='button_reinicia_cl();'>"+but_nam_r+"</button>"
+	var but_inside = "<div class='div_list_style'>Restaurar Pagos: "+but_r+" Quitar esta Cuenta: "+but_q+"</div>";
+
+	secc_det.innerHTML = "<div class=''>"+ monto_d + monto_b + monto_p + estado + fecha + hora + but_inside +"</div>";	
 }
 function button_detalles_cc() {
 	//console.log("Test"+ gl_curr_cuenta)
@@ -318,6 +322,36 @@ function button_detalles_cc() {
 		secc_det.setAttribute("class", "element_style_hidden");
 }
 
+function button_reinicia_cl() {
+	var butt = document.getElementById("butt_rcl");
+	var name = 	butt.innerHTML;
+	if(name =="Restaurar"){
+		butt.innerHTML = "Confirmar";
+	}
+	else if(name == "Confirmar"){
+		if(gl_cliente.start){
+			for (var j = 0;j < gl_cliente.indx_a; j++) {
+				gl_cliente.monto_totl[j] = 0;
+				gl_cliente.indx_b[j] = -1;
+
+				gl_cliente.actual_bs[j][0] = 0;		//Precio del dolara al momento de registrar
+				gl_cliente.desc[j][0] = "";			//Texto descritivo
+				gl_cliente.monto_dol[j][0] = 0;		//Monto en dolares
+				gl_cliente.monto_bs[j][0] = 0;		//Monto en bs
+
+				gl_cliente.fecha[j][0] = "";
+				gl_cliente.hora[j][0] = "";
+			}
+
+ 			agregar_cliente(gl_cliente, gl_cuenta.clave);				//Se guardan la informacion de Clientes
+		}
+
+		butt.innerHTML = "Quitar";
+		alert("Todos los pagos se han reiniciado!.");
+		buscar_lista_cuenta();
+	}
+}
+
 function button_marcar_cuenta() {
 	var butt = document.getElementById("butt_qcc");
 	var name = 	butt.innerHTML;
@@ -327,11 +361,13 @@ function button_marcar_cuenta() {
 	else if(name == "Confirmar"){
 		gl_general.etdtlist[gl_cuenta.clave] = false;
 		crear_datalist_cc();
+		agregar_gene_datos(gl_general);
 		butt.innerHTML = "Deshacer";
 		return alert("Cuenta Descartada");
 	}
 	else{
 		gl_general.etdtlist[gl_cuenta.clave] = true;
+		agregar_gene_datos(gl_general);
 		crear_datalist_cc();
 		butt.innerHTML = "Quitar";
 	}
@@ -362,6 +398,8 @@ function mostrar_detalles_cl(){
 				var buttm = "<button type='button' class='butt_style' onclick='button_detalles_pg("+j+");'>Detalles</button>";
 				var check = "<input class='' type='checkbox' id='check_x"+j+"' onchange='check_ocultar_x("+j+","+(gl_cliente.indx_b[j]+1)+")'>";
 				var detalles = "";
+
+				//console.log("Test: "+gl_cliente.indx_b[j]);
 				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 					var desc = " - "+ gl_cliente.desc[j][i];
 

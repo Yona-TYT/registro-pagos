@@ -362,28 +362,28 @@ function obtener_inmp_cl(evento) {
 			if(tx_b.includes(nombre+",")){
 				for (var i = 0; i < gl_save_cl.indx_a; i++) {
 					if (nombre == gl_save_cl.cliente[i]){
-						cl.indx_b[j]++;
+						//cl.indx_b[j]++;
 						for(var nr = 0; nr < gl_save_cl.indx_b[i]+(1); nr++) {
+							cl.indx_b[j] ++;
+							cl.actual_bs[j][cl.indx_b[j]] = gl_save_cl.actual_bs[i][nr];
+							cl.monto_dol[j][cl.indx_b[j]] = gl_save_cl.monto_dol[i][nr];
+							cl.monto_bs[j][cl.indx_b[j]] = gl_save_cl.monto_bs[i][nr];
+							cl.fecha[j][cl.indx_b[j]] = gl_save_cl.fecha[i][nr];
+							cl.hora[j][cl.indx_b[j]] = gl_save_cl.hora[i][nr];
+							cl.desc[j][cl.indx_b[j]] = gl_save_cl.desc[i][nr];
 
-							cl.actual_bs[j][cl.indx_b[j]+nr] = gl_save_cl.actual_bs[i][nr];
-							cl.monto_dol[j][cl.indx_b[j]+nr] = gl_save_cl.monto_dol[i][nr];
-							cl.monto_bs[j][cl.indx_b[j]+nr] = gl_save_cl.monto_bs[i][nr];
-							cl.fecha[j][cl.indx_b[j]+nr] = gl_save_cl.fecha[i][nr];
-							cl.hora[j][cl.indx_b[j]+nr] = gl_save_cl.hora[i][nr];
-							cl.desc[j][cl.indx_b[j]+nr] = gl_save_cl.desc[i][nr];
-
-							//console.log(" Valor leido: "+i+" "+nr+" "+gl_save_cl.monto_dol[i][nr]);	
+							//console.log("j: "+j+" cl.indx_b: "+cl.indx_b[j]+" i: "+i+" nr: "+nr+" Dolar: "+gl_save_cl.monto_dol[i][nr]);	
 							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
 
-							cl.indx_b[j] += nr;
+
 							//console.log(" Valor leido: "+i+" "+nr+" "+cl.fecha[j][cl.indx_b[j]+nr]);	
-						}
+						}						
+					}
 						var sav_a = new Array();
 						var sav_b = new Array();
 						var sav_c = new Array();
 						var sav_d = new Array();
-						var sav_e = new Array();						
-					}
+						var sav_e = new Array();
 				}
 				//console.log(" Valor leido 2: "+nombre);
 				tx_b = tx_b.replace(new RegExp("(^|[\,])" + nombre + "([\,]|$)"), "");
@@ -418,7 +418,7 @@ function obtener_inmp_cl(evento) {
 
 					cl.indx_a++;
 
-					//console.log(" Valor leido 2: "+test_name);
+					console.log(" Valor Test Name: "+test_name);
 				}
 			}
 		}

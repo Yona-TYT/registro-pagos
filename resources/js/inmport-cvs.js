@@ -275,7 +275,7 @@ function butt_integrar() {
 				agregar_gene_datos(gl_general);									//Se guardan los datos Generales
 
 				crear_datalist_cc();
-				mostrar_detalles_cl();
+				buscar_lista_cuenta();
 				alert("Proceso Completado!.");
 			}
 		}
@@ -322,6 +322,7 @@ function obtener_inmp_cc(evento) {
 
 			crear_datalist_cc();
 			mostrar_detalles_cl();
+			buscar_lista_cuenta();
 			alert("Proceso Completado!.");
 		}
 		
@@ -427,7 +428,7 @@ function obtener_inmp_cl(evento) {
 		agregar_cuenta(gl_save_cc, gl_save_cc.clave);				//Se guardan la informacion de Cuenta
  		agregar_cliente(cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
 		crear_datalist_cc();
-		mostrar_detalles_cl();
+		buscar_lista_cuenta();
 		alert("Proceso Completado!.");
 	}
 }

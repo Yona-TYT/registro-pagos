@@ -385,6 +385,9 @@ function mostrar_detalles_cl(){
 	var gen_bs = gl_general.gen_bs;
 
 	gl_capt_id = new Array();				//Limpia la lista de claves para los captures
+
+	gl_hist_pg = new reg_cliente();			//Inicia la listas para el historial
+
 	if(gl_curr_cuenta){
 		if(gl_cliente.start){
 			for (var j = 0;j < gl_cliente.indx_a; j++) {
@@ -420,6 +423,14 @@ function mostrar_detalles_cl(){
 
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
+
+					gl_hist_pg.cliente.push(cliente);
+					gl_hist_pg.actual_bs.push(actual_bs);
+					gl_hist_pg.monto_dol.push(monto_dol);
+					gl_hist_pg.monto_bs.push(monto_bs);
+					gl_hist_pg.fecha.push(fecha);
+					gl_hist_pg.hora.push(hora);
+
 					var buttq = "<button type='button' id='butt_x"+j+""+i+"' class='element_style_hidden' onclick='button_quit_pg("+j+","+i+");'>X</button>";
 
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+gl_cuenta.clave+","+j+","+i+");'>Capture</button>";
@@ -433,6 +444,7 @@ function mostrar_detalles_cl(){
 		}
 		start_inputs_pagos();
 		mostrar_detalles_cc();
+		mostrar_historial();
 	}
 }
 function button_detalles_pg(index) {

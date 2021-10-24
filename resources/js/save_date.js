@@ -271,6 +271,8 @@ function reg_cliente() {
 	this.pagoid = new Array();
 	this.indx_b = new Array();			//index maximo para los arrays
 
+	this.fechalist = new Array(); 		//Lista de fechas para el historial
+
 	this.cliente = new Array();			//Nombre de cada Cliente
 	this.monto_totl = new Array();		//Monoto total de cada cliente
 

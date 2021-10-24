@@ -424,6 +424,7 @@ function mostrar_detalles_cl(){
 					var fecha = gl_cliente.fecha[j][i];
 					var hora = gl_cliente.hora[j][i];
 
+					add_fech_list(fecha);					//Compara las fechas y agg solo si son distintas
 					gl_hist_pg.cliente.push(cliente);
 					gl_hist_pg.actual_bs.push(actual_bs);
 					gl_hist_pg.monto_dol.push(monto_dol);
@@ -445,7 +446,14 @@ function mostrar_detalles_cl(){
 		start_inputs_pagos();
 		mostrar_detalles_cc();
 		mostrar_historial();
+		preloder_filtro_fec();
 	}
+}
+function add_fech_list(text) {
+	var fech_tx = gl_hist_pg.fechalist.join(",")
+	var result = fech_tx.includes(text);
+	if(!result)
+		gl_hist_pg.fechalist.push(text);
 }
 function button_detalles_pg(index) {
 	var secc_det = document.getElementById("div_pag"+index);

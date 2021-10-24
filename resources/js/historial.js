@@ -14,19 +14,39 @@ function mostrar_historial() {
 function preloder_filtro_fec() {
 	var selec = document.getElementById("selchisfec");
 
-	var index = gl_hist_date.save_id;
+	var index = gl_hist_pg.fechalist.length;
+	console.log(""+index);
 	var selc_tx = "";
+	selc_tx += "<option id='fech"+index+1+"' value='"+index+1+"'>Todas</option>";
 	for (var j = index; j >= 0; j--) {
-		var name = gl_hist_date.fechalist[j]
+		var name = gl_hist_pg.fechalist[j]
 		if(name){
 			selc_tx += "<option id='fech"+j+"' value='"+j+"'>"+name+"</option>";
 		}
 	}
 	selec.innerHTML = selc_tx;
-	selec.setAttribute("onchange","selec_fechas('selchisfec');");
-	var current_opt = selec.options[selec.selectedIndex];
-	gl_curr_optsel = current_opt?parseInt(current_opt.value):0;
+	selec.setAttribute("onchange","action_filtro_fec('selchisfec');");
+
+	//gl_curr_optsel = current_opt?parseInt(current_opt.value):0;
 }
+
+function action_filtro_fec() {
+	var selec = document.getElementById("selchisfec");
+	var current_opt = selec.options[selec.selectedIndex];
+	var selc_tx = current_opt.innerHTML;
+
+	//console.log(""+selc_tx);
+	var secc_hist = document.getElementById("histpg");
+	secc_hist.innerHTML = "";
+	for (var j = 0;j < gl_hist_pg.fecha.length; j++) {
+		if(selc_tx == gl_hist_pg.fecha[j] || selc_tx == "Todas"){
+			secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> ";
+		}
+	}
+
+
+}
+
 
 function selec_fechas(id,mostrar = true) {
 	var secc_his = document.getElementById("historialventa");

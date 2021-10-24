@@ -323,7 +323,7 @@ function create_table_pagos(){
 
 	//----------------------------------------------------------------
 	//Nombre de las celdas value--------------------------------------
-	var name_cel = ["Descripcion", "Monto Total", "Total Pagado", "Accion"];
+	var name_cel = ["Descripcion", "Monto Estimado", "Total Pagado", "Accion"];
 	var name_siz = name_cel.length;
 	//----------------------------------------------------------------
 

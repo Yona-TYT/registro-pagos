@@ -215,6 +215,7 @@ function save_exp_date(results) {
 				sav_c = new Array();
 				sav_d = new Array();
 				sav_e = new Array();
+				sav_f = new Array();
 			}	//------------------------------------------------------------------------------------------------------
 			if(value[i]=="SHA-256"){
 				i++;

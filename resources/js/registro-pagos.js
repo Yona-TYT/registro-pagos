@@ -296,8 +296,12 @@ function mostrar_detalles_cc(){
 	var gen_bs = gl_general.gen_bs;
 	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_dol, gen_bs);
 
-	var monto_d = "<div class='div_list_style'> Monto ($): "+ get_mask(gl_cuenta.monto_dol,"$") +"</div>";
-	var monto_b = "<div class='div_list_style'> Monto (Bs): "+ get_mask(monto_tot_bs,"Bs") +"</div>";
+	var mont_estd = "<div class='div_list_style'> Estimado: "+ get_mask(gl_cuenta.monto_dol,"$") +" / "+ get_mask(monto_tot_bs,"Bs")+"</div>";
+
+	var mask = "<input readonly='' class='input_style_td' id='text_mask_edit_mont' onclick='mostrar_input();' onselect='mostrar_input();'>"; 
+	var input = "<input type='number' readwrite='' class='input_style_hidden' onkeyup='input_edit_estimado();' onclick='input_edit_estimado();' onchange='input_edit_estimado();' step='0.01' min='0.01' id='input_edit_mont' onfocus='ocultar_input();' placeholder='Ingrese Monto'>"
+
+	var edit_mont = "<div class='div_list_style'>Edit. Estimado ("+(gl_opt_moneda==0?"$":"Bs")+"): <div id='div_edit_mont'>"+ mask + input +"</div></div>";
 	var monto_p = "<div class='div_list_style'> Pagado: "+ get_mask(gl_cuenta.monto_pagado,"$") +"</div>";
 	var estado = "<div class='div_list_style'> Estado: "+ gl_cuenta.estado +"</div>";
 	var fecha = "<div class='div_list_style'> Fecha: "+ gl_cuenta.fecha +"</div>";
@@ -308,19 +312,83 @@ function mostrar_detalles_cc(){
 
 	var but_nam_r = "Restaurar";
 	var but_r = "<button type='button' class='butt_style' id='butt_rcl' onclick='button_reinicia_cl();'>"+but_nam_r+"</button>"
-	var but_inside = "<div class='div_list_style'>Restaurar Pagos: "+but_r+" Quitar esta Cuenta: "+but_q+"</div>";
+	var but_ins_r = "<div class='div_list_style'>"+but_r+"Restaurar Pagos</div>";
+	var but_ins_q = "<div class='div_list_style'>"+but_q+"Quitar esta Cuenta</div>";
 
-	secc_det.innerHTML = "<div class=''>"+ monto_d + monto_b + monto_p + estado + fecha + hora + but_inside +"</div>";	
+	secc_det.innerHTML = "<div class=''>"+ mont_estd  + monto_p + estado + fecha + hora + edit_mont + but_ins_r + but_ins_q +"</div>";	
 }
 function button_detalles_cc() {
 	//console.log("Test"+ gl_curr_cuenta)
 	var secc_det = document.getElementById("detalles_cc");
+	var div = document.getElementById("div_edit_mont");
+
 	var class_name = secc_det.className;
-	if(class_name == "element_style_hidden")
+	if(class_name == "element_style_hidden"){
 		secc_det.setAttribute("class", "label_style");
-	else
+		if(div){
+			div.style.width = "250px";
+
+			var gen_bs = gl_general.gen_bs;
+			var mask = document.getElementById("text_mask_edit_mont");
+			var input = document.getElementById("input_edit_mont");
+
+			var mont_dol = null;
+			var mont_bs = null;
+			//Dolar
+			if(gl_opt_moneda == 0){
+				mont_dol = gl_cuenta.monto_dol;
+				mont_bs = calc_dolar_a_bs(mont_dol, gen_bs);
+
+				mask.value = get_mask(mont_dol,"$");
+				input.value = mont_dol;
+			}
+			//Bolivares
+			else if(gl_opt_moneda == 1){
+				mont_dol = gl_cuenta.monto_dol;
+				mont_bs = calc_dolar_a_bs(mont_dol, gen_bs);
+
+				mask.value = get_mask(mont_bs,"Bs");
+				input.value = mont_bs;
+			}
+		}
+	}
+	else{
 		secc_det.setAttribute("class", "element_style_hidden");
+		buscar_lista_cuenta();
+	}
 }
+
+function input_edit_estimado() {
+	
+	var gen_bs = gl_general.gen_bs;
+	var mask = document.getElementById("text_mask_edit_mont");
+	var monto = document.getElementById("input_edit_mont");
+
+	var mont_dol = null;
+	var mont_bs = null;
+	//Dolar
+	if(gl_opt_moneda == 0){
+		mont_dol = parseFloat(monto.value)?parseFloat(monto.value):0;
+		mont_bs = calc_dolar_a_bs(mont_dol, gen_bs);
+
+		gl_cuenta.monto_dol = mont_dol;					//Guarda el monto en dolares
+		
+
+		mask.value = get_mask(mont_dol,"$");
+	}
+	//Bolivares
+	else if(gl_opt_moneda == 1){
+		mont_bs = parseFloat(monto.value)?parseFloat(monto.value):0;
+		mont_dol = calc_bs_a_dolar(mont_bs, gen_bs);
+
+		gl_cuenta.monto_dol = mont_dol;					//Guarda el monto en dolares
+
+		mask.value = get_mask(mont_bs,"Bs");
+	}
+
+ 	agregar_cuenta(gl_cuenta, gl_cuenta.clave);				//Se guardan la informacion de Cuenta
+}
+
 
 function button_reinicia_cl() {
 	var butt = document.getElementById("butt_rcl");

@@ -168,6 +168,8 @@ function obtener_captures(evento) {
 		//gl_general.captid.push(capt);
 		//alert("Add");
 		var div = document.getElementById('divcapt'+index);
+		//Test
+		div.innerHTML += ""+index+"";
 		var img = div.getElementsByTagName("img")[0];
 
 		//console.log(index);

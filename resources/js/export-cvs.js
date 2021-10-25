@@ -220,7 +220,7 @@ function start_array_capt() {
 
 		//console.log(" "+gl_capt_id[j]);
 		//var clave = gl_capt_id[j];
-		mostrar_capt_exp(gl_cuenta.clave+""+gl_capt_id[j]);
+		mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
@@ -245,6 +245,7 @@ function cambio_valor(){
 
 //Manejo de Captures de pago -----------------------------------------
 function mostrar_capt_exp(clave) {
+	//console.log(""+clave+"");
 	var transaccion = bd.transaction(["capture_clientes"]);
 	var almacen = transaccion.objectStore("capture_clientes");
 	var solicitud = almacen.get(clave);
@@ -258,7 +259,9 @@ function obtener_capt_exp(evento) {
 		var capt = resultado.rg_capture;
 		gl_captures.push(capt);
 		gl_new_id.push(gl_capt_id[gl_data_count-1]);
-		//console.log(""+index+"");
+		//console.log(""+gl_captures.length+" "+(gl_data_count));
+		if(gl_captures.length != gl_data_count)
+			alert(""+gl_data_count+" - "+gl_captures.length);
 	}
 	gl_data_count++;
 }

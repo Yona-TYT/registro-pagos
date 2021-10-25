@@ -54,7 +54,7 @@ function save_exp_capt(results) {
 					var count = 0;
 					for (; value[i]!="ct_fin"; i++) {
 						gl_save_idlist[count] = value[i];
-						//console.log(""+count+" Valor leido: "+value[i]);
+						console.log(""+count+" Valor leido: "+value[i]);
 						count++;
 					}
 					i++;

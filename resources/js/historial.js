@@ -6,7 +6,7 @@ function mostrar_historial() {
 	var secc_hist = document.getElementById("histpg");
 	secc_hist.innerHTML = "";
 	//console.log(""+gl_hist_pg.fecha.length);
-	for (var j = 0;j < gl_hist_pg.fecha.length; j++) {
+	for (var j = gl_hist_pg.fecha.length-1;j >=0 ; j--) {
 		secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> ";
 	}
 }
@@ -38,7 +38,7 @@ function action_filtro_fec() {
 	//console.log(""+selc_tx);
 	var secc_hist = document.getElementById("histpg");
 	secc_hist.innerHTML = "";
-	for (var j = 0;j < gl_hist_pg.fecha.length; j++) {
+	for (var j = gl_hist_pg.fecha.length-1;j >= 0; j--) {
 		if(selc_tx == gl_hist_pg.fecha[j] || selc_tx == "Todas"){
 			secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> ";
 		}

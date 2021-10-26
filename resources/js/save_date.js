@@ -169,7 +169,7 @@ function obtener_captures(evento) {
 		//alert("Add");
 		var div = document.getElementById('divcapt'+index);
 		//Test
-		div.innerHTML += ""+index+"";
+		//div.innerHTML += ""+index+"";
 		var img = div.getElementsByTagName("img")[0];
 
 		//console.log(index);

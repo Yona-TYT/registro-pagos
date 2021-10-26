@@ -222,18 +222,6 @@ function start_array_capt() {
 	gl_data_count = 1; //Se inicia el contador de lecturas
 	retardo_capture(true);
 	contador = setInterval(retardo_capture, 100);
-	//for (var j = 0;j < gl_capt_id.length; j++) {
-
-		//console.log(" "+gl_capt_id[j]);
-		//var clave = gl_capt_id[j];
-		//mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
-		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
-			//var clave = ""+j+""+i;
-			//console.log(""+clave+" "+gl_cliente.indx_a);
-			//mostrar_capt_exp(clave);
-		//}
-//	}
-	//gl_captures.push("ct_fin");
 }
 
 //contador para esperar mientras los valores se cargan
@@ -242,9 +230,7 @@ var contador;		// = setInterval(cambio_valor, 1000);
 var cont_sw = true;
 function retardo_capture(start = false){
 	if(segundos>0 || start){ 
-
 		if(gl_data_count <= gl_capt_id.length){
-
 			segundos=0;
 			mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[gl_data_count-1]+"");
 		}
@@ -252,7 +238,6 @@ function retardo_capture(start = false){
 			clearInterval(contador);
 			alert("Los datos se han procesado, vuelva a pulsar el boton guardar.");
 			segundos=0;
-
 		}
 	}
 	segundos++;

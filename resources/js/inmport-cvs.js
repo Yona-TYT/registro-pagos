@@ -54,7 +54,7 @@ function save_exp_capt(results) {
 					var count = 0;
 					for (; value[i]!="ct_fin"; i++) {
 						gl_save_idlist[count] = value[i];
-						console.log(""+count+" Valor leido: "+value[i]);
+						//console.log(""+count+" Valor leido: "+value[i]);
 						count++;
 					}
 					i++;
@@ -377,7 +377,6 @@ function obtener_inmp_cl(evento) {
 							//console.log("j: "+j+" cl.indx_b: "+cl.indx_b[j]+" i: "+i+" nr: "+nr+" Dolar: "+gl_save_cl.monto_dol[i][nr]);	
 							cl.monto_totl[j] += gl_save_cl.monto_dol[i][nr];
 
-
 							//console.log(" Valor leido: "+i+" "+nr+" "+cl.fecha[j][cl.indx_b[j]+nr]);	
 						}						
 					}
@@ -420,7 +419,7 @@ function obtener_inmp_cl(evento) {
 
 					cl.indx_a++;
 
-					console.log(" Valor Test Name: "+test_name);
+					//console.log(" Valor Test Name: "+test_name);
 				}
 			}
 		}

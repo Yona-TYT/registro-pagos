@@ -295,6 +295,7 @@ function mostrar_detalles_cc(){
 
 	var gen_bs = gl_general.gen_bs;
 	var monto_tot_bs = calc_dolar_a_bs(gl_cuenta.monto_dol, gen_bs);
+	var monto_pag_bs = calc_dolar_a_bs(gl_cuenta.monto_pagado, gen_bs);
 
 	var mont_estd = "<div class='div_list_style'> Estimado: "+ get_mask(gl_cuenta.monto_dol,"$") +" / "+ get_mask(monto_tot_bs,"Bs")+"</div>";
 
@@ -302,7 +303,7 @@ function mostrar_detalles_cc(){
 	var input = "<input type='number' readwrite='' class='input_style_hidden' onkeyup='input_edit_estimado();' onclick='input_edit_estimado();' onchange='input_edit_estimado();' step='0.01' min='0.01' id='input_edit_mont' onfocus='ocultar_input();' placeholder='Ingrese Monto'>"
 
 	var edit_mont = "<div class='div_list_style'>Edit. Estimado ("+(gl_opt_moneda==0?"$":"Bs")+"): <div id='div_edit_mont'>"+ mask + input +"</div></div>";
-	var monto_p = "<div class='div_list_style'> Pagado: "+ get_mask(gl_cuenta.monto_pagado,"$") +"</div>";
+	var monto_p = "<div class='div_list_style'> Pagado: "+ get_mask(gl_cuenta.monto_pagado,"$") +" / "+ get_mask(monto_pag_bs,"Bs")+"</div>";
 	var estado = "<div class='div_list_style'> Estado: "+ gl_cuenta.estado +"</div>";
 	var fecha = "<div class='div_list_style'> Fecha: "+ gl_cuenta.fecha +"</div>";
 	var hora = "<div class='div_list_style'> Hora: "+ gl_cuenta.hora +"</div>";

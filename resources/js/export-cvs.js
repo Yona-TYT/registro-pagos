@@ -11,7 +11,7 @@ function export_main() {
 
 function butt_guardar_datos() {
 	var check = document.getElementById("captcheck").checked;
-	if(gl_data_count == 1) start_array_capt();
+	if(gl_data_count == 1) return start_array_capt();
 	if(gl_data_count < gl_capt_id.length) return alert("Cargando los datos, vuelva a pulsar")
 	if(check){
 		test_imgs();
@@ -218,29 +218,40 @@ function start_array_capt() {
 	gl_new_id.push("ct_inicio");
 	
 	gl_data_count = 1; //Se inicia el contador de lecturas
-	for (var j = 0;j < gl_capt_id.length; j++) {
+	retardo_capture(true);
+	contador = setInterval(retardo_capture, 100);
+	//for (var j = 0;j < gl_capt_id.length; j++) {
 
 		//console.log(" "+gl_capt_id[j]);
 		//var clave = gl_capt_id[j];
-		mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
+		//mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
 			//mostrar_capt_exp(clave);
 		//}
-	}
+//	}
 	//gl_captures.push("ct_fin");
 }
 
 //contador para esperar mientras los valores se cargan
 var segundos = 0;
-var contador = setInterval(cambio_valor, 1000);
+var contador;		// = setInterval(cambio_valor, 1000);
 var cont_sw = true;
-function cambio_valor(){
-	if(segundos>5){ 
-		clearInterval(contador);
-		//alert("Total: " + segundos + " segundos");
-		segundos=0;
+function retardo_capture(start = false){
+	if(segundos>0 || start){ 
+
+		if(gl_data_count <= gl_capt_id.length){
+
+			segundos=0;
+			mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[gl_data_count-1]+"");
+		}
+		else{
+			clearInterval(contador);
+			alert("Total: " + segundos*gl_capt_id.length + " segundos");
+			segundos=0;
+
+		}
 	}
 	segundos++;
 }

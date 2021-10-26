@@ -257,11 +257,25 @@ function obtener_capt_exp(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
-		gl_captures[(gl_data_count-1)] = capt;
-		gl_new_id.push(gl_capt_id[(gl_data_count-1)]);
+
+					var result = false;
+					try {
+							gl_captures[(gl_data_count-1)] = capt;
+							gl_new_id.push(gl_capt_id[(gl_data_count-1)]);
+					}
+					catch (err) {
+						result = true;
+						alert(""+err);
+					}
+					if(result) alert("Hay un error!!.")
+
+
+
 		//console.log(""+gl_captures.length+" "+(gl_data_count));
-		if(gl_captures.length != gl_data_count)
-			alert(""+gl_data_count+" - "+gl_captures.length);
+
+
+		//if(gl_captures.length != gl_data_count)
+			//alert(""+gl_data_count+" - "+gl_captures.length);
 	}
 	gl_data_count++;
 }

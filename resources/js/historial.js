@@ -84,6 +84,18 @@ function clear_history(){
 		remove_cliente(j);
 	}
 }
+function test_imgs(){
+	var sect = document.getElementById("test_imgs");
 
+	sect.innerHTML = "";
+	for (var j = 0;j < gl_captures.length ; j++) {
+
+		var img = document.createElement("img");
+		img.src = gl_captures[j];
+		sect.appendChild(img);
+		sect.innerHTML += "Clave: "+gl_new_id[j+1]+" Index: "+j+"";
+	}
+
+}
 
 

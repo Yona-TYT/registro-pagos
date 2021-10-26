@@ -13,8 +13,10 @@ function butt_guardar_datos() {
 	var check = document.getElementById("captcheck").checked;
 	if(gl_data_count == 1) start_array_capt();
 	if(gl_data_count < gl_capt_id.length) return alert("Cargando los datos, vuelva a pulsar")
-	if(check)
-		capt_datos_csv();
+	if(check){
+		test_imgs();
+		//capt_datos_csv();
+	}
 
 	else
 		cuent_datos_csv();
@@ -216,21 +218,17 @@ function start_array_capt() {
 	gl_new_id.push("ct_inicio");
 	
 	gl_data_count = 1; //Se inicia el contador de lecturas
-	var tx_test = "";
 	for (var j = 0;j < gl_capt_id.length; j++) {
 
 		//console.log(" "+gl_capt_id[j]);
 		//var clave = gl_capt_id[j];
-		var tx_clav = ""+gl_cuenta.clave+""+gl_capt_id[j]+"";
-		tx_test += " : "+tx_clav;
-		mostrar_capt_exp(tx_clav);
+		mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
 			//mostrar_capt_exp(clave);
 		//}
 	}
-	alert("?"+tx_test);
 	//gl_captures.push("ct_fin");
 }
 
@@ -261,25 +259,11 @@ function obtener_capt_exp(evento) {
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
-
-					var result = false;
-					try {
-							gl_captures[(gl_data_count-1)] = capt;
-							gl_new_id.push(gl_capt_id[(gl_data_count-1)]);
-					}
-					catch (err) {
-						result = true;
-						alert(""+err);
-					}
-					if(result) alert("Hay un error!!.")
-
-
-
+		gl_captures.push(capt);
+		gl_new_id.push(gl_capt_id[gl_data_count-1]);
 		//console.log(""+gl_captures.length+" "+(gl_data_count));
-
-
-		//if(gl_captures.length != gl_data_count)
-			//alert(""+gl_data_count+" - "+gl_captures.length);
+		if(gl_captures.length != gl_data_count)
+			alert(""+gl_data_count+" - "+gl_captures.length);
 	}
 	gl_data_count++;
 }

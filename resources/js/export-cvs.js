@@ -216,17 +216,21 @@ function start_array_capt() {
 	gl_new_id.push("ct_inicio");
 	
 	gl_data_count = 1; //Se inicia el contador de lecturas
+	var tx_test = "";
 	for (var j = 0;j < gl_capt_id.length; j++) {
 
 		//console.log(" "+gl_capt_id[j]);
 		//var clave = gl_capt_id[j];
-		mostrar_capt_exp(""+gl_cuenta.clave+""+gl_capt_id[j]+"");
+		var tx_clav = ""+gl_cuenta.clave+""+gl_capt_id[j]+"";
+		tx_test += " : "+tx_clav;
+		mostrar_capt_exp(tx_clav);
 		//for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
 			//var clave = ""+j+""+i;
 			//console.log(""+clave+" "+gl_cliente.indx_a);
 			//mostrar_capt_exp(clave);
 		//}
 	}
+	alert("?"+tx_test);
 	//gl_captures.push("ct_fin");
 }
 

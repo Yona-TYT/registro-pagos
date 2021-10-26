@@ -11,11 +11,13 @@ function export_main() {
 
 function butt_guardar_datos() {
 	var check = document.getElementById("captcheck").checked;
+
+	if(!gl_curr_cuenta) return alert("Debes Seleccionar una Cuenta!.");
 	if(gl_data_count == 1) return start_array_capt();
-	if(gl_data_count < gl_capt_id.length) return alert("Cargando los datos, vuelva a pulsar")
+	if(gl_data_count <= gl_capt_id.length) return alert("Cargando los datos...")
 	if(check){
-		test_imgs();
-		//capt_datos_csv();
+		//test_imgs();
+		capt_datos_csv();
 	}
 
 	else
@@ -248,7 +250,7 @@ function retardo_capture(start = false){
 		}
 		else{
 			clearInterval(contador);
-			alert("Total: " + segundos*gl_capt_id.length + " segundos");
+			alert("Los datos se han procesado, vuelva a pulsar el boton guardar.");
 			segundos=0;
 
 		}

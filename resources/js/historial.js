@@ -7,8 +7,24 @@ function mostrar_historial() {
 	secc_hist.innerHTML = "";
 	//console.log(""+gl_hist_pg.fecha.length);
 	for (var j = gl_hist_pg.fecha.length-1;j >=0 ; j--) {
-		secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> ";
+		var test_id = gl_hist_pg.pagoid[j]
+		var buttcap = '<button type="button" class="butt_style" onclick="button_cap_hpg(\''+test_id+'\');">Capture</button>';
+		var cap_secc = "<section class='element_style_hidden' id='sec_hcap"+gl_hist_pg.pagoid[j]+"'><img></img></section>";
+		secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttcap+"["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> "+cap_secc;
 	}
+}
+function button_cap_hpg(id){
+
+	//console.log("Test: "+id);
+	var name = "sec_hcap"+id;
+	var secc_capt = document.getElementById(name);
+	var class_name = secc_capt.className;
+	if(class_name == "element_style_hidden"){
+		secc_capt.setAttribute("class", "");
+		mostrar_captures(id,name);
+	}
+	else
+		secc_capt.setAttribute("class", "element_style_hidden");
 }
 
 function preloder_filtro_fec() {
@@ -40,7 +56,10 @@ function action_filtro_fec() {
 	secc_hist.innerHTML = "";
 	for (var j = gl_hist_pg.fecha.length-1;j >= 0; j--) {
 		if(selc_tx == gl_hist_pg.fecha[j] || selc_tx == "Todas"){
-			secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> ";
+		var test_id = gl_hist_pg.pagoid[j]
+		var buttcap = '<button type="button" class="butt_style" onclick="button_cap_hpg(\''+test_id+'\');">Capture</button>';
+		var cap_secc = "<section class='element_style_hidden' id='sec_hcap"+gl_hist_pg.pagoid[j]+"'><img></img></section>";
+		secc_hist.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttcap+"["+gl_hist_pg.fecha[j]+" "+gl_hist_pg.hora[j]+"] "+ gl_hist_pg.cliente[j] +", monto: "+get_mask(gl_hist_pg.monto_dol[j],"$")+" / "+get_mask(gl_hist_pg.monto_bs[j],"Bs")+"</div> "+cap_secc;
 		}
 	}
 

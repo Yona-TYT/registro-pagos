@@ -157,24 +157,25 @@ function obtener_clientes(evento) {
 //----------------------------------------------------------------------
 
 //Manejo de Captures de pago -----------------------------------------
-function mostrar_captures(clave) {
+function mostrar_captures(clave,name) {
 	var transaccion = bd.transaction(["capture_clientes"]);
 	var almacen = transaccion.objectStore("capture_clientes");
 	var solicitud = almacen.get(clave);
-	solicitud.addEventListener("success", obtener_captures);
+	solicitud.addEventListener("success", function(){obtener_captures(event, name);});
+
 }
 
-function obtener_captures(evento) {
+function obtener_captures(evento, name) {
 	var resultado = evento.target.result;
 	if(resultado){
 		var index =	resultado.id;
 		var capt = resultado.rg_capture;
 		//gl_general.captid.push(capt);
 		//alert("Add");
-		var div = document.getElementById('divcapt'+index);
+		var elem = document.getElementById(name);
 		//Test
-		div.innerHTML += ""+index+"";
-		var img = div.getElementsByTagName("img")[0];
+		//div.innerHTML += ""+index+"";
+		var img = elem.getElementsByTagName("img")[0];
 
 		//console.log(index);
 		img.src = capt;

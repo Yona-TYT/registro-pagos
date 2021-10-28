@@ -461,7 +461,7 @@ function mostrar_detalles_cl(){
 
 	if(gl_curr_cuenta){
 		if(gl_cliente.start){
-			for (var j = 0;j < gl_cliente.indx_a; j++) {
+			for (var j = gl_cliente.indx_a-1;j >= 0; j--) {
 				//console.log("Registro de pagos: "+gl_cliente.indx_a);
 
 				mostrar_gcl(j);
@@ -474,7 +474,8 @@ function mostrar_detalles_cl(){
 				var detalles = "";
 
 				//console.log("Test: "+gl_cliente.indx_b[j]);
-				for (var i = 0; i < gl_cliente.indx_b[j]+1; i++) {
+				var indx_b = gl_cliente.indx_b[j];
+				for (var i = indx_b; i >= 0; i--) {
 					var desc = " - "+ gl_cliente.desc[j][i];
 
 					//console.log("Test: "+gl_cliente.desc[j][i]);
@@ -496,6 +497,7 @@ function mostrar_detalles_cl(){
 					var hora = gl_cliente.hora[j][i];
 
 					add_fech_list(fecha);					//Compara las fechas y agg solo si son distintas
+					gl_hist_pg.pagoid.push(""+gl_cuenta.clave+""+j+""+i+"");
 					gl_hist_pg.cliente.push(cliente);
 					gl_hist_pg.actual_bs.push(actual_bs);
 					gl_hist_pg.monto_dol.push(monto_dol);
@@ -507,8 +509,8 @@ function mostrar_detalles_cl(){
 
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+gl_cuenta.clave+","+j+","+i+");'>Capture</button>";
 					var inp_file = "<input type='file' class='custom-file-input' name='"+gl_cuenta.clave+""+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg, .png'/>";
-					var cap_div = "<section class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</section>";
-					detalles += "<div class='div_list_style'>"/*+j+""+i+""*/+buttq+" ["+(i+1)+""+desc+"]  Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
+					var cap_secc = "<section class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</section>";
+					detalles += "<div class='div_list_style'>"/*+j+""+i+""*/+buttq+" ["+(indx_b-i+1)+""+desc+"]  Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_secc;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
@@ -577,11 +579,12 @@ function button_quit_pg(a,b) {
 function button_cap_pg(a,b,c){
 
 	//	console.log("Test: ");
-	var secc_capt = document.getElementById("divcapt"+a+b+c);
+	var name = "divcapt"+a+b+c;
+	var secc_capt = document.getElementById(name);
 	var class_name = secc_capt.className;
 	if(class_name == "element_style_hidden"){
 		secc_capt.setAttribute("class", "");
-		mostrar_captures(a+""+b+""+c);
+		mostrar_captures((a+""+b+""+c),name);
 	}
 	else
 		secc_capt.setAttribute("class", "element_style_hidden");

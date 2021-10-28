@@ -94,6 +94,16 @@ function selec_moneda_chg(){
 
 	gl_opt_moneda = opt.value;
 
+	gl_general.temp_selec = gl_opt_moneda;
+
+	var result = true;
+		try {
+			agregar_gene_datos(gl_general);
+		}
+		catch (err) {
+			result = false;
+	}
+
 	get_input_value_rc();
 	save_inputs_cliente();
 }

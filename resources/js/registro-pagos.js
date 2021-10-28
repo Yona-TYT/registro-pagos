@@ -141,8 +141,6 @@ function save_inputs_cliente(){
 		mask.value = get_mask(mont_bs,"Bs");
 	}
 	
-	gl_general.temp_selec = gl_opt_moneda;
-
 	buscar_lista_cuenta();
 }
 

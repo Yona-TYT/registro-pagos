@@ -83,6 +83,10 @@ function obtener_general(evento) {
 	if(resultado){
 		gl_general = resultado.datos_gene;
 
+		gl_opt_moneda = gl_general.temp_selec;
+		var selec_moneda = document.getElementById("selc_moneda");
+		selec_moneda.options[gl_opt_moneda].selected = true;
+
 		//console.log("Claave gn "+gl_general.cu_save_id +" Nr: "+gl_cliente.indx_a)
 		//----------------------------------------------
 		var gen_bs = document.getElementById("input_gnbs");

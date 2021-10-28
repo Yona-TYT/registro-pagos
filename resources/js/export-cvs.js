@@ -227,7 +227,6 @@ function start_array_capt() {
 //contador para esperar mientras los valores se cargan
 var segundos = 0;
 var contador;		// = setInterval(cambio_valor, 1000);
-var cont_sw = true;
 function retardo_capture(start = false){
 	if(segundos>0 || start){ 
 		if(gl_data_count <= gl_capt_id.length){

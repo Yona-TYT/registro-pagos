@@ -20,6 +20,7 @@ function check_windows_siz() {
 			//console.log(+ancho+"  " +font_siz);
 			objref.style.setProperty("--alig-text", 'left');
 			objref.style.setProperty("--cel-siz", '5%');
+			objref.style.setProperty("--siz-img", '100%');
 			gl_mobil = true;
 			create_table_pagos();
 			create_table_cuentas();
@@ -32,6 +33,7 @@ function check_windows_siz() {
 		menu_list.setAttribute("class","element_style_hidden");
 		objref.style.setProperty("--alig-text", 'center');
 		objref.style.setProperty("--cel-siz", '10%');
+		objref.style.setProperty("--siz-img", '40%');
 		if(gl_mobil) {
 			gl_mobil = false;
 			create_table_pagos();

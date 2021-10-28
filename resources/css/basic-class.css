@@ -1,5 +1,6 @@
 :root {
 	--siz-text: 100%;
+	--siz-img: 100%;
 	--all-height: 100%;
 	--mask-height: 5%;
 	--caja-disp: inline-block;
@@ -643,7 +644,7 @@ input[type=file]::file-selector-button {
 }
 
 img {
-	width: 100%;
+	width: var(--siz-img);
 	height: auto;
 }
 

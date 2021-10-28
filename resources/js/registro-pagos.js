@@ -219,6 +219,10 @@ function button_reg_pago(){
 		agregar_gene_datos(gl_general);
 		gl_cuenta.hash = null;
  		agregar_cuenta(gl_cuenta, gl_cuenta.clave);				//Se guardan la informacion de Cuenta
+
+		//Tests 
+		//remove_capture(""+gl_cuenta.clave+""+index_a+""+index_b+"");		//Limpia el espacio en casi de que existan captures basura
+
 		nombre.value = "";
 		inp_desc.value = "";
 		mask.value = "";
@@ -505,8 +509,8 @@ function mostrar_detalles_cl(){
 
 					var buttcap = "<button type='button' class='butt_style' onclick='button_cap_pg("+gl_cuenta.clave+","+j+","+i+");'>Capture</button>";
 					var inp_file = "<input type='file' class='custom-file-input' name='"+gl_cuenta.clave+""+j+""+i+"' onchange='cargar_capture(event);' accept='.jpg, .png'/>";
-					var cap_div = "<div class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</div>";
-					detalles += "<div class='div_list_style'>"+buttq+" ["+(i+1)+""+desc+"]  Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
+					var cap_div = "<section class='element_style_hidden' id='divcapt"+gl_cuenta.clave+""+j+""+i+"'><img></img>"+inp_file+"</section>";
+					detalles += "<div class='div_list_style'>"/*+j+""+i+""*/+buttq+" ["+(i+1)+""+desc+"]  Monto: "+get_mask(monto_dol,"$")+" / "+get_mask(monto_bs,"Bs")+" &nbsp <strong>Fecha: "+fecha+" "+hora+"</strong>&nbsp"+buttcap+"</div>"+cap_div;
 				}
 				var inside = "<div class='element_style_hidden' id='div_pag"+j+"'>"+ detalles +"</div>";
 				secc_reg.innerHTML +=  "<div class='div_list_style' id='divpg"+j+"'>"+buttm+" Cliente: "+ cliente + " <div class='total_style'>Total: "+get_mask(monto_total,"$")+" / "+get_mask(monto_tot_bs,"Bs")+"&nbsp &nbsp &nbsp Quitar:"+check+"</div> "+ inside+"</div>";
@@ -526,11 +530,18 @@ function add_fech_list(text) {
 }
 function button_detalles_pg(index) {
 	var secc_det = document.getElementById("div_pag"+index);
+	var secc_cap = secc_det.getElementsByTagName("section");
+
 	var class_name = secc_det.className;
 	if(class_name == "element_style_hidden")
 		secc_det.setAttribute("class", "");
-	else
+	else{
 		secc_det.setAttribute("class", "element_style_hidden");
+
+		for (var j = 0;j < secc_cap.length; j++) {
+			secc_cap[j].setAttribute("class", "element_style_hidden");
+		}
+	}
 }
 
 function check_ocultar_x(a,siz) {
@@ -560,7 +571,9 @@ function button_quit_pg(a,b) {
 	gl_cuenta.hash = null;
  	agregar_cuenta(gl_cuenta, gl_cuenta.clave);					//Se guardan la informacion de Cuenta
 	mostrar_detalles_cl();
-	remove_capture(gl_cuenta.clave+""+a+""+b);
+
+	mostrar_capt_gcl(""+gl_cuenta.clave+""+a+""+(b+1)+"", ""+gl_cuenta.clave+""+(a)+""+b+"");
+
 }
 
 function button_cap_pg(a,b,c){

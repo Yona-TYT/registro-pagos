@@ -6,7 +6,7 @@ function mostrar_historial() {
 	var secc_hist = document.getElementById("histpg");
 	secc_hist.innerHTML = "";
 	//console.log(""+gl_hist_pg.fecha.length);
-	for (var j = gl_hist_pg.fecha.length-1;j >=0 ; j--) {
+	for (var j = 0;j < gl_hist_pg.fecha.length; j++) {
 		var test_id = gl_hist_pg.pagoid[j]
 		var buttcap = '<button type="button" class="butt_style" onclick="button_cap_hpg(\''+test_id+'\');">Capture</button>';
 		var cap_secc = "<section class='element_style_hidden' id='sec_hcap"+gl_hist_pg.pagoid[j]+"'><img></img></section>";
@@ -34,7 +34,7 @@ function preloder_filtro_fec() {
 	//console.log(""+index);
 	var selc_tx = "";
 	selc_tx += "<option id='fech"+index+1+"' value='"+index+1+"'>Todas</option>";
-	for (var j = index; j >= 0; j--) {
+	for (var j = 0; j < index; j++) {
 		var name = gl_hist_pg.fechalist[j]
 		if(name){
 			selc_tx += "<option id='fech"+j+"' value='"+j+"'>"+name+"</option>";
@@ -54,7 +54,7 @@ function action_filtro_fec() {
 	//console.log(""+selc_tx);
 	var secc_hist = document.getElementById("histpg");
 	secc_hist.innerHTML = "";
-	for (var j = gl_hist_pg.fecha.length-1;j >= 0; j--) {
+	for (var j = 0;j < gl_hist_pg.fecha.length; j++) {
 		if(selc_tx == gl_hist_pg.fecha[j] || selc_tx == "Todas"){
 		var test_id = gl_hist_pg.pagoid[j]
 		var buttcap = '<button type="button" class="butt_style" onclick="button_cap_hpg(\''+test_id+'\');">Capture</button>';

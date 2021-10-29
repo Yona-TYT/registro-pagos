@@ -114,9 +114,7 @@ function obtener_general(evento) {
 		else if(curr_fecha != fecha){
 			gl_general.fecha = curr_fecha;
 		}
-		mostrar_cuentas(gl_general.cu_save_id);
-		mostrar_clientes(gl_general.cl_save_id);
-		crear_datalist_cc();
+
 
 	}
 	gl_general.demo = null;
@@ -125,11 +123,20 @@ function obtener_general(evento) {
 		if (confirm("Mostrar datos de demostracion?.") == false) {
 			gl_general.demo = false;
 			agregar_gene_datos(gl_general);
+
+			mostrar_cuentas(gl_general.cu_save_id);
+			mostrar_clientes(gl_general.cl_save_id);
+			crear_datalist_cc();
 		}
 		else {
 			//Iniciar la lectura de archivos de demostracion
 			iniciar_demo();
 		}
+	}
+	else {
+		mostrar_cuentas(gl_general.cu_save_id);
+		mostrar_clientes(gl_general.cl_save_id);
+		crear_datalist_cc();
 	}
 	console.log(""+gl_general.demo+" "+gl_general.fecha);
 

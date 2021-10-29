@@ -6,11 +6,11 @@ function importar_main() {
 	files.addEventListener("change", function(e){inicia_lectura_csv(event);});
 }
 
-function inicia_lectura_csv(e, demo = null) {
+function inicia_lectura_csv(e) {
 	var type_1 = "text/csv";
 	var type_2 = "text/comma-separated-values";
 
-	var file_date = demo? demo : e.target.files[0];
+	var file_date = e.target.files[0];
 	if(file_date){
 		var current_type = file_date.type;
 		//console.log(current_type);
@@ -95,6 +95,9 @@ function save_exp_date(results) {
 	var sav_f = new Array();
     var data = results
     var siz_a = data.length;
+
+	//console.log("Valor leido: ? "+data);
+
 	for (var j = 0; j < siz_a; j++) {
         var value = data[j];
       	value.join("|").split("|");
@@ -244,7 +247,7 @@ function butt_integrar() {
 		var siz = gl_save_idlist.length;
 		if(siz > 0){
 		}
-		else alert("Debes cargar un respaldo primero, captures: "+ siz);
+		else alert("Debes cargar un respaldo primero!");
 	}
 	else {
 		var hash = gl_save_cc.hash;
@@ -291,6 +294,26 @@ function butt_integrar() {
 	}
 }
 
+function guardar_inmp_data() {
+
+	gl_save_cl.start = true;
+	gl_save_cc.clave = 0;
+	agregar_cuenta(gl_save_cc, gl_save_cc.clave);				//Se guardan la informacion de Cuenta
+	agregar_cliente(gl_save_cl, gl_save_cc.clave);					//Se guardan la informacion de Clientes
+
+	console.log("Finished: ",gl_save_cc.nombre);	
+
+	gl_general.cuentlist[0] = gl_save_cc.nombre + " " + gl_save_cc.desc;	//Titulo para la cuenta
+	gl_general.etdtlist[0] = true;
+
+	gl_general.cu_save_id = 1;											//Se incrementa para la siguiente cuenta
+
+	agregar_gene_datos(gl_general);									//Se guardan los datos Generales
+
+	crear_datalist_cc();
+	buscar_lista_cuenta();
+	alert("Proceso Completado!.");	
+}
 
 //Manejo de datos para las cuentas-----------------------------------------
 function mostrar_inmp_cc(clave) {

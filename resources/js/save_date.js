@@ -8,7 +8,7 @@ function set_basededatos(name)
 }
 
 function mostrarerror(evento) {
-	alert("Error: tyt tyt " + evento.code + " " + evento.message);
+	alert("Error:  " + evento.code + " " + evento.message);
 }
 function comenzar(evento) {
 	bd = evento.target.result;
@@ -36,6 +36,8 @@ function crearbd(evento) {
 	var alma_capture = basededatos.createObjectStore("capture_clientes", {keyPath:"id", autoIncrement: true});
 	alma_capture.createIndex("buscarnombre", "nombre", {unique: true});
 
+	//Pregunta si motrar datos demo
+	//confirm("Mostrar datos de demostracion?.");
 }
 
 //Guarda los datos generales
@@ -115,7 +117,22 @@ function obtener_general(evento) {
 		mostrar_cuentas(gl_general.cu_save_id);
 		mostrar_clientes(gl_general.cl_save_id);
 		crear_datalist_cc();
+
 	}
+	gl_general.demo = null;
+	if(gl_general.demo ==  null){
+
+		if (confirm("Mostrar datos de demostracion?.") == false) {
+			gl_general.demo = false;
+			agregar_gene_datos(gl_general);
+		}
+		else {
+			//Iniciar la lectura de archivos de demostracion
+			iniciar_demo();
+		}
+	}
+	console.log(""+gl_general.demo+" "+gl_general.fecha);
+
 }
 //----------------------------------------------------------------------
 
@@ -221,6 +238,7 @@ function general_datos() {
 	this.clave = 0;						//Clave para guardar/cargar el registro
 	this.cu_save_id = 0;				//Clave clave mayor para el registro cuentas
 	this.cl_save_id = 0;				//Clave clave mayor para el registro clientes
+	this.demo = null;
 
 	//Guarda valor de input bolivares
 	this.gen_bs = 0;

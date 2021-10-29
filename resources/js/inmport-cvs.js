@@ -2,35 +2,42 @@
 function importar_main() {
 	var files = document.getElementById("archivos");
 	files.value = "";
+
+	files.addEventListener("change", function(e){inicia_lectura_csv(event);});
+}
+
+function inicia_lectura_csv(e, demo = null) {
 	var type_1 = "text/csv";
 	var type_2 = "text/comma-separated-values";
-	files.addEventListener("change", function(e) {
-		var file_date = e.target.files[0];
-		if(file_date){
-			var current_type = file_date.type;
-			//console.log(current_type);
-			if(current_type == type_1 || current_type == type_2){
-				Papa.parse(file_date,{
-					config: {
-						delimiter: "auto"
-					},
-					complete: function(results) {
-						var selec_intg = document.getElementById("selc_integr");
-						var opt = selec_intg.options[selec_intg.selectedIndex].value;
-						if(opt == 3) {
-							save_exp_capt(results.data);
-						}
-						else {
-							save_exp_date(results.data);
-							//console.log("Finished:",results.data);
-						}
+
+	var file_date = demo? demo : e.target.files[0];
+	if(file_date){
+		var current_type = file_date.type;
+		//console.log(current_type);
+		if(current_type == type_1 || current_type == type_2){
+			Papa.parse(file_date,{
+				config: {
+					delimiter: "auto"
+				},
+				complete: function(results) {
+					var selec_intg = document.getElementById("selc_integr");
+					var opt = selec_intg.options[selec_intg.selectedIndex].value;
+					if(opt == 3) {
+						save_exp_capt(results.data);
 					}
-				});
-			}
+					else {
+						save_exp_date(results.data);
+						//console.log("Finished:",results.data);
+					}
+				}
+			});
 		}
-		else alert("No hay archivo seleccionado!.")
-	});
+	}
+	else alert("No hay archivo seleccionado!.");
+
+	return null;
 }
+
 
 var gl_save_idlist = new Array();
 function save_exp_capt(results) {

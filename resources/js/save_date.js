@@ -36,8 +36,10 @@ function crearbd(evento) {
 	var alma_capture = basededatos.createObjectStore("capture_clientes", {keyPath:"id", autoIncrement: true});
 	alma_capture.createIndex("buscarnombre", "nombre", {unique: true});
 
-	//Pregunta si motrar datos demo
-	//confirm("Mostrar datos de demostracion?.");
+	if (confirm("Mostrar datos de demostracion?.")) {
+		//Iniciar la lectura de archivos de demostracion
+		iniciar_demo();
+	}
 }
 
 //Guarda los datos generales
@@ -114,29 +116,25 @@ function obtener_general(evento) {
 		else if(curr_fecha != fecha){
 			gl_general.fecha = curr_fecha;
 		}
-
+		mostrar_cuentas(gl_general.cu_save_id);
+		mostrar_clientes(gl_general.cl_save_id);
+		crear_datalist_cc();
 
 	}
-	gl_general.demo = null;
+	else{
+		gl_general.demo =  null;
+	}
+
 	if(gl_general.demo ==  null){
 
 		if (confirm("Mostrar datos de demostracion?.") == false) {
 			gl_general.demo = false;
 			agregar_gene_datos(gl_general);
-
-			mostrar_cuentas(gl_general.cu_save_id);
-			mostrar_clientes(gl_general.cl_save_id);
-			crear_datalist_cc();
 		}
 		else {
 			//Iniciar la lectura de archivos de demostracion
 			iniciar_demo();
 		}
-	}
-	else {
-		mostrar_cuentas(gl_general.cu_save_id);
-		mostrar_clientes(gl_general.cl_save_id);
-		crear_datalist_cc();
 	}
 	console.log(""+gl_general.demo+" "+gl_general.fecha);
 

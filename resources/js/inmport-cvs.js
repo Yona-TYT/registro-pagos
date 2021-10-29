@@ -295,6 +295,7 @@ function butt_integrar() {
 }
 
 function guardar_inmp_data() {
+	gl_curr_cuenta = true;
 
 	gl_save_cl.start = true;
 	gl_save_cc.clave = 0;
@@ -308,6 +309,7 @@ function guardar_inmp_data() {
 
 	gl_general.cu_save_id = 1;											//Se incrementa para la siguiente cuenta
 
+	gl_general.demo = false;
 	agregar_gene_datos(gl_general);									//Se guardan los datos Generales
 
 	crear_datalist_cc();

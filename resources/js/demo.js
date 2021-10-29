@@ -1,15 +1,16 @@
 function iniciar_demo() {
 	
-	var datos_dir = "https://raw.githubusercontent.com/Yona-TYT/registro-pagos/c3173466ab1a41d7f71cc863c5b5311820443b79/resources/demo/datos.csv";
-	var capt_dir = "https://raw.githubusercontent.com/Yona-TYT/registro-pagos/c3173466ab1a41d7f71cc863c5b5311820443b79/resources/demo/datos.csv";
+	var datos_dir = "https://raw.githubusercontent.com/Yona-TYT/registro-pagos/gh-pages/resources/demo/datos.csv";
+	var capt_dir = "https://raw.githubusercontent.com/Yona-TYT/registro-pagos/gh-pages/resources/demo/captures.csv";
 
-	var file_a = loadFile(datos_dir);
+	loadFile_data(datos_dir);
+	loadFile_cap(capt_dir);
 
 	//console.log("File: "+file_a);
 	
 }
 
-function loadFile(filePath) {
+function loadFile_data(filePath) {
 	fetch(filePath)
 	.then(response => response.blob())
 	.then(data => 
@@ -20,7 +21,22 @@ function loadFile(filePath) {
 				complete: function(results) {
 					save_exp_date(results.data);
 					guardar_inmp_data();
-					//console.log("Finished:",results.data);	
+				}
+			})
+		);
+}
+
+function loadFile_cap(filePath) {
+	fetch(filePath)
+	.then(response => response.blob())
+	.then(data => 
+				Papa.parse(data,{
+				config: {
+					delimiter: "auto"
+				},
+				complete: function(results) {
+					save_exp_capt(results.data);
+
 				}
 			})
 		);

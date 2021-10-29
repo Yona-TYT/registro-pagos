@@ -36,10 +36,6 @@ function crearbd(evento) {
 	var alma_capture = basededatos.createObjectStore("capture_clientes", {keyPath:"id", autoIncrement: true});
 	alma_capture.createIndex("buscarnombre", "nombre", {unique: true});
 
-	if (confirm("Mostrar datos de demostracion?.")) {
-		//Iniciar la lectura de archivos de demostracion
-		iniciar_demo();
-	}
 }
 
 //Guarda los datos generales
@@ -136,8 +132,6 @@ function obtener_general(evento) {
 			iniciar_demo();
 		}
 	}
-	console.log(""+gl_general.demo+" "+gl_general.fecha);
-
 }
 //----------------------------------------------------------------------
 

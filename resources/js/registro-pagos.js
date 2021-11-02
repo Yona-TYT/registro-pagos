@@ -599,6 +599,7 @@ function cargar_capture(e){
 	if(file_date){
 		var current_type = file_date.type;
 		//console.log(current_type);
+		alert(""+current_type);
 		if(current_type == type_1 || current_type == type_2){
 			var reader = new FileReader();
 			reader.onload = function (e) {

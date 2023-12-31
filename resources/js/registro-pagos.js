@@ -598,8 +598,8 @@ function cargar_capture(e){
 	var type_2 = "image/png";
 	if(file_date){
 		var current_type = file_date.type;
-		//console.log(current_type);
-		alert(""+current_type);
+		console.log(current_type);
+		//alert(""+current_type);
 		if(current_type == type_1 || current_type == type_2){
 			var reader = new FileReader();
 			reader.onload = function (e) {
